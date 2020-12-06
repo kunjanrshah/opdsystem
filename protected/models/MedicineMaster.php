@@ -25,7 +25,7 @@ class MedicineMaster extends CActiveRecord {
     const EXTERNAL = 2;
     public $isInternalArr = array(self::INTERNAL => "Yes", self::EXTERNAL=> "No");
     public $medicineTypeArr = array(1 => "Type1", 2 => "Type2");
-    public $start_date, $end_date, $medicine_name_with_type;
+    public $start_date, $end_date, $medicine_name_with_type, $medicine_name_with_company,$group_id;
 
     /**
      * Returns the static model of the specified AR class.
@@ -50,11 +50,12 @@ class MedicineMaster extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('medicine_name, drug_id, is_internal, company_id', 'required'),
+            array('group_id,medicine_name, drug_id, is_internal, company_id', 'required'),
             array('drug_id, is_internal, medicine_type, dosages, company_id, deleted, created_dt, created_by, updated_dt, updated_by', 'numerical', 'integerOnly' => true),
             array("medicine_name", "unique"),
             array('medicine_name', 'length', 'max' => 128),
             array('duration_in_days', 'length', 'max' => 10),
+            array('group_id', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, medicine_name,is_vaccine,stock, drug_id, is_internal, medicine_type, dosages, dosages_remarks, duration_in_days, company_id, deleted, created_dt, created_by, updated_dt, updated_by', 'safe', 'on' => 'search'),
@@ -70,6 +71,7 @@ class MedicineMaster extends CActiveRecord {
         return array(
             "drugRel" => array(self::BELONGS_TO, "DrugsMaster", "drug_id"),
             "companyRel" => array(self::BELONGS_TO, "CompanyMaster", "company_id"),
+            "groupRel" => array(self::BELONGS_TO, "MedicineGroupMaster", "group_id"),
         );
     }
 
@@ -85,6 +87,8 @@ class MedicineMaster extends CActiveRecord {
     public function afterFind() {
         $type = ($this->is_internal == 1) ? "Internal" : "External";
         $this->medicine_name_with_type = $this->medicine_name . " (" . $type . ")";
+        $company_name = !empty($this->companyRel->company_name)? " (" . $this->companyRel->company_name . ")" : '';
+        $this->medicine_name_with_company = $this->medicine_name . $company_name;
         return parent::afterFind();
     }
 
@@ -106,6 +110,7 @@ class MedicineMaster extends CActiveRecord {
         return array(
             'id' => 'ID',
             'medicine_name' => 'Medicine Name',
+            'group_id' => 'Group',
             'drug_id' => 'Drug',
             'is_internal' => 'Is Internal',
             'medicine_type' => 'Medicine Type',

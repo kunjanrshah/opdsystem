@@ -169,11 +169,13 @@ class TreatmentsController extends Controller {
                 $this->saveTreatmentCharges($model);
                 $this->saveNotifications($model);
                 Yii::app()->user->setFlash("success", common::translateText("ADD_SUCCESS"));
-                if (isset($_POST['next'])):
+                if (isset($_POST['next'])) {
                     $this->redirect(array("/admin/dashboard/index"));
-                else:
+                } else if(isset($_POST['prescription'])) {
+                    $this->redirect(array("/admin/treatments/prescription", "id" => $model->id));
+                } else {
                     $this->redirect(array("/admin/treatments/casepaper", "id" => $model->id));
-                endif;
+                }
             }
         }
         $this->render('addTreatment', array('model' => $model));
@@ -231,11 +233,13 @@ class TreatmentsController extends Controller {
                 $this->saveTreatmentCharges($model);
 //                $this->saveNotifications($model);
                 Yii::app()->user->setFlash("success", common::translateText("ADD_SUCCESS"));
-                if (isset($_POST['next'])):
+                if (isset($_POST['next'])) {
                     $this->redirect(array("/admin/dashboard/index"));
-                else:
+                } else if(isset($_POST['prescription'])) {
+                    $this->redirect(array("/admin/treatments/prescription", "id" => $model->id));
+                } else {
                     $this->redirect(array("/admin/treatments/casepaper", "id" => $model->id));
-                endif;
+                }
             }
         }
         $this->render('addTreatment', array('model' => $model));
@@ -264,7 +268,11 @@ class TreatmentsController extends Controller {
                     endforeach;
                 endif;
 
-                $DiagnosisTreatments = DiagnosisTreatments::model()->findAllByAttributes(array("diagnosis_id" => $diagnosis_id));
+                $crit = new CDBCriteria();
+                $crit->join = "LEFT JOIN `".MedicineMaster::tableName()."` AS MM ON MM.id = t.medicine_id";
+                $crit->compare("diagnosis_id",$diagnosis_id);
+                $crit->order = "MM.is_internal ASC";
+                $DiagnosisTreatments = DiagnosisTreatments::model()->findAll($crit);
 
                 if (!empty($DiagnosisTreatments)): $i = 0;
                     foreach ($DiagnosisTreatments as $value):

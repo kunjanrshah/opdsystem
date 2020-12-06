@@ -1,6 +1,6 @@
 <?php
 
-class AllergiesController extends Controller {
+class MedicinegroupController extends Controller {
 
     public function filters() {
         return array(
@@ -31,33 +31,31 @@ class AllergiesController extends Controller {
     /* View lising page */
 
     public function actionIndex() {
-        $model = new AllergyMaster("search");
+        $model = new MedicineGroupMaster("search");
         $this->render('index', array("model" => $model));
     }
 
+    /* add user group */
+
     public function actionAdd() {
         if (Yii::app()->request->isPostRequest) {
-            $model = new AllergyMaster();
+            $model = new MedicineGroupMaster();
             // Uncomment the following line if AJAX validation is needed
-            $this->performAjaxValidation($model, "form-allergies");
+            $this->performAjaxValidation($model, "form-user-group");
 
-            if (isset($_POST['AllergyMaster'])) {
-                $model->attributes = $_POST['AllergyMaster'];
+            if (isset($_POST['MedicineGroupMaster'])) {
+                $model->attributes = $_POST['MedicineGroupMaster'];
                 if ($model->validate()) {
                     $model->save();
-                    $response["success"] = true;
-                    $response["message"] = common::getMessage("success", common::translateText("ADD_SUCCESS"));
-                    $response["data"] = $this->getOptions($model->id);
                     Yii::app()->user->setFlash("success", common::translateText("ADD_SUCCESS"));
                 } else {
-                    $response["success"] = false;
-                    $response["message"] = common::getMessage("danger", common::translateText("ADD_FAIL"));
                     Yii::app()->user->setFlash("danger", common::translateText("ADD_FAIL"));
                 }
-                $this->redirect(array("/admin/allergies"));
+                $this->redirect(array("/admin/medicinegroup"));
             }
-            $this->layout = false;
-            $this->render('_form_allergies', array('model' => $model), false, FALSE);
+
+            $outputJs = Yii::app()->request->isAjaxRequest;
+            $this->renderPartial('_form', array('model' => $model), false, $outputJs);
         } else
             throw new CHttpException(400, common::translateText("400_ERROR"));
     }
@@ -66,42 +64,25 @@ class AllergiesController extends Controller {
 
     public function actionUpdate($id) {
         if (Yii::app()->request->isPostRequest) {
-            $model = $this->loadModel($id, "AllergyMaster");
+            $model = $this->loadModel($id, "MedicineGroupMaster");
             // Uncomment the following line if AJAX validation is needed
-            $this->performAjaxValidation($model, "form-allergies");
+            $this->performAjaxValidation($model, "form-user-group");
 
-            if (isset($_POST['AllergyMaster'])) {
-                $model->attributes = $_POST['AllergyMaster'];
+            if (isset($_POST['MedicineGroupMaster'])) {
+                $model->attributes = $_POST['MedicineGroupMaster'];
                 if ($model->validate()) {
                     $model->update();
-                    $response["success"] = true;
-                    $response["message"] = common::getMessage("success", common::translateText("UPDATE_SUCCESS"));
-                    $response["data"] = $this->getOptions($model->id);
                     Yii::app()->user->setFlash("success", common::translateText("UPDATE_SUCCESS"));
                 } else {
-                    $response["success"] = false;
-                    $response["message"] = common::getMessage("danger", common::translateText("UPDATE_FAIL"));
                     Yii::app()->user->setFlash("danger", common::translateText("UPDATE_FAIL"));
                 }
-                $this->redirect(array("/admin/allergies"));
+                $this->redirect(array("/admin/medicinegroup"));
             }
-            $this->layout = false;
-            $this->render('_form_allergies', array('model' => $model), false, FALSE);
+
+            $outputJs = Yii::app()->request->isAjaxRequest;
+            $this->renderPartial('_form', array('model' => $model), false, $outputJs);
         } else
             throw new CHttpException(400, common::translateText("400_ERROR"));
-    }
-
-    public function getOptions($selected_id = null) {
-        $model = AllergyMaster::model()->findAll();
-        $select = common::translateText("DROPDOWN_TEXT");
-        $option = null;
-        $option .= CHtml::tag('option', array('value' => ""), CHtml::encode($select), true);
-        if ($model): foreach ($model as $value):
-                $selected = ($value->id == $selected_id) ? true : false;
-                $option .= CHtml::tag('option', array('value' => $value->id, 'selected' => $selected), CHtml::encode($value->title), true);
-            endforeach;
-        endif;
-        return $option;
     }
 
     /* delete user group */
@@ -116,7 +97,7 @@ class AllergiesController extends Controller {
 
             $update = false;
             if (!empty($idsArr)) : foreach ($idsArr as $id):
-                    $model = $this->loadModel($id, "AllergyMaster");
+                    $model = $this->loadModel($id, "MedicineGroupMaster");
                     $update = ($model->delete()) ? true : false;
                 endforeach;
             endif;
@@ -131,5 +112,4 @@ class AllergiesController extends Controller {
             throw new CHttpException(400, common::translateText("400_ERROR"));
         }
     }
-
 }

@@ -1,5 +1,5 @@
 <?php
-$medicines = CHtml::ListData(MedicineMaster::model()->findAll(), "id", "medicine_name");
+$medicines = CHtml::ListData(MedicineMaster::model()->findAll(), "id", "medicine_name_with_company");
 $doseages = CHtml::ListData(DosagesMaster::model()->findAll(), "id", "dosage_name");
 $form = $this->beginWidget('CActiveForm', array(
     'id' => 'form-diagnosis',

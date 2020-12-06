@@ -1,5 +1,4 @@
 <?php
-$HOST_NAME = "localhost";
 return array(
     'connectionString' => 'mysql:host=' . $HOST_NAME . ';dbname=' . $DB_NAME,
     'emulatePrepare' => true,

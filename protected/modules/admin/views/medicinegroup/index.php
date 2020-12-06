@@ -1,36 +1,33 @@
 <?php
-$deleteRight = common::checkActionAccess("medicine/delete");
+$deleteRight = common::checkActionAccess("medicinegroup/delete");
 ?>
 <!-- START Template Container -->
 <div class="container-fluid">
     <!-- START row -->
-    <?php
-    $this->renderPartial("_search", array("model" => $model));
-    $this->renderPartial("/layouts/_message");
-    ?>
+    <?php $this->renderPartial("/layouts/_message"); ?>
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-primary">
                 <div class="panel-toolbar-wrapper pl0 pt5 pb5">
                     <div class="panel-toolbar pl10">
                         <div class="pull-left">
-                            <span class="semibold">&nbsp;&nbsp;<?php echo common::getTitle("medicine/index"); ?></span>  
+                            <span class="semibold">&nbsp;&nbsp;<?php echo common::getTitle("medicinegroup/index"); ?></span>  
                         </div>
                     </div>
                     <div class="panel-toolbar text-right">
                         <?php
-                        if (common::checkActionAccess("medicine/add")) :
-                            echo CHtml::Link(common::getTitle("medicine/add") . ' <i class="ico-plus"></i>', array("medicine/add"), array(
-                                "title" => common::getTitle("medicine/add"),
+                        if (common::checkActionAccess("medicinegroup/add")) :
+                            echo CHtml::Link(common::getTitle("medicinegroup/add") . ' <i class="ico-plus"></i>', array("medicinegroup/add"), array(
+                                "title" => common::getTitle("medicinegroup/add"),
                                 "data-placement" => "bottom",
                                 "rel" => "tooltip",
                                 "class" => "btn btn-sm btn-default addUpdateRecord",
-                                "data-original-title" => common::getTitle("medicine/add")
+                                "data-original-title" => common::getTitle("medicinegroup/add")
                             ));
                         endif;
-                        
+
                         if ($deleteRight) :
-                            echo CHtml::Link('<i class="ico-remove3"></i>', array("/admin/medicine/delete"), array("class" => "ml5 btn btn-sm btn-danger deleteRecord multipleDelete"));
+                            echo CHtml::Link('<i class="ico-remove3"></i>', array("/admin/medicinegroup/delete"), array("class" => "ml5 btn btn-sm btn-danger deleteRecord multipleDelete"));
                         endif;
                         ?>
                     </div>
@@ -38,11 +35,12 @@ $deleteRight = common::checkActionAccess("medicine/delete");
                 <!-- panel body with collapse capabale -->
                 <div class="table-responsive panel-collapse pull out">                  
                     <?php
-                    $updateRight = common::checkActionAccess("medicine/index");
-                    $deleteRight = common::checkActionAccess("medicine/delete");
-                    $columnClass = (!$updateRight && !$deleteRight) ? "hide" : "";
+                    $updateRight = common::checkActionAccess("medicinegroup/index");
+                    $deleteRight = common::checkActionAccess("medicinegroup/delete");
+                    $permissionRight = common::checkActionAccess("medicinegroup/permissions");
+                    $columnClass = (!$updateRight && !$deleteRight && !$permissionRight) ? "hide" : "";
                     $this->widget("zii.widgets.grid.CGridView", array(
-                        "id" => "medicine-grid",
+                        "id" => "users-group-grid",
                         "dataProvider" => $model->search(),
                         "columns" => array(
                             array(
@@ -51,15 +49,7 @@ $deleteRight = common::checkActionAccess("medicine/delete");
                                 'value' => '$data["id"]',
                                 "checkBoxHtmlOptions" => array("name" => "idList[]"),
                             ),
-                            "medicine_name",
-                            "groupRel.name",
-                            "drugRel.drug_name",
-                            "companyRel.company_name",
-                            array(
-                                "name" => "is_vaccine",
-                                "value" => '!empty($data->is_vaccine)?"Yes":"No"'
-                            ),
-                            'stock',
+                            "name",
                             array(
                                 "class" => "CButtonColumn",
                                 "header" => "Action",
@@ -81,15 +71,15 @@ $deleteRight = common::checkActionAccess("medicine/delete");
                                     "updateRecord" => array(
                                         "label" => '<i class="icon ico-pencil"></i> ' . common::translateText("UPDATE_BTN_TEXT"),
                                         "imageUrl" => false,
-                                        "url" => 'Yii::app()->createUrl("/admin/medicine/update", array("id"=>$data->id))',
-                                        "options" => array("class" => "addUpdateRecord mr5", "title" => common::getTitle("medicine/update")),
+                                        "url" => 'Yii::app()->createUrl("/admin/medicinegroup/update", array("id"=>$data->id))',
+                                        "options" => array("class" => "addUpdateRecord mr5", "title" => common::getTitle("medicinegroup/update")),
                                         "visible" => ($updateRight) ? 'true' : 'false',
                                     ),
                                     "deleteRecord" => array(
                                         "label" => '<i class="icon ico-trash"></i> ' . common::translateText("DELETE_BTN_TEXT"),
                                         "imageUrl" => false,
-                                        "url" => 'Yii::app()->createUrl("/admin/medicine/delete", array("id"=>$data->id))',
-                                        "options" => array("class" => "deleteRecord text-danger mr5", "title" => common::getTitle("medicine/delete")),
+                                        "url" => 'Yii::app()->createUrl("/admin/medicinegroup/delete", array("id"=>$data->id))',
+                                        "options" => array("class" => "deleteRecord text-danger mr5", "title" => common::getTitle("medicinegroup/delete")),
                                         "visible" => ($deleteRight) ? 'true' : 'false',
                                     ),
                                 ),
@@ -115,12 +105,12 @@ $deleteRight = common::checkActionAccess("medicine/delete");
                                     alert('" . common::translateText("INVALID_SELECTION") . "'); return false;  
                                 }
                             }
-                            var totalRecs = $('input[type=checkbox]:checked').not('#medicine-grid_c0_all').length;
+                            var totalRecs = $('input[type=checkbox]:checked').not('#users-group-grid_c0_all').length;
                             totalRecs = (totalRecs=='0')?'this':totalRecs;
-                            if(!confirm('Are you sure to delete '+totalRecs+' area ?')) return false;                                               
+                            if(!confirm('Are you sure to delete '+totalRecs+' charges ?')) return false;                                               
                             var url = $(this).attr('href');
                             $.post(url,idList,function(res){
-                                $.fn.yiiGridView.update('medicine-grid');
+                                $.fn.yiiGridView.update('users-group-grid');
                                 $('#flash-message').html(res).animate({opacity: 1.0}, 3000).fadeOut('slow');
                             });
                             return false;
