@@ -81,7 +81,7 @@ class MedicineController extends Controller {
                 $model->stock = !empty($_POST['MedicineMaster']['stock']) ? $_POST['MedicineMaster']['stock'] : "";
 
                 if ($model->validate()) {
-                    $model->updated();
+                    $model->update(false);
                     $response["success"] = true;
                     $response["message"] = common::getMessage("success", common::translateText("ADD_SUCCESS"));
                     $response["data"] = $this->getOptions($model->id);

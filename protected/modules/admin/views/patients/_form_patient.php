@@ -22,7 +22,7 @@ echo $form->hiddenField($model, "state_id");
             <?php echo $form->error($model, "id", array("class" => "parsley-custom-error-message")); ?>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="form-group">
             <?php echo $form->labelEx($model, "registration_date", array("class" => "control-label")); ?>
             <div class="has-icon pull-left">
@@ -32,7 +32,7 @@ echo $form->hiddenField($model, "state_id");
             <?php echo $form->error($model, "registration_date", array("class" => "parsley-custom-error-message")); ?>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="form-group">
             <?php echo $form->labelEx($model, "birth_date", array("class" => "control-label")); ?>
             <div class="has-icon pull-left">
@@ -50,6 +50,7 @@ echo $form->hiddenField($model, "state_id");
                             $('#Patients_patient_age_years').val(years);
                             $('#Patients_patient_age_months').val(months);
                             $('#Patients_patient_age_days').val(days);
+                            $('#Patients_age').val(years);
                         }"
                     )
                         ),array('yearRange' => '2005:2099',"maxDate" => 0));
@@ -58,6 +59,15 @@ echo $form->hiddenField($model, "state_id");
             </div>
             <?php echo $form->error($model, "birth_date", array("class" => "parsley-custom-error-message")); ?>
         </div>
+    </div>
+    <div class="col-md-2">
+    <div class="form-group">
+        <label class="control-label" for="Patients_age">Age</label>            
+        <div class="has-icon pull-left">
+            <input class="form-control numeric" maxlength="3" placeholder="Age" id="Patients_age" name="Patients[age]" type="text" value="<?php echo $model->patient_age_years;?>">                
+            <i class="ico-calendar5 form-control-icon"></i>
+        </div>
+        </div>    
     </div>
     <div class="col-md-4">
         <div class="form-group">
@@ -450,4 +460,13 @@ Yii::app()->clientScript->registerScript('actions', "
     $("input:file").change(function () {
         readURL(this);
     })
+    $("#Patients_age").change(function(){ 
+        var age = $(this).val();
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = Number(today.getFullYear())-Number(age);
+        today = mm + '/' + dd + '/' + yyyy;
+        $("#Patients_birth_date").val(today).trigger('change');
+    });
 </script>

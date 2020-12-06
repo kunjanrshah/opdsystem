@@ -33,7 +33,7 @@ class CaseMaster extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('title', 'required'),
-            array('unique', 'required'),
+            array('title', 'unique'),
             array('title', 'length', 'max' => 50),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.

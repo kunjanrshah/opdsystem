@@ -1,17 +1,23 @@
 <?php
 $criteria = new CDbCriteria();
-$criteria->order = "t.is_internal ASC";
+$criteria->condition="is_internal='1'";
+$criteria->order = "t.medicine_name ASC";
 $medicinesModel = MedicineMaster::model()->findAll($criteria);
+
+$criteria = new CDbCriteria();
+$criteria->condition="is_internal!='1'";
+$criteria->with = "companyRel";
+$criteria->order = "companyRel.company_name ASC";
+$medicinesModel2 = MedicineMaster::model()->findAll($criteria);
 
 $medicines = array();
 $internal = array();
 $external = array();
 foreach ($medicinesModel as $medicine) {
-    if ($medicine->is_internal == 1) {
-        $internal[$medicine->id] = $medicine->medicine_name_with_type;
-    } else {
-        $external[$medicine->id] = $medicine->medicine_name_with_type;
-    }
+    $internal[$medicine->id] = $medicine->medicine_name_with_type;
+}
+foreach ($medicinesModel2 as $medicine) {
+    $external[$medicine->id] = $medicine->medicine_name_with_company;
 }
 $medicines = array("Internal" => $internal) + array("External" => $external);
 
@@ -178,6 +184,7 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
 </div>               
 <div class="modal-footer">
 <!--    <a type="button" class="btn btn-default" href="<?php echo Yii::app()->createUrl("/admin/appointments/index"); ?>"><?php echo common::translateText("CANCEL_BTN_TEXT"); ?></a>-->
+    <button type="submit" name="prescription" class="btn btn-primary"><?php echo "Prescription"; ?></button>
     <button type="submit" class="btn btn-primary"><?php echo "Case Paper"; ?></button>
     <button type="submit" name="next" class="btn btn-primary" onclick="return confirm('Are you sure? You want to save Treatment.');"><?php echo "Next"; ?></button>
 </div>

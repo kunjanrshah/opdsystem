@@ -49,7 +49,7 @@ class FamilyMaster extends CActiveRecord {
         return array(
             array('family_name,  contact_number', 'required'),
             array("family_name", "unique"),
-            array("contact_number", "unique"),
+            // array("contact_number", "unique"),
             array('email_address', 'email'),
             array('country_id, state_id, pin_code, deleted, created_dt, created_by, updated_dt, updated_by', 'numerical', 'integerOnly' => true),
             array('family_name, city', 'length', 'max' => 50),

@@ -59,8 +59,8 @@ class FamilyController extends Controller {
                 }
                 $this->redirect(array("/admin/family"));
             }
-            $this->layout = false;
-            $this->render('_form_family', array('model' => $model), false, FALSE);
+            $outputJs = Yii::app()->request->isAjaxRequest;
+            $this->renderPartial('_form_family', array('model' => $model), false, $outputJs);
         } else
             throw new CHttpException(400, common::translateText("400_ERROR"));
     }
@@ -88,8 +88,8 @@ class FamilyController extends Controller {
                 }
                 $this->redirect(array("/admin/family"));
             }
-            $this->layout = false;
-            $this->render('_form_family', array('model' => $model), false, FALSE);
+            $outputJs = Yii::app()->request->isAjaxRequest;
+            $this->renderPartial('_form_family', array('model' => $model), false, $outputJs);
         } else
             throw new CHttpException(400, common::translateText("400_ERROR"));
     }
