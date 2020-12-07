@@ -11,7 +11,7 @@
                 <?php
                 $form = $this->beginWidget('CActiveForm', array(
                     'id' => 'form-references',
-                    'enableAjaxValidation' => true,
+                    'enableAjaxValidation' => false,
                     'enableClientValidation' => false,
                     'clientOptions' => array(
                         'validateOnSubmit' => true,

@@ -25,7 +25,7 @@ class MedicineMaster extends CActiveRecord {
     const EXTERNAL = 2;
     public $isInternalArr = array(self::INTERNAL => "Yes", self::EXTERNAL=> "No");
     public $medicineTypeArr = array(1 => "Type1", 2 => "Type2");
-    public $start_date, $end_date, $medicine_name_with_type, $medicine_name_with_company,$group_id;
+    public $start_date, $end_date, $medicine_name_with_type, $medicine_name_with_company,$group_id,$medicine_name_with_group;
 
     /**
      * Returns the static model of the specified AR class.
@@ -89,6 +89,9 @@ class MedicineMaster extends CActiveRecord {
         $this->medicine_name_with_type = $this->medicine_name . " (" . $type . ")";
         $company_name = !empty($this->companyRel->company_name)? " (" . $this->companyRel->company_name . ")" : '';
         $this->medicine_name_with_company = $this->medicine_name . $company_name;
+        $group_name = !empty($this->groupRel->name)? " (" . $this->groupRel->name . ")" : '';
+        $this->medicine_name_with_group = $this->medicine_name . $group_name;
+
         return parent::afterFind();
     }
 

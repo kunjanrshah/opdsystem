@@ -54,6 +54,7 @@ class FamilyMaster extends CActiveRecord {
             array('country_id, state_id, pin_code, deleted, created_dt, created_by, updated_dt, updated_by', 'numerical', 'integerOnly' => true),
             array('family_name, city', 'length', 'max' => 50),
             array('contact_number, pan_number', 'length', 'max' => 20),
+            array('address1, address2, area', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, family_name, address1, address2, country_id, state_id, city, pin_code, contact_number, pan_number, deleted, created_dt, created_by, updated_dt, updated_by', 'safe', 'on' => 'search'),

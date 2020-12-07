@@ -1,6 +1,12 @@
-<div class="row nm" id="cloneMe">
+<div class="row nm diagnosis-parent" id="cloneMe">
    <?php echo CHtml::hiddenField("DiagnosisTreatments[$c][id]",$id,array("class"=>"ids")); ?>
-    <div class="col-md-6">
+   <div class="col-md-3">
+        <div class="form-group">
+            <?php echo CHtml::Label("Group", "&nbsp;", array("class" => "control-label")); ?>
+            <?php echo CHtml::dropDownList("DiagnosisTreatments[$c][medicine_group_id]",$medicine_group_id, $medicineGroups, array("prompt" => common::translateText("DROPDOWN_TEXT"), "class" => "addmore-required medicine-groups form-control")); ?>
+        </div>
+    </div>
+    <div class="col-md-3">
         <div class="form-group">
             <?php echo CHtml::Label("Medicine", "&nbsp;", array("class" => "control-label")); ?>
             <?php echo CHtml::dropDownList("DiagnosisTreatments[$c][medicine_id]",$medicine_id, $medicines, array("prompt" => common::translateText("DROPDOWN_TEXT"), "class" => "addmore-required medicines form-control")); ?>

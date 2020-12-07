@@ -50,6 +50,23 @@ $deleteRight = common::checkActionAccess("diagnosis/delete");
                             ),
                             "diagnosis_title",
                             array(
+                                "header"=> 'Group',
+                                'value'=> function($data,$row) {
+                                    $d = array();
+                                    $i = 0;
+                                    $DiagnosisTreatments = DiagnosisTreatments::model()->findAllByAttributes(array('diagnosis_id'=> $data->id));
+                                    if(!empty($DiagnosisTreatments)) {
+                                        foreach($DiagnosisTreatments as $v) {
+                                            if(!empty($v->medicineGroupRel->name)) {
+                                                $d[$i] = $v->medicineGroupRel->name;
+                                                $i++;
+                                            }
+                                        }
+                                    }
+                                    return implode(', ', $d);
+                                }
+                            ),
+                            array(
                                 "name" => "complains",
                                 "value" => function($data, $row) {
                                     $complains = ComplainsMaster::model()->getComplainsList();
@@ -114,7 +131,7 @@ $deleteRight = common::checkActionAccess("diagnosis/delete");
                             }
                             var totalRecs = $('input[type=checkbox]:checked').not('#diagnosis-grid_c0_all').length;
                             totalRecs = (totalRecs=='0')?'this':totalRecs;
-                            if(!confirm('Are you sure to delete '+totalRecs+' area ?')) return false;                                               
+                            if(!confirm('Are you sure to delete '+totalRecs+' record(s) ?')) return false;                                               
                             var url = $(this).attr('href');
                             $.post(url,idList,function(res){
                                 $.fn.yiiGridView.update('diagnosis-grid');
