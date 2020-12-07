@@ -52,7 +52,12 @@ $deleteRight = common::checkActionAccess("medicine/delete");
                                 "checkBoxHtmlOptions" => array("name" => "idList[]"),
                             ),
                             "medicine_name",
-                            "groupRel.name",
+                            array(
+                                "header"=> 'Group',
+                                'value'=> function($data,$row) {
+                                    return !empty($data->groupRel->name) ? $data->groupRel->name : '';
+                                }
+                            ),
                             "drugRel.drug_name",
                             "companyRel.company_name",
                             array(
@@ -117,7 +122,7 @@ $deleteRight = common::checkActionAccess("medicine/delete");
                             }
                             var totalRecs = $('input[type=checkbox]:checked').not('#medicine-grid_c0_all').length;
                             totalRecs = (totalRecs=='0')?'this':totalRecs;
-                            if(!confirm('Are you sure to delete '+totalRecs+' area ?')) return false;                                               
+                            if(!confirm('Are you sure to delete '+totalRecs+' record(s) ?')) return false;                                               
                             var url = $(this).attr('href');
                             $.post(url,idList,function(res){
                                 $.fn.yiiGridView.update('medicine-grid');

@@ -58,8 +58,8 @@ class ReferencesController extends Controller {
                 }
                 $this->redirect(array("/admin/references"));
             }
-            $this->layout = false;
-            $this->render('_form_reference', array('model' => $model), false, FALSE);
+            $outputJs = Yii::app()->request->isAjaxRequest;
+            $this->renderPartial('_form_reference', array('model' => $model), false, $outputJs);
         } else
             throw new CHttpException(400, common::translateText("400_ERROR"));
     }
@@ -87,8 +87,8 @@ class ReferencesController extends Controller {
                 }
                 $this->redirect(array("/admin/references"));
             }
-            $this->layout = false;
-            $this->render('_form_reference', array('model' => $model), false, FALSE);
+            $outputJs = Yii::app()->request->isAjaxRequest;
+            $this->renderPartial('_form_reference', array('model' => $model), false, $outputJs);
         } else
             throw new CHttpException(400, common::translateText("400_ERROR"));
     }

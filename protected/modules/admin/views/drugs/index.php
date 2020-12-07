@@ -108,7 +108,7 @@ $deleteRight = common::checkActionAccess("drugs/delete");
                             }
                             var totalRecs = $('input[type=checkbox]:checked').not('#drug-grid_c0_all').length;
                             totalRecs = (totalRecs=='0')?'this':totalRecs;
-                            if(!confirm('Are you sure to delete '+totalRecs+' area ?')) return false;                                               
+                            if(!confirm('Are you sure to delete '+totalRecs+' record(s) ?')) return false;                                               
                             var url = $(this).attr('href');
                             $.post(url,idList,function(res){
                                 $.fn.yiiGridView.update('drug-grid');

@@ -62,6 +62,7 @@ class ReferencesMaster extends CActiveRecord {
             array('email_address', 'length', 'max' => 128),
             array('website', 'length', 'max' => 255),
             // The following rule is used by search().
+            array('address1', 'safe'),
             // Please remove those attributes that should not be searched.
             array('id, reference_name, reference_type, profession, address1, address2, country_id, state_id, city, contact_number, fax, pin_code, email_address, website, deleted, created_dt, created_by, updated_dt, updated_by', 'safe', 'on' => 'search'),
         );

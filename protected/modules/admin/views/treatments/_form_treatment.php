@@ -6,8 +6,8 @@ $medicinesModel = MedicineMaster::model()->findAll($criteria);
 
 $criteria = new CDbCriteria();
 $criteria->condition="is_internal!='1'";
-$criteria->with = "companyRel";
-$criteria->order = "companyRel.company_name ASC";
+$criteria->with = "groupRel";
+$criteria->order = "groupRel.name ASC";
 $medicinesModel2 = MedicineMaster::model()->findAll($criteria);
 
 $medicines = array();
@@ -17,7 +17,7 @@ foreach ($medicinesModel as $medicine) {
     $internal[$medicine->id] = $medicine->medicine_name_with_type;
 }
 foreach ($medicinesModel2 as $medicine) {
-    $external[$medicine->id] = $medicine->medicine_name_with_company;
+    $external[$medicine->id] = $medicine->medicine_name_with_group;
 }
 $medicines = array("Internal" => $internal) + array("External" => $external);
 

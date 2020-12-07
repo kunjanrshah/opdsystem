@@ -1,6 +1,7 @@
 <?php
 $medicines = CHtml::ListData(MedicineMaster::model()->findAll(), "id", "medicine_name_with_company");
 $doseages = CHtml::ListData(DosagesMaster::model()->findAll(), "id", "dosage_name");
+$medicineGroups = CHtml::ListData(MedicineGroupMaster::model()->getGroups(), 'id', 'name');
 $form = $this->beginWidget('CActiveForm', array(
     'id' => 'form-diagnosis',
     'enableAjaxValidation' => true,
@@ -38,7 +39,7 @@ $form = $this->beginWidget('CActiveForm', array(
     $DiagnosisTreatments = DiagnosisTreatments::model()->findAllByAttributes(array("diagnosis_id"=>$model->id));
     //echo count($DiagnosisTreatments);
     if (!empty($DiagnosisTreatments)): foreach ($DiagnosisTreatments as $value):
-            $this->renderPartial("_diagnosis_treatments", array("medicines" => $medicines, "doseages" => $doseages, "medicine_id" => $value->medicine_id, "doseage_id" => $value->doseage_id, "c" => $c, "id" => $value->id));
+            $this->renderPartial("_diagnosis_treatments", array("medicines" => CHtml::ListData(MedicineMaster::model()->findAllByAttributes(array('group_id'=>$value->medicine_group_id)), "id", "medicine_name_with_company"), "doseages" => $doseages, "medicine_id" => $value->medicine_id, 'medicineGroups'=>$medicineGroups, "doseage_id" => $value->doseage_id, "medicine_group_id"=>$value->medicine_group_id, "c" => $c, "id" => $value->id));
             $c++;
         endforeach;
     endif;
@@ -53,11 +54,23 @@ $form = $this->beginWidget('CActiveForm', array(
 </div>
 <?php $this->endWidget(); ?>
 <script type="text/javascript">
+    function populateGroups() {
+        $("select.medicine-groups").change(function() {
+            var obj = $(this);
+            var url = '<?php echo Yii::app()->createURL('common/getmedicines');?>';
+            url = url + '?id='+obj.val();
+            $.get(url, function(response) {
+                obj.parent().parent().parent().find('.medicines').html(response);
+            });
+        });
+    }
     var c = <?php echo $c; ?>;
     function cloneMe() {
         $clone = $('#cloneMe').clone();
         $clone.find('select.medicines').attr('name', 'DiagnosisTreatments[' + c + '][medicine_id]');
         $clone.find('select.medicines').attr('id', 'DiagnosisTreatments_' + c + '_medicine_id');
+        $clone.find('select.medicine-groups').attr('name', 'DiagnosisTreatments[' + c + '][medicine_group_id]');
+        $clone.find('select.medicine-groups').attr('id', 'DiagnosisTreatments_' + c + 'medicine_group_id');
         $clone.find('select.doseages').attr('name', 'DiagnosisTreatments[' + c + '][doseage_id]');
         $clone.find('select.doseages').attr('id', 'DiagnosisTreatments_' + c + '_doseage_id');
         $clone.find('.ids').attr('name', 'DiagnosisTreatments[' + c + '][id]');
@@ -67,16 +80,18 @@ $form = $this->beginWidget('CActiveForm', array(
         c++;
         $("#cloneContainer").append($clone);
         $clone.removeAttr("id", "cloneMe");
+        populateGroups();
     }
     function deletemore(obj) {
         $(obj).parent().parent().parent().remove();
     }
     $(document).ready(function () {
         cloneMe();
+        populateGroups();
     });
 </script>
 <div class="hide">
 <?php
-$this->renderPartial("_diagnosis_treatments", array("medicines" => $medicines, "doseages" => $doseages, "medicine_id" => "", "doseage_id" => "", "c" => 0, "id" => ""));
+$this->renderPartial("_diagnosis_treatments", array('medicineGroups'=>$medicineGroups, "medicines" => array(), "doseages" => $doseages, "medicine_id" => "","medicine_group_id" => "", "doseage_id" => "", "c" => 0, "id" => ""));
 ?>
 </div>

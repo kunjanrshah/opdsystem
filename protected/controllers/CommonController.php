@@ -76,4 +76,16 @@ class CommonController extends Controller {
         }
     }
 
+    public function actionGetMedicines($id = null) {
+        $id = !empty($_POST["id"]) ? $_POST["id"] : $id;
+        $model = MedicineMaster::model()->findAllByAttributes(array("group_id" => $id));
+        $select = common::translateText("DROPDOWN_TEXT");
+        echo CHtml::tag('option', array('value' => ""), CHtml::encode($select), true);
+        if ($model): foreach ($model as $value):
+                echo CHtml::tag('option', array('value' => $value->id,), CHtml::encode($value->medicine_name), true);
+            endforeach;
+        endif;
+        Yii::app()->end();
+    }
+
 }
