@@ -105,7 +105,7 @@ echo $form->hiddenField($model, "state_id");
             <?php echo $form->labelEx($model, "family_id", array("class" => "control-label")); ?>
 			<?php if (common::checkActionAccess("family/add")): ?>
                 <div class="pull-right">
-                    <a data-id="#Patients_regular_medicine" href="<?php echo Yii::app()->createUrl("/admin/family/add") ?>" title="Add Medicine" class="pull-left btn-sm btn-default plus-box" id="addMedicine">
+                    <a data-id="#Patients_f_head" href="<?php echo Yii::app()->createUrl("/admin/family/add") ?>" title="Add Medicine" class="pull-left btn-sm btn-default plus-box" id="addFamily">
                         Add <i class="ico-plus"></i>
                     </a>
                 </div>

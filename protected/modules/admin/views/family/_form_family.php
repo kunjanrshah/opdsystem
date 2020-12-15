@@ -36,7 +36,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <?php echo $form->labelEx($model, 'address2', array('class' => 'control-label')); ?>
-                            <?php echo common::select2($model, "address2", CHtml::ListData(AreaMaster::model()->findAll(), "id", "area_name"), array("class" => "form-control", "prompt" => "Select Area")); ?>
+                            <?php echo $form->dropdownList($model, "address2", CHtml::ListData(AreaMaster::model()->findAll(), "id", "area_name"), array("class" => "form-control", "prompt" => "Select Area")); ?>
                             <?php echo $form->error($model, 'address2', array('class' => 'parsley-custom-error-message')); ?>
                         </div>
                     </div>      

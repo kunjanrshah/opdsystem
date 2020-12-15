@@ -84,7 +84,7 @@ class RMedicineController extends Controller {
             if (isset($_POST['RMedicineMaster'])) {
                 $model->attributes = $_POST['RMedicineMaster'];
                 if ($model->validate()) {
-                    $model->updated();
+                    $model->update();
                     $response["success"] = true;
                     $response["message"] = common::getMessage("success", common::translateText("ADD_SUCCESS"));
                     $response["data"] = $this->getOptions($model->id);
