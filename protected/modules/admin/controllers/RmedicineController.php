@@ -116,14 +116,24 @@ class RMedicineController extends Controller {
         return $option;
     }
 
-    /* delete user group */
+    /* delete rmedicine */
 
-    public function actionDelete($id) {
+    public function actionDelete($id = null) {
         if (Yii::app()->request->isAjaxRequest) {
-            $model = $this->loadModel($id, "RMedicineMaster");
-            $model->deleted = true;
+            if (!empty($id)):
+                $idsArr = array($id);
+            else:
+                $idsArr = !empty($_POST["idList"]) ? $_POST["idList"] : array();
+            endif;
 
-            if ($model->update()) {
+            $update = false;
+            if (!empty($idsArr)) : foreach ($idsArr as $id):
+                    $model = $this->loadModel($id, "RMedicineMaster");
+                    $update = ($model->delete()) ? true : false;
+                endforeach;
+            endif;
+
+            if ($update) {
                 echo common::getMessage("success", common::translateText("DELETE_SUCCESS"));
             } else {
                 echo common::getMessage("danger", common::translateText("DELETE_FAIL"));
