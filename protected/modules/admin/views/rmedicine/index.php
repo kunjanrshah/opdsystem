@@ -16,6 +16,7 @@
                     </div>
                     <div class="panel-toolbar text-right">
                         <?php
+                        $deleteRight = common::checkActionAccess("rmedicine/delete");
                         if (common::checkActionAccess("rmedicine/add")) :
                             echo CHtml::Link(common::getTitle("rmedicine/add") . ' <i class="ico-plus"></i>', array("rmedicine/add"), array(
                                 "title" => common::getTitle("rmedicine/add"),
@@ -25,6 +26,9 @@
                                 "data-original-title" => common::getTitle("rmedicine/add")
                             ));
                         endif;
+                        if ($deleteRight) :
+                            echo CHtml::Link('<i class="ico-remove3"></i>', array("/admin/rmedicine/delete"), array("class" => "ml5 btn btn-sm btn-danger deleteRecord multipleDelete"));
+                        endif;
                         ?>
                     </div>
                 </div>
@@ -32,12 +36,17 @@
                 <div class="table-responsive panel-collapse pull out">                  
                     <?php
                     $updateRight = common::checkActionAccess("rmedicine/index");
-                    $deleteRight = common::checkActionAccess("rmedicinedelete");
                     $columnClass = (!$updateRight && !$deleteRight) ? "hide" : "";
                     $this->widget("zii.widgets.grid.CGridView", array(
                         "id" => "rmedicine-grid",
                         "dataProvider" => $model->search(),
                         "columns" => array(
+                            array(
+                                'class' => 'CCheckBoxColumn',
+                                'selectableRows' => 2,
+                                'value' => '$data["id"]',
+                                "checkBoxHtmlOptions" => array("name" => "idList[]"),
+                            ),
                             "title",
                             array(
                                 "class" => "CButtonColumn",
@@ -67,8 +76,8 @@
                                     "deleteRecord" => array(
                                         "label" => '<i class="icon ico-trash"></i> ' . common::translateText("DELETE_BTN_TEXT"),
                                         "imageUrl" => false,
-                                        "url" => 'Yii::app()->createUrl("/admin/rmedicinedelete", array("id"=>$data->id))',
-                                        "options" => array("class" => "deleteRecord text-danger mr5", "title" => common::getTitle("rmedicinedelete")),
+                                        "url" => 'Yii::app()->createUrl("/admin/rmedicine/delete", array("id"=>$data->id))',
+                                        "options" => array("class" => "deleteRecord text-danger mr5", "title" => common::getTitle("rmedicine/delete")),
                                         "visible" => ($deleteRight) ? 'true' : 'false',
                                     ),
                                 ),
@@ -84,15 +93,26 @@
                         });
                         return false;
                     });
-                    $('.deleteRecord').live('click',function() {
-                        if(!confirm('" . common::translateText("DELETE_CONFIRM") . "')) return false;                        
-                        var url = $(this).attr('href');
-                        $.post(url,function(res){
-                            $.fn.yiiGridView.update('rmedicine-grid');
-                            $('#flash-message').html(res).animate({opacity: 1.0}, 3000).fadeOut('slow');
+                    var idList = '';
+                        $('.deleteRecord').live('click',function() 
+                        {                        
+                            if($(this).hasClass('multipleDelete'))
+                            {
+                                var idList    = $('input[type=checkbox]:checked').serialize();
+                                if(!idList){
+                                    alert('" . common::translateText("INVALID_SELECTION") . "'); return false;  
+                                }
+                            }
+                            var totalRecs = $('input[type=checkbox]:checked').not('#medicine-grid_c0_all').length;
+                            totalRecs = (totalRecs=='0')?'this':totalRecs;
+                            if(!confirm('Are you sure to delete '+totalRecs+' record(s) ?')) return false;                                               
+                            var url = $(this).attr('href');
+                            $.post(url,idList,function(res){
+                                $.fn.yiiGridView.update('rmedicine-grid');
+                                $('#flash-message').html(res).animate({opacity: 1.0}, 3000).fadeOut('slow');
+                            });
+                            return false;
                         });
-                        return false;
-                    });
                 ");
                     ?>                    
                 </div>
