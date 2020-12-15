@@ -28,11 +28,13 @@
                                         var data = response.data;
                                         $(".close").trigger("click");
                                         $("#flash-message").html(message).show();                                        
-                                        
-                                        if($("#Patients_regular_medicine")){
+                                        /*if($("#Patients_regular_medicine")){
                                             $("#Patients_regular_medicine").select2("destroy");
                                             $("#Patients_regular_medicine").empty().append(data);
                                             $("#Patients_regular_medicine").select2();
+                                        }*/
+                                        if($("#rmedicine-grid")){
+                                            $.fn.yiiGridView.update("rmedicine-grid");
                                         }
                                     }
                                 });
