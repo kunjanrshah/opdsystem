@@ -32,6 +32,10 @@ class DiagnosisController extends Controller {
 
     public function actionIndex() {
         $model = new DiagnosisMaster("search");
+        $model->unSetAttributes();
+        if (isset($_GET['DiagnosisMaster'])):
+            $model->attributes = $_GET['DiagnosisMaster'];
+        endif;
         $this->render('index', array("model" => $model));
     }
 

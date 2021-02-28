@@ -32,6 +32,10 @@ class CompaniesController extends Controller {
 
     public function actionIndex() {
         $model = new CompanyMaster("search");
+        $model->unSetAttributes();
+        if (isset($_GET['CompanyMaster'])):
+            $model->attributes = $_GET['CompanyMaster'];
+        endif;
         $this->render('index', array("model" => $model));
     }
 

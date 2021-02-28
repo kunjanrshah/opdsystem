@@ -5,6 +5,7 @@ $deleteRight = common::checkActionAccess("diagnosis/delete");
 <div class="container-fluid">
     <!-- START row -->
     <?php $this->renderPartial("/layouts/_message"); ?>
+    <?php $this->renderPartial("application.modules.admin.views.common._search", array("field"=>"diagnosis_title", "id"=>"diagnosis-grid", "model" => $model));?>
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-primary">

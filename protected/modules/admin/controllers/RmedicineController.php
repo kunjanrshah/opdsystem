@@ -32,6 +32,10 @@ class RMedicineController extends Controller {
 
     public function actionIndex() {
         $model = new RMedicineMaster("search");
+        $model->unSetAttributes();
+        if (isset($_GET['RMedicineMaster'])):
+            $model->attributes = $_GET['RMedicineMaster'];
+        endif;
         $this->render('index', array("model" => $model));
     }
 

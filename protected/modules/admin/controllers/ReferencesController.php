@@ -32,6 +32,10 @@ class ReferencesController extends Controller {
 
     public function actionIndex() {
         $model = new ReferencesMaster("search");
+        $model->unSetAttributes();
+        if (isset($_GET['ReferencesMaster'])):
+            $model->attributes = $_GET['ReferencesMaster'];
+        endif;
         $this->render('index', array("model" => $model));
     }
 

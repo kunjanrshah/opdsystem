@@ -118,6 +118,7 @@ class MenusMaster extends CActiveRecord {
 
         $criteria = new CDbCriteria;
         $criteria->addCondition('parent_id NOT IN (0)', "AND");
+        $criteria->compare('menu_title', $this->menu_title, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

@@ -32,6 +32,10 @@ class MenusController extends Controller {
 
     public function actionIndex() {
         $model = new MenusMaster("search");
+        $model->unSetAttributes();
+        if (isset($_GET['MenusMaster'])):
+            $model->attributes = $_GET['MenusMaster'];
+        endif;
         $this->render('index', array("model" => $model));
     }
 

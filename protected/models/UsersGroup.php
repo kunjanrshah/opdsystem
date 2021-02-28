@@ -106,6 +106,7 @@ class UsersGroup extends CActiveRecord {
         // should not be searched.
 
         $criteria = new CDbCriteria;
+        $criteria->compare('group_name', $this->group_name, true);
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'pagination' => array('pageSize' => Yii::app()->params->defaultPageSize)

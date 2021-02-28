@@ -32,6 +32,10 @@ class MedicinegroupController extends Controller {
 
     public function actionIndex() {
         $model = new MedicineGroupMaster("search");
+        $model->unSetAttributes();
+        if (isset($_GET['MedicineGroupMaster'])):
+            $model->attributes = $_GET['MedicineGroupMaster'];
+        endif;
         $this->render('index', array("model" => $model));
     }
 

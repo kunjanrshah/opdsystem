@@ -32,6 +32,10 @@ class DrugsController extends Controller {
 
     public function actionIndex() { 
         $model = new DrugsMaster("search");
+        $model->unSetAttributes();
+        if (isset($_GET['DrugsMaster'])):
+            $model->attributes = $_GET['DrugsMaster'];
+        endif;
         $this->render('index', array("model" => $model));
     }
 
