@@ -32,6 +32,10 @@ class FamilyController extends Controller {
 
     public function actionIndex() {
         $model = new FamilyMaster("search");
+        $model->unSetAttributes();
+        if (isset($_GET['FamilyMaster'])):
+            $model->attributes = $_GET['FamilyMaster'];
+        endif;
         $this->render('index', array("model" => $model));
     }
 

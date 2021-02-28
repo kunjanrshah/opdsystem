@@ -4,6 +4,7 @@ $deleteRight = common::checkActionAccess("references/delete");
 <!-- START Template Container -->
 <div class="container-fluid">
     <!-- START row -->
+    <?php $this->renderPartial("application.modules.admin.views.common._search", array("field"=>"reference_name", "id"=>"reference-grid", "model" => $model));?>
     <?php $this->renderPartial("/layouts/_message"); ?>
     <div class="row">
         <div class="col-md-12">

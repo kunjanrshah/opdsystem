@@ -32,6 +32,10 @@ class ComplainsController extends Controller {
 
     public function actionIndex() {
         $model = new ComplainsMaster("search");
+        $model->unSetAttributes();
+        if (isset($_GET['ComplainsMaster'])):
+            $model->attributes = $_GET['ComplainsMaster'];
+        endif;
         $this->render('index', array("model" => $model));
     }
 

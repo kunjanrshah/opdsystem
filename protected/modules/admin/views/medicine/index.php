@@ -4,8 +4,9 @@ $deleteRight = common::checkActionAccess("medicine/delete");
 <!-- START Template Container -->
 <div class="container-fluid">
     <!-- START row -->
+    <?php $this->renderPartial("application.modules.admin.views.common._search", array("field"=>"medicine_name", "id"=>"medicine-grid", "model" => $model));?>
     <?php
-    $this->renderPartial("_search", array("model" => $model));
+    // $this->renderPartial("_search", array("model" => $model));
     $this->renderPartial("/layouts/_message");
     ?>
     <div class="row">

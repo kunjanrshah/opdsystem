@@ -32,6 +32,10 @@ class AllergiesController extends Controller {
 
     public function actionIndex() {
         $model = new AllergyMaster("search");
+        $model->unSetAttributes();
+        if (isset($_GET['AllergyMaster'])):
+            $model->attributes = $_GET['AllergyMaster'];
+        endif;
         $this->render('index', array("model" => $model));
     }
 

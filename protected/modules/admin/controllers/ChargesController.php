@@ -32,6 +32,10 @@ class ChargesController extends Controller {
 
     public function actionIndex() {
         $model = new ChargesMaster("search");
+        $model->unSetAttributes();
+        if (isset($_GET['ChargesMaster'])):
+            $model->attributes = $_GET['ChargesMaster'];
+        endif;
         $this->render('index', array("model" => $model));
     }
 

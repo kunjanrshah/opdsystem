@@ -139,6 +139,8 @@ class MedicineMaster extends CActiveRecord {
         // should not be searched.
 
         $criteria = new CDbCriteria;
+        $criteria->compare('medicine_name',$this->medicine_name,true);
+
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));

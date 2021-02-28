@@ -4,6 +4,7 @@ $deleteRight = common::checkActionAccess("charges/delete");
 <div class="container-fluid">
     <!-- START row -->
     <?php $this->renderPartial("/layouts/_message"); ?>
+    <?php $this->renderPartial("application.modules.admin.views.common._search", array("field"=>"charge_title", "id"=>"users-group-grid", "model" => $model));?>
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-primary">

@@ -94,6 +94,10 @@ class AreaController extends Controller {
 
     public function actionIndex() {
         $model = new AreaMaster("search");
+        $model->unSetAttributes();
+        if (isset($_GET['AreaMaster'])):
+            $model->attributes = $_GET['AreaMaster'];
+        endif;
         $this->render('index', array("model" => $model));
     }
 

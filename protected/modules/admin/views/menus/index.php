@@ -1,6 +1,7 @@
 <!-- START Template Container -->
 <div class="container-fluid">
     <!-- START row -->
+    <?php $this->renderPartial("application.modules.admin.views.common._search", array("field"=>"menu_title", "id"=>"menu-grid", "model" => $model));?>
     <?php $this->renderPartial("/layouts/_message"); ?>
     <div class="row">
         <div class="col-md-12">

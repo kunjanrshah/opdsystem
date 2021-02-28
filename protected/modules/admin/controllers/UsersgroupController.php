@@ -32,6 +32,10 @@ class UsersgroupController extends Controller {
 
     public function actionIndex() {
         $model = new UsersGroup("search");
+        $model->unSetAttributes();
+        if (isset($_GET['UsersGroup'])):
+            $model->attributes = $_GET['UsersGroup'];
+        endif;
         $this->render('index', array("model" => $model));
     }
 

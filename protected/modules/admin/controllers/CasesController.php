@@ -32,6 +32,10 @@ class CasesController extends Controller {
 
     public function actionIndex() {
         $model = new CaseMaster("search");
+        $model->unSetAttributes();
+        if (isset($_GET['CaseMaster'])):
+            $model->attributes = $_GET['CaseMaster'];
+        endif;
         $this->render('index', array("model" => $model));
     }
 
