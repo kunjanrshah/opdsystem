@@ -43,5 +43,21 @@ class CommonController extends Controller {
         }
         exit("ok");
     }
+    
+    public function actionGlobalDropdown($term) {
+        $criteria = new CDbCriteria();
+        $criteria->addSearchCondition($_GET['field'], $term);
+        $criteria->limit = 20;
+        $query = $_GET['model']::model()->findAll($criteria);
+        $list = array();
+        foreach ($query as $q) {
+            $data['value'] = $q[$_GET['field']];
+            $data['label'] = $q[$_GET['field']];
+            $list[] = $data;
+            unset($data);
+        }
 
+        echo json_encode($list);
+        exit;
+    }
 }
