@@ -102,7 +102,7 @@ function appointmentcall(){
    data: {page: page},
    success: function(data) {
        data = JSON.parse(data);
-	   if(count != data.count){		   
+	   if(Number(count) != Number(data.count)){		   
 		$("#notificationCountAppointment").text(data.count);
 		if(data.page == true)
 			location.reload();

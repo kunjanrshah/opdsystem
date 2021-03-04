@@ -139,10 +139,12 @@ class MedicineMaster extends CActiveRecord {
         // should not be searched.
 
         $criteria = new CDbCriteria;
+        $criteria->select = "t.*, REPLACE(REPLACE(REPLACE(REPLACE(t.medicine_name, 'Syp.', '') , 'Tab.', '') , 'Cap.', ''), 'Inj.', '') AS newMedicineName";
         $criteria->compare('medicine_name',$this->medicine_name,true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'sort' => array('defaultOrder' => 'newMedicineName ASC')
         ));
     }
 
