@@ -18,7 +18,35 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="col-xs-2">				
-                    <?php echo $form->textField($model, $field, array("placeholder"=>"Search","class" => "form-control")); ?>
+                    <?php 
+                         $className = get_class($model);
+                         echo $form->hiddenField($model, $field, array("placeholder"=>"Search","class" => "form-control"));
+                         $identifier = $className."_".$field;
+                         $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                            'name' => 'selectFieldValue',
+                            'value' => isset($_GET['selectFieldValue'])?$_GET['selectFieldValue']:'',
+                            'source' => CController::createUrl('common/globaldropdown', array('field'=>$field, "model" => $className)),
+                            'options' => array(
+                                'html'=>true,
+                                'showAnim' => 'fold',
+                                'minLength' => '1',
+                                'search' => 'js:function( event, ui ) { 
+                                    $("#'.$identifier.'").val(null); 
+                                }',
+                                'select' => 'js:function( event, ui ) {
+                                    $("#selectFieldValue").val( ui.item.label );
+                                    $("#'.$identifier.'").val( ui.item.value );
+                                    return false;
+                                }',
+                            ),
+                            'htmlOptions' => array(
+                                'onblur' => 'js: if(!$("#'.$identifier.'").val()){ $("#selectFieldValue").val(null); }',
+                                'class' => 'form-control',
+                                'placeholder' => "Search",
+                                'autocomplete'=>'off'
+                            ),
+                        ));
+                        ?>
                 </div>
                 <div class="col-xs-2">
                     <button type="submit" class="btn btn-primary"><i class="ico-loop4 mr5"></i><?php echo common::translateText("SEARCH_BTN_TEXT"); ?></button>
