@@ -1,12 +1,14 @@
 <?php
 $criteria = new CDbCriteria();
+$criteria->select = "t.*, REPLACE(REPLACE(REPLACE(REPLACE(t.medicine_name, 'Syp.', '') , 'Tab.', '') , 'Cap.', ''), 'Inj.', '') AS newMedicineName";
 $criteria->condition="is_internal='1'";
-$criteria->order = "t.medicine_name ASC";
+$criteria->order = "newMedicineName ASC";
 $medicinesModel = MedicineMaster::model()->findAll($criteria);
 
 $criteria = new CDbCriteria();
 $criteria->condition="is_internal!='1'";
 $criteria->with = "groupRel";
+$criteria->together = true;
 $criteria->order = "groupRel.name ASC";
 $medicinesModel2 = MedicineMaster::model()->findAll($criteria);
 
@@ -16,9 +18,25 @@ $external = array();
 foreach ($medicinesModel as $medicine) {
     $internal[$medicine->id] = $medicine->medicine_name_with_type;
 }
+$tempExternal = array();
 foreach ($medicinesModel2 as $medicine) {
-    $external[$medicine->id] = $medicine->medicine_name_with_group;
+    list($type, $name) = explode('.', $medicine->medicine_name_with_group);
+    if(!empty($type) && !empty($name)) {
+        $tempExternal[$medicine->id] = trim($name."$$$".$type);
+    } else {
+        $tempExternal[$medicine->id] = trim($medicine->medicine_name_with_group);
+    }
 }
+asort($tempExternal);
+foreach ($tempExternal as $key=>$medicine) {
+    list($name, $type) = explode('$$$', $medicine);
+    if(!empty($type) && !empty($name)) {
+        $external[$key] = trim($type.'. '.$name);
+    } else {
+        $external[$key] = trim($medicine);
+    }
+}
+
 $medicines = array("Internal" => $internal) + array("External" => $external);
 
 $doseages = CHtml::ListData(DosagesMaster::model()->findAll(), "id", "dosage_name");

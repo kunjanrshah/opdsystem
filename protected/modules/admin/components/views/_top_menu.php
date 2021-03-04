@@ -73,7 +73,7 @@
 				<li>
 					<a href="<?php  echo Yii::app()->createUrl("/admin/appointments/index")?>">
 						<span class="meta">
-							<span class="text">Notifications <span class="number label label-danger" id="notificationCountAppointment"><?php echo count(Appointments::model()->findAll("is_treatment_given = 0 AND t.deleted = 0"));?></span></span>
+							<span class="text">Waiting <span class="number label label-danger" id="notificationCountAppointment"><?php echo count(Appointments::model()->findAll("is_treatment_given = 0 AND t.deleted = 0"));?></span></span>
 						</span>
 					</a>	
 				</li>
