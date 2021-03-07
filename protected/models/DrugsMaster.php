@@ -102,6 +102,7 @@ class DrugsMaster extends CActiveRecord {
         // should not be searched.
 
         $criteria = new CDbCriteria;
+        $criteria->select = "t.*, REPLACE(REPLACE(REPLACE(REPLACE(t.drug_name, 'Syp.', '') , 'Tab.', '') , 'Cap.', ''), 'Inj.', '') AS newMedicineName";
 
         $criteria->compare('id', $this->id);
         $criteria->compare('drug_name', $this->drug_name, true);
@@ -114,6 +115,7 @@ class DrugsMaster extends CActiveRecord {
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'sort' => array('defaultOrder' => 'newMedicineName ASC')
         ));
     }
     public function getDrugs(){
