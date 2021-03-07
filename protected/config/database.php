@@ -7,7 +7,8 @@ return array(
     'charset' => 'utf8',
     'enableProfiling' => true,
     'initSQLs' => array(
-        "SET time_zone = '+5:30'"
+        "SET time_zone = '+5:30'",
+        //"set global sql_mode=''"
     ),
 );
 ?>

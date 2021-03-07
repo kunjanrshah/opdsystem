@@ -40,7 +40,7 @@
                                 }',
                             ),
                             'htmlOptions' => array(
-                                'onblur' => 'js: if(!$("#'.$identifier.'").val()){ $("#selectFieldValue").val(null); }',
+                                'onChange' => 'js: if($("#selectFieldValue").val() == "") { $("#'.$identifier.'").val("") }',
                                 'class' => 'form-control',
                                 'placeholder' => "Search",
                                 'autocomplete'=>'off'
