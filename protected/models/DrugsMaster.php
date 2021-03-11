@@ -129,6 +129,9 @@ class DrugsMaster extends CActiveRecord {
         ));
     }
     public function getDrugs(){
-      return DrugsMaster::model()->findAll();
+      $criteria = new CDbCriteria;
+      $criteria->select = "t.*, REPLACE(REPLACE(REPLACE(REPLACE(t.drug_name, 'Syp.', '') , 'Tab.', '') , 'Cap.', ''), 'Inj.', '') AS newMedicineName";
+      $criteria->order = "newMedicineName ASC";
+      return DrugsMaster::model()->findAll($criteria);
     }
 }
