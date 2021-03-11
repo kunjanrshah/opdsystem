@@ -83,7 +83,7 @@ $(document).ready(function(){
 });
 function notificationcall(){
     $.ajax({
-   url: 'http://localhost/opdsystem/admin/notifications/getlivenotification',
+   url: '<?php echo Yii::app()->createUrl('admin/notifications/getlivenotification');?>',
    type: 'GET',
    success: function(data) {
        data = JSON.parse(data);
@@ -97,7 +97,7 @@ function appointmentcall(){
    var count = parseInt($("#notificationCountAppointment").text());	
    var page = "<?php echo Yii::app()->urlManager->parseUrl(Yii::app()->request);?>";
    $.ajax({
-   url: 'http://localhost/opdsystem/admin/appointments/getlivenotification',
+   url: '<?php echo Yii::app()->createUrl('admin/notifications/getlivenotification');?>',
    type: 'POST',
    data: {page: page},
    success: function(data) {
