@@ -142,9 +142,18 @@ class MedicineMaster extends CActiveRecord {
         $criteria->select = "t.*, REPLACE(REPLACE(REPLACE(REPLACE(t.medicine_name, 'Syp.', '') , 'Tab.', '') , 'Cap.', ''), 'Inj.', '') AS newMedicineName";
         $criteria->compare('medicine_name',$this->medicine_name,true);
 
+        $sort = new CSort();
+        $sort->attributes = array(
+                'medicine_name'=>array(
+                        'asc'=>'newMedicineName ASC',
+                        'desc'=>'newMedicineName DESC',
+                ),
+                '*', // this adds all of the other columns as sortable
+        );
+        $sort->defaultOrder = 'newMedicineName ASC';
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
-            'sort' => array('defaultOrder' => 'newMedicineName ASC')
+            'sort' => $sort
         ));
     }
 
