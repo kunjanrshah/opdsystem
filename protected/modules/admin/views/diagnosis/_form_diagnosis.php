@@ -1,5 +1,9 @@
 <?php
-$medicines = CHtml::ListData(MedicineMaster::model()->findAll(), "id", "medicine_name_with_company");
+
+$criteria = new CDbCriteria;
+$criteria->select = "t.*, REPLACE(REPLACE(REPLACE(REPLACE(t.medicine_name, 'Syp.', '') , 'Tab.', '') , 'Cap.', ''), 'Inj.', '') AS newMedicineName";
+$criteria->order = "newMedicineName ASC";
+$medicines = CHtml::ListData(MedicineMaster::model()->findAll($criteria), "id", "medicine_name_with_company");
 $doseages = CHtml::ListData(DosagesMaster::model()->findAll(), "id", "dosage_name");
 $medicineGroups = CHtml::ListData(MedicineGroupMaster::model()->getGroups(), 'id', 'name');
 $form = $this->beginWidget('CActiveForm', array(
