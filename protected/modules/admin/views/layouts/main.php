@@ -97,7 +97,7 @@ function appointmentcall(){
    var count = parseInt($("#notificationCountAppointment").text());	
    var page = "<?php echo Yii::app()->urlManager->parseUrl(Yii::app()->request);?>";
    $.ajax({
-   url: '<?php echo Yii::app()->createUrl('admin/notifications/getlivenotification');?>',
+   url: '<?php echo Yii::app()->createUrl('admin/appointments/getlivenotification');?>',
    type: 'POST',
    data: {page: page},
    success: function(data) {
