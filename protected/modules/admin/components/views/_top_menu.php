@@ -84,7 +84,7 @@
             <li>
                 <a href="<?php  echo Yii::app()->createUrl("/admin/notifications/index")?>">
                     <span class="meta">
-                        <span class="text">Notifications <span class="number label label-danger" id="notificationCount"><?php echo Notifications::model()->totalNotifications(Yii::app()->user->id)?></span></span>
+                        <span class="text">Waiting <span class="number label label-danger" id="notificationCount"><?php echo Notifications::model()->totalNotifications(Yii::app()->user->id)?></span></span>
                     </span>
                 </a>	
             </li>
