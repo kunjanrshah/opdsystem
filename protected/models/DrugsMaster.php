@@ -113,9 +113,19 @@ class DrugsMaster extends CActiveRecord {
         $criteria->compare('updated_dt', $this->updated_dt);
         $criteria->compare('updated_by', $this->updated_by);
 
+        $sort = new CSort();
+        $sort->attributes = array(
+                'drug_name'=>array(
+                        'asc'=>'newMedicineName ASC',
+                        'desc'=>'newMedicineName DESC',
+                ),
+                '*', // this adds all of the other columns as sortable
+        );
+        $sort->defaultOrder = 'newMedicineName ASC';
+
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
-            'sort' => array('defaultOrder' => 'newMedicineName ASC')
+            'sort' => $sort
         ));
     }
     public function getDrugs(){
