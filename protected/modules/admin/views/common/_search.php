@@ -48,8 +48,9 @@
                         ));
                         ?>
                 </div>
-                <div class="col-xs-2">
+                <div class="col-xs-4">
                     <button type="submit" class="btn btn-primary"><i class="ico-loop4 mr5"></i><?php echo common::translateText("SEARCH_BTN_TEXT"); ?></button>
+                    <a href="javascript:;" onClick="window.location.reload();" class="btn btn-default"><i class="ico-loop4 mr5"></i>Reset</a>
                 </div>
             </div>
         </div>
