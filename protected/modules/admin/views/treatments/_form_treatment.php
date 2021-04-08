@@ -72,7 +72,7 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
     </div>
 </div>
 <div class="row nm">
-    <div class="col-md-4">
+    <div class="col-md-2">
         <div class="form-group">
             <?php echo $form->labelEx($model, "patient_width", array("class" => "control-label")); ?>
             <div class="has-icon pull-left">
@@ -82,7 +82,7 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
             <?php echo $form->error($model, "patient_width", array("class" => "parsley-custom-error-message")); ?>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-2">
         <div class="form-group">
             <?php echo $form->labelEx($model, "patient_pressure", array("class" => "control-label")); ?>
             <div class="has-icon pull-left">
@@ -92,7 +92,7 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
             <?php echo $form->error($model, "patient_pressure", array("class" => "parsley-custom-error-message")); ?>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-2">
         <div class="form-group">
             <?php echo $form->labelEx($model, "patient_temp", array("class" => "control-label")); ?>
             <div class="has-icon pull-left">
@@ -102,7 +102,7 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
             <?php echo $form->error($model, "patient_temp", array("class" => "parsley-custom-error-message")); ?>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-2">
         <div class="form-group">
             <?php echo $form->labelEx($model, "patient_height", array("class" => "control-label")); ?>
             <div class="has-icon pull-left">
@@ -112,7 +112,7 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
             <?php echo $form->error($model, "patient_height", array("class" => "parsley-custom-error-message")); ?>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-2">
         <div class="form-group">
             <?php echo $form->labelEx($model, "patient_bmi", array("class" => "control-label")); ?>
             <div class="has-icon pull-left">
@@ -188,7 +188,13 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
                 </div>
             </div>    
             </div>
-        <!--</div>-->
+        <!--</div>-->         
+        <div class="modal-footer">
+        <!--    <a type="button" class="btn btn-default" href="<?php echo Yii::app()->createUrl("/admin/appointments/index"); ?>"><?php echo common::translateText("CANCEL_BTN_TEXT"); ?></a>-->
+            <button type="submit" name="prescription" class="btn btn-primary"><?php echo "Prescription"; ?></button>
+            <button type="submit" class="btn btn-primary"><?php echo "Case Paper"; ?></button>
+            <button type="submit" name="next" class="btn btn-primary" onclick="return confirm('Are you sure? You want to save Treatment.');"><?php echo "Next"; ?></button>
+        </div>
         <div class="row nm">
             <div class="col-md-12">
                 <div class="form-group">
@@ -199,12 +205,6 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
             </div>
         </div>
      
-</div>               
-<div class="modal-footer">
-<!--    <a type="button" class="btn btn-default" href="<?php echo Yii::app()->createUrl("/admin/appointments/index"); ?>"><?php echo common::translateText("CANCEL_BTN_TEXT"); ?></a>-->
-    <button type="submit" name="prescription" class="btn btn-primary"><?php echo "Prescription"; ?></button>
-    <button type="submit" class="btn btn-primary"><?php echo "Case Paper"; ?></button>
-    <button type="submit" name="next" class="btn btn-primary" onclick="return confirm('Are you sure? You want to save Treatment.');"><?php echo "Next"; ?></button>
 </div>
 <?php $this->endWidget(); ?>
 <script type="text/javascript">
@@ -256,6 +256,7 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
             debit_amount = Number(v.value) + Number(debit_amount);
         });
         $("#Treatments_debit_amount").val(debit_amount);
+        $("#Treatments_credit_amount").val(debit_amount);
     }
     $("#Treatments_credit_amount").change(function () {
         udpateDebitAmount();
@@ -352,5 +353,12 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
     }
     .cutom-select-box .select2-choices{
         border-radius: 4px; border: 1px solid #cfd9db; min-height: 34px;
+    }
+    #cloneContainer > :not(:nth-child(2)) .control-label {
+        display: none;
+    }  
+    .modal-footer {
+        border: none;
+        float: left;
     }
 </style>

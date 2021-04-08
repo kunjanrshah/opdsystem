@@ -23,9 +23,9 @@
                                 <p class="semibold nm" style="font-size: 15px;">Sanjay Shah</p>
                                 <p class="text-muted nm">M.B.B.S, M.D </p>
                                 <p></p>
-                                <p class="text-muted nm">7/8, Jeevan Sadhna Complex, </p>
-                                <p class="text-muted nm">Maniyasa Society,Maninagar,</p>
-                                <p class="text-muted nm"> Ahmedabad  - 380008</p>
+                                <p class="text-muted nm hide">7/8, Jeevan Sadhna Complex, </p>
+                                <p class="text-muted nm hide">Maniyasa Society,Maninagar,</p>
+                                <p class="text-muted nm hide"> Ahmedabad  - 380008</p>
 
                             </div>
                         </div>
@@ -42,7 +42,7 @@
                     </div>
                     <div class="table-responsive">
                         <table class="table">
-                            <tr>
+                            <tr class="hide">
                                 <td colspan="4">
                                     <div class="col-lg-8 panel-body text-left">
                                         <h5 class="semibold mt0 mb5" style="margin-left: 15px;">Diagnosis</h5>
