@@ -15,6 +15,33 @@
                     'enableClientValidation' => true,
                     'clientOptions' => array(
                         'validateOnSubmit' => true,
+                        'afterValidate' => 'js:function(form, data, hasError){
+                            if(!hasError){
+                                $.ajax({
+                                    url:form.attr("action"),
+                                    type:"POST",
+                                    dataType:"JSON",
+                                    data:form.serialize(),
+                                    success:function(response){
+                                        var success = response.success;
+                                        var message = response.message;
+                                        var data = response.data;
+                                        $(".close").trigger("click");
+                                        $("#flash-message").html(message).show();                                        
+                                        if($("#family-grid") && $("#family-grid").length){
+                                            $.fn.yiiGridView.update("family-grid");
+                                        } else {
+                                            // if($("#Patients_family_id")){
+                                            //     $("#Patients_family_id").select2("destroy");
+                                            //     $("#Patients_family_id").empty().append(data);
+                                            //     $("#Patients_family_id").select2();
+                                            // }
+                                        }
+                                    }
+                                });
+                                return false;
+                            }
+                         }'
                     )
                 ));
                 ?>

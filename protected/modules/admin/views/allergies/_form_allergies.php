@@ -14,6 +14,33 @@
                     'enableClientValidation' => false,
                     'clientOptions' => array(
                         'validateOnSubmit' => true,
+                        'afterValidate' => 'js:function(form, data, hasError){
+                            if(!hasError){
+                                $.ajax({
+                                    url:form.attr("action"),
+                                    type:"POST",
+                                    dataType:"JSON",
+                                    data:form.serialize(),
+                                    success:function(response){
+                                        var success = response.success;
+                                        var message = response.message;
+                                        var data = response.data;
+                                        $(".close").trigger("click");
+                                        $("#flash-message").html(message).show();                                        
+                                        if($("#allergies-grid") && $("#allergies-grid").length){
+                                            $.fn.yiiGridView.update("allergies-grid");
+                                        } else {
+                                            if($("#Patients_allergy")){
+                                                $("#Patients_allergy").select2("destroy");
+                                                $("#Patients_allergy").empty().append(data);
+                                                $("#Patients_allergy").select2();
+                                            }
+                                        }
+                                    }
+                                });
+                                return false;
+                            }
+                         }'
                     )
                 ));
                 ?>

@@ -28,10 +28,13 @@ class AreaController extends Controller {
         );
     }
 
+    /* add area */
+
     public function actionAdd() {
         if (Yii::app()->request->isPostRequest) {
             $response = array();
-
+            Yii::app()->clientscript->scriptMap['jquery.min.js'] = FALSE;
+            Yii::app()->clientscript->scriptMap['jquery.js'] = FALSE;
             $model = new AreaMaster();
             // Uncomment the following line if AJAX validation is needed
             $this->performAjaxValidation($model, "form-area");
@@ -49,20 +52,22 @@ class AreaController extends Controller {
                     $response["message"] = common::getMessage("danger", common::translateText("ADD_FAIL"));
                     Yii::app()->user->setFlash("danger", common::translateText("ADD_FAIL"));
                 }
-                $this->redirect(array("/admin/area"));
+                echo CJSON::encode($response);
+                exit;
             }
-            $outputJs = Yii::app()->request->isAjaxRequest;
-            $this->renderPartial('_form', array('model' => $model), false, $outputJs);
+            $this->layout = false;
+            $this->render('_form', array('model' => $model), false, FALSE);
         } else
             throw new CHttpException(400, common::translateText("400_ERROR"));
     }
 
-    /* update user group */
+    /* update area */
 
     public function actionUpdate($id) {
         if (Yii::app()->request->isPostRequest) {
             $response = array();
-
+            Yii::app()->clientscript->scriptMap['jquery.min.js'] = FALSE;
+            Yii::app()->clientscript->scriptMap['jquery.js'] = FALSE;
             $model = $this->loadModel($id, "AreaMaster");
             // Uncomment the following line if AJAX validation is needed
             $this->performAjaxValidation($model, "form-area");
@@ -80,12 +85,11 @@ class AreaController extends Controller {
                     $response["message"] = common::getMessage("danger", common::translateText("UPDATE_FAIL"));
                     Yii::app()->user->setFlash("danger", common::translateText("UPDATE_FAIL"));
                 }
-                $this->redirect(array("/admin/area"));
+                echo CJSON::encode($response);
+                exit;
             }
-            $outputJs = Yii::app()->request->isAjaxRequest;
-            $this->renderPartial('_form', array('model' => $model), false, $outputJs);
-            //$this->layout = false;
-            //$this->render('_form', array('model' => $model), false, FALSE);
+            $this->layout = false;
+            $this->render('_form', array('model' => $model), false, FALSE);
         } else
             throw new CHttpException(400, common::translateText("400_ERROR"));
     }

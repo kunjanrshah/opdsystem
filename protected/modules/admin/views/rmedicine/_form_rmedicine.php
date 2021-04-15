@@ -6,7 +6,6 @@
                 <button type="button" class="close" data-dismiss="modal">×</button>
                 <h4 class="modal-title text-primary"><i class="ico-menu6 mr5"></i><?php echo!$model->isNewRecord ? common::getTitle("medicine/update") : common::getTitle("medicine/add"); ?></h4>
             </div>
-
             <div class="modal-body">
                 <?php
                 $form = $this->beginWidget('CActiveForm', array(
@@ -28,13 +27,14 @@
                                         var data = response.data;
                                         $(".close").trigger("click");
                                         $("#flash-message").html(message).show();                                        
-                                        /*if($("#Patients_regular_medicine")){
-                                            $("#Patients_regular_medicine").select2("destroy");
-                                            $("#Patients_regular_medicine").empty().append(data);
-                                            $("#Patients_regular_medicine").select2();
-                                        }*/
-                                        if($("#rmedicine-grid")){
+                                        if($("#rmedicine-grid") && $("#rmedicine-grid").length){
                                             $.fn.yiiGridView.update("rmedicine-grid");
+                                        } else {
+                                            if($("#Patients_regular_medicine")){
+                                                $("#Patients_regular_medicine").select2("destroy");
+                                                $("#Patients_regular_medicine").empty().append(data);
+                                                $("#Patients_regular_medicine").select2();
+                                            }
                                         }
                                     }
                                 });

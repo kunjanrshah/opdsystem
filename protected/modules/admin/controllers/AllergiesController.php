@@ -39,8 +39,13 @@ class AllergiesController extends Controller {
         $this->render('index', array("model" => $model));
     }
 
+    /* add allergies */
+
     public function actionAdd() {
         if (Yii::app()->request->isPostRequest) {
+            $response = array();
+            Yii::app()->clientscript->scriptMap['jquery.min.js'] = FALSE;
+            Yii::app()->clientscript->scriptMap['jquery.js'] = FALSE;
             $model = new AllergyMaster();
             // Uncomment the following line if AJAX validation is needed
             $this->performAjaxValidation($model, "form-allergies");
@@ -58,7 +63,8 @@ class AllergiesController extends Controller {
                     $response["message"] = common::getMessage("danger", common::translateText("ADD_FAIL"));
                     Yii::app()->user->setFlash("danger", common::translateText("ADD_FAIL"));
                 }
-                $this->redirect(array("/admin/allergies"));
+                echo CJSON::encode($response);
+                exit;
             }
             $this->layout = false;
             $this->render('_form_allergies', array('model' => $model), false, FALSE);
@@ -66,10 +72,13 @@ class AllergiesController extends Controller {
             throw new CHttpException(400, common::translateText("400_ERROR"));
     }
 
-    /* update user group */
+    /* update allergies */
 
     public function actionUpdate($id) {
         if (Yii::app()->request->isPostRequest) {
+            $response = array();
+            Yii::app()->clientscript->scriptMap['jquery.min.js'] = FALSE;
+            Yii::app()->clientscript->scriptMap['jquery.js'] = FALSE;
             $model = $this->loadModel($id, "AllergyMaster");
             // Uncomment the following line if AJAX validation is needed
             $this->performAjaxValidation($model, "form-allergies");
@@ -87,7 +96,8 @@ class AllergiesController extends Controller {
                     $response["message"] = common::getMessage("danger", common::translateText("UPDATE_FAIL"));
                     Yii::app()->user->setFlash("danger", common::translateText("UPDATE_FAIL"));
                 }
-                $this->redirect(array("/admin/allergies"));
+                echo CJSON::encode($response);
+                exit;
             }
             $this->layout = false;
             $this->render('_form_allergies', array('model' => $model), false, FALSE);

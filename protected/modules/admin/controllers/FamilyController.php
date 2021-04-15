@@ -39,11 +39,13 @@ class FamilyController extends Controller {
         $this->render('index', array("model" => $model));
     }
 
-    /* add user group */
+    /* add family */
 
     public function actionAdd() {
         if (Yii::app()->request->isPostRequest) {
-
+            $response = array();
+            Yii::app()->clientscript->scriptMap['jquery.min.js'] = FALSE;
+            Yii::app()->clientscript->scriptMap['jquery.js'] = FALSE;
             $model = new FamilyMaster();
             // Uncomment the following line if AJAX validation is needed
             $this->performAjaxValidation($model, "form-family");
@@ -61,18 +63,23 @@ class FamilyController extends Controller {
                     $response["message"] = common::getMessage("danger", common::translateText("ADD_FAIL"));
                     Yii::app()->user->setFlash("danger", common::translateText("ADD_FAIL"));
                 }
-                $this->redirect(array("/admin/family"));
+                echo CJSON::encode($response);
+                exit;
             }
-            $outputJs = Yii::app()->request->isAjaxRequest;
-            $this->renderPartial('_form_family', array('model' => $model), false, $outputJs);
+            $this->layout = false;
+            $this->render('_form_family', array('model' => $model), false, FALSE);
         } else
             throw new CHttpException(400, common::translateText("400_ERROR"));
     }
 
-    /* update user group */
+    /* update family */
 
     public function actionUpdate($id) {
         if (Yii::app()->request->isPostRequest) {
+            $response = array();
+            Yii::app()->clientscript->scriptMap['jquery.min.js'] = FALSE;
+            Yii::app()->clientscript->scriptMap['jquery.js'] = FALSE;
+            $JSON = !empty($_REQUEST["json"]) ? true : false;
             $model = $this->loadModel($id, "FamilyMaster");
             // Uncomment the following line if AJAX validation is needed
             $this->performAjaxValidation($model, "form-family");
@@ -90,10 +97,11 @@ class FamilyController extends Controller {
                     $response["message"] = common::getMessage("danger", common::translateText("UPDATE_FAIL"));
                     Yii::app()->user->setFlash("danger", common::translateText("UPDATE_FAIL"));
                 }
-                $this->redirect(array("/admin/family"));
+                echo CJSON::encode($response);
+                exit;
             }
-            $outputJs = Yii::app()->request->isAjaxRequest;
-            $this->renderPartial('_form_family', array('model' => $model), false, $outputJs);
+            $this->layout = false;
+            $this->render('_form_family', array('model' => $model), false, FALSE);
         } else
             throw new CHttpException(400, common::translateText("400_ERROR"));
     }
