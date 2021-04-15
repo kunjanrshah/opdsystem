@@ -11,10 +11,37 @@
                 <?php
                 $form = $this->beginWidget('CActiveForm', array(
                     'id' => 'form-references',
-                    'enableAjaxValidation' => false,
-                    'enableClientValidation' => false,
+                    'enableAjaxValidation' => true,
+                    'enableClientValidation' => true,
                     'clientOptions' => array(
                         'validateOnSubmit' => true,
+                        'afterValidate' => 'js:function(form, data, hasError){
+                            if(!hasError){
+                                $.ajax({
+                                    url:form.attr("action"),
+                                    type:"POST",
+                                    dataType:"JSON",
+                                    data:form.serialize(),
+                                    success:function(response){
+                                        var success = response.success;
+                                        var message = response.message;
+                                        var data = response.data;
+                                        $(".close").trigger("click");
+                                        $("#flash-message").html(message).show();                                        
+                                        if($("#reference-grid") && $("#reference-grid").length){
+                                            $.fn.yiiGridView.update("reference-grid");
+                                        } else {
+                                            if($("#Patients_reference_id")){
+                                                $("#Patients_reference_id").select2("destroy");
+                                                $("#Patients_reference_id").empty().append(data);
+                                                $("#Patients_reference_id").select2();
+                                            }
+                                        }
+                                    }
+                                });
+                                return false;
+                            }
+                         }'
                     )
                 ));
                 ?>

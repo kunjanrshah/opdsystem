@@ -5,7 +5,7 @@ $deleteRight = common::checkActionAccess("area/delete");
 <div class="container-fluid">
     <!-- START row -->
     <?php $this->renderPartial("/layouts/_message"); ?>
-    <?php $this->renderPartial("application.modules.admin.views.common._search", array("field"=>"area_name", "id"=>"users-group-grid", "model" => $model));?>
+    <?php $this->renderPartial("application.modules.admin.views.common._search", array("field"=>"area_name", "id"=>"area-grid", "model" => $model));?>
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-primary">
@@ -41,7 +41,7 @@ $deleteRight = common::checkActionAccess("area/delete");
                     $permissionRight = common::checkActionAccess("area/permissions");
                     $columnClass = (!$updateRight && !$deleteRight && !$permissionRight) ? "hide" : "";
                     $this->widget("zii.widgets.grid.CGridView", array(
-                        "id" => "users-group-grid",
+                        "id" => "area-grid",
                         "dataProvider" => $model->search(),
                         "columns" => array(
                             array(
@@ -106,12 +106,12 @@ $deleteRight = common::checkActionAccess("area/delete");
                                     alert('" . common::translateText("INVALID_SELECTION") . "'); return false;  
                                 }
                             }
-                            var totalRecs = $('input[type=checkbox]:checked').not('#users-group-grid_c0_all').length;
+                            var totalRecs = $('input[type=checkbox]:checked').not('#area-grid_c0_all').length;
                             totalRecs = (totalRecs=='0')?'this':totalRecs;
                             if(!confirm('Are you sure to delete '+totalRecs+' record(s) ?')) return false;                                               
                             var url = $(this).attr('href');
                             $.post(url,idList,function(res){
-                                $.fn.yiiGridView.update('users-group-grid');
+                                $.fn.yiiGridView.update('area-grid');
                                 $('#flash-message').html(res).animate({opacity: 1.0}, 3000).fadeOut('slow');
                             });
                             return false;

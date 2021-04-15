@@ -5,7 +5,7 @@ $deleteRight = common::checkActionAccess("allergies/delete");
 <div class="container-fluid">
     <!-- START row -->
     <?php $this->renderPartial("/layouts/_message"); ?>
-    <?php $this->renderPartial("application.modules.admin.views.common._search", array("field"=>"title", "id"=>"users-group-grid", "model" => $model));?>
+    <?php $this->renderPartial("application.modules.admin.views.common._search", array("field"=>"title", "id"=>"allergies-grid", "model" => $model));?>
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-primary">
@@ -40,7 +40,7 @@ $deleteRight = common::checkActionAccess("allergies/delete");
                     $deleteRight = common::checkActionAccess("allergies/delete");
                     $columnClass = (!$updateRight && !$deleteRight) ? "hide" : "";
                     $this->widget("zii.widgets.grid.CGridView", array(
-                        "id" => "users-group-grid",
+                        "id" => "allergies-grid",
                         "dataProvider" => $model->search(),
                         "columns" => array(
                             array(
@@ -105,12 +105,12 @@ $deleteRight = common::checkActionAccess("allergies/delete");
                                     alert('" . common::translateText("INVALID_SELECTION") . "'); return false;  
                                 }
                             }
-                            var totalRecs = $('input[type=checkbox]:checked').not('#users-group-grid_c0_all').length;
+                            var totalRecs = $('input[type=checkbox]:checked').not('#allergies-grid_c0_all').length;
                             totalRecs = (totalRecs=='0')?'this':totalRecs;
                             if(!confirm('Are you sure to delete '+totalRecs+' record(s) ?')) return false;                                               
                             var url = $(this).attr('href');
                             $.post(url,idList,function(res){
-                                $.fn.yiiGridView.update('users-group-grid');
+                                $.fn.yiiGridView.update('allergies-grid');
                                 $('#flash-message').html(res).animate({opacity: 1.0}, 3000).fadeOut('slow');
                             });
                             return false;

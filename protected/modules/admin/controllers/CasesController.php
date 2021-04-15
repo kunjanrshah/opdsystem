@@ -39,10 +39,13 @@ class CasesController extends Controller {
         $this->render('index', array("model" => $model));
     }
 
-    /* add user group */
+    /* add case */
 
     public function actionAdd() {
         if (Yii::app()->request->isPostRequest) {
+            $response = array();
+            Yii::app()->clientscript->scriptMap['jquery.min.js'] = FALSE;
+            Yii::app()->clientscript->scriptMap['jquery.js'] = FALSE;
             $model = new CaseMaster();
             // Uncomment the following line if AJAX validation is needed
             $this->performAjaxValidation($model, "form-cases");
@@ -50,7 +53,7 @@ class CasesController extends Controller {
             if (isset($_POST['CaseMaster'])) {
                 $model->attributes = $_POST['CaseMaster'];
                 if ($model->validate()) {
-                    $model->save(false);
+                    $model->save();
                     $response["success"] = true;
                     $response["message"] = common::getMessage("success", common::translateText("ADD_SUCCESS"));
                     $response["data"] = $this->getOptions($model->id);
@@ -60,21 +63,25 @@ class CasesController extends Controller {
                     $response["message"] = common::getMessage("danger", common::translateText("ADD_FAIL"));
                     Yii::app()->user->setFlash("danger", common::translateText("ADD_FAIL"));
                 }
-                $this->redirect(array("/admin/cases"));
+                echo CJSON::encode($response);
+                exit;
             }
-            $outputJs = Yii::app()->request->isAjaxRequest;
-            $this->renderPartial('_form_case', array('model' => $model), false, $outputJs);
+            $this->layout = false;
+            $this->render('_form_case', array('model' => $model), false, FALSE);
         } else
             throw new CHttpException(400, common::translateText("400_ERROR"));
     }
 
-    /* update user group */
+    /* update case */
 
     public function actionUpdate($id) {
         if (Yii::app()->request->isPostRequest) {
+            $response = array();
+            Yii::app()->clientscript->scriptMap['jquery.min.js'] = FALSE;
+            Yii::app()->clientscript->scriptMap['jquery.js'] = FALSE;
             $model = $this->loadModel($id, "CaseMaster");
             // Uncomment the following line if AJAX validation is needed
-            $this->performAjaxValidation($model, "form-cases");
+            $this->performAjaxValidation($model, "form-rmedicine");
 
             if (isset($_POST['CaseMaster'])) {
                 $model->attributes = $_POST['CaseMaster'];
@@ -89,10 +96,11 @@ class CasesController extends Controller {
                     $response["message"] = common::getMessage("danger", common::translateText("UPDATE_FAIL"));
                     Yii::app()->user->setFlash("danger", common::translateText("UPDATE_FAIL"));
                 }
-                $this->redirect(array("/admin/cases"));
+                echo CJSON::encode($response);
+                exit;
             }
-            $outputJs = Yii::app()->request->isAjaxRequest;
-            $this->renderPartial('_form_case', array('model' => $model), false, $outputJs);
+            $this->layout = false;
+            $this->render('_form_case', array('model' => $model), false, FALSE);
         } else
             throw new CHttpException(400, common::translateText("400_ERROR"));
     }

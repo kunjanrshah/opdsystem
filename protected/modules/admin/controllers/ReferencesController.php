@@ -39,10 +39,13 @@ class ReferencesController extends Controller {
         $this->render('index', array("model" => $model));
     }
 
-    /* add user group */
+    /* add reference */
 
     public function actionAdd() {
         if (Yii::app()->request->isPostRequest) {
+            $response = array();
+            Yii::app()->clientscript->scriptMap['jquery.min.js'] = FALSE;
+            Yii::app()->clientscript->scriptMap['jquery.js'] = FALSE;
             $model = new ReferencesMaster();
             // Uncomment the following line if AJAX validation is needed
             $this->performAjaxValidation($model, "form-references");
@@ -50,7 +53,7 @@ class ReferencesController extends Controller {
             if (isset($_POST['ReferencesMaster'])) {
                 $model->attributes = $_POST['ReferencesMaster'];
                 if ($model->validate()) {
-                    $model->save();
+                    $model->save(false);
                     $response["success"] = true;
                     $response["message"] = common::getMessage("success", common::translateText("ADD_SUCCESS"));
                     $response["data"] = $this->getOptions($model->id);
@@ -60,18 +63,22 @@ class ReferencesController extends Controller {
                     $response["message"] = common::getMessage("danger", common::translateText("ADD_FAIL"));
                     Yii::app()->user->setFlash("danger", common::translateText("ADD_FAIL"));
                 }
-                $this->redirect(array("/admin/references"));
+                echo CJSON::encode($response);
+                exit;
             }
-            $outputJs = Yii::app()->request->isAjaxRequest;
-            $this->renderPartial('_form_reference', array('model' => $model), false, $outputJs);
+            $this->layout = false;
+            $this->render('_form_reference', array('model' => $model), false, FALSE);
         } else
             throw new CHttpException(400, common::translateText("400_ERROR"));
     }
 
-    /* update user group */
+    /* update reference */
 
     public function actionUpdate($id) {
         if (Yii::app()->request->isPostRequest) {
+            $response = array();
+            Yii::app()->clientscript->scriptMap['jquery.min.js'] = FALSE;
+            Yii::app()->clientscript->scriptMap['jquery.js'] = FALSE;
             $model = $this->loadModel($id, "ReferencesMaster");
             // Uncomment the following line if AJAX validation is needed
             $this->performAjaxValidation($model, "form-references");
@@ -89,10 +96,11 @@ class ReferencesController extends Controller {
                     $response["message"] = common::getMessage("danger", common::translateText("UPDATE_FAIL"));
                     Yii::app()->user->setFlash("danger", common::translateText("UPDATE_FAIL"));
                 }
-                $this->redirect(array("/admin/references"));
+                echo CJSON::encode($response);
+                exit;
             }
-            $outputJs = Yii::app()->request->isAjaxRequest;
-            $this->renderPartial('_form_reference', array('model' => $model), false, $outputJs);
+            $this->layout = false;
+            $this->render('_form_reference', array('model' => $model), false, FALSE);
         } else
             throw new CHttpException(400, common::translateText("400_ERROR"));
     }
