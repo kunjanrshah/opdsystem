@@ -22,7 +22,7 @@
  */
 class FamilyMaster extends CActiveRecord {
 
-    public $family_name_with_contact;
+    public $family_name_with_contact, $patient_name_with_id;
 
     /**
      * Returns the static model of the specified AR class.
@@ -82,6 +82,7 @@ class FamilyMaster extends CActiveRecord {
 
     protected function afterFind() {
         $this->family_name_with_contact = $this->family_name . " " . $this->contact_number;
+        $this->patient_name_with_id = $this->id . " - " . $this->family_name . " - " . $this->contact_number;
         return parent::afterFind();
     }
 

@@ -186,9 +186,29 @@ class PatientsController extends Controller {
         $criteria = new CDbCriteria();
 //    $criteria->condition = 'family_id=0';
         $criteria->addSearchCondition("CONCAT( id,  ' - ', patient_name,  ' - ', contact_number )", $term);
-        $criteria->limit = 20;
+        $criteria->limit = 5000000000000000;
         //$criteria->params = array(':patient_name' => "$term");
         $query = Patients::model()->findAll($criteria);
+        $list = array();
+        foreach ($query as $q) {
+            $data['value'] = $q['id'];
+            $data['label'] = $q['patient_name_with_id'];
+
+            $list[] = $data;
+            unset($data);
+        }
+
+        echo json_encode($list);
+        exit;
+    }
+
+    public function actionFamilyheaddropdown2($term) {
+        $criteria = new CDbCriteria();
+//    $criteria->condition = 'family_id=0';
+        $criteria->addSearchCondition("CONCAT( id,  ' - ', family_name,  ' - ', contact_number )", $term);
+        $criteria->limit = 5000000000000000;
+        //$criteria->params = array(':patient_name' => "$term");
+        $query = FamilyMaster::model()->findAll($criteria);
         $list = array();
         foreach ($query as $q) {
             $data['value'] = $q['id'];
