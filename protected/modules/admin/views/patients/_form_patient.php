@@ -124,7 +124,7 @@ echo $form->hiddenField($model, "state_id");
                          $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
                             'name' => 'selectFamilyHeadValue',
                             'value' => $selectFamilyHeadValue->patient_name_with_id,
-                            'source' => CController::createUrl('patients/familyheaddropdown'),
+                            'source' => CController::createUrl('patients/familyheaddropdown2'),
                             'options' => array(
                                 'html'=>true,
                                 'showAnim' => 'fold',

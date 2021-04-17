@@ -5,8 +5,8 @@
                 <!-- Left / Bottom Side -->
                 <div class="col-lg-12 panel">
                     <!-- panel body -->
-                    <div class="col-lg-12">
-                        <div class="col-lg-6">
+                    <div class="col-lg-12" style="display: flex;justify-content: space-between;">
+                        <div>
                             <div class="panel-body text-left">
                                 <h4 class="semibold nm"><?php echo $model->patientRel->patient_name; ?></h4>
                                 <p class="text-muted nm"><?php echo $model->patientRel->contact_number; ?></p>
@@ -17,7 +17,7 @@
                                 <p class="text-muted nm" style="font-size: 15px;">Prescription : #<?php echo $model->id; ?></p>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div>
                             <div class="panel-body text-right">
                                 <h4 class="semibold nm">Radhe Clinic</h4>
                                 <p class="semibold nm" style="font-size: 15px;">Sanjay Shah</p>

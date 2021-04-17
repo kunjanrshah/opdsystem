@@ -123,8 +123,7 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
         </div>
     </div>
 </div>
-<div class="row nm">    
-    <hr />
+<div class="row nm">
     <div class="col-md-6">
         <div class="form-group">
             <?php echo $form->labelEx($model, "diagnosis_id", array("class" => "control-label")); ?>
@@ -172,7 +171,14 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
     </div>
     <div class="row nm">
         <!--<div class="form-group">-->
-            <div class="col-md-8 col-sm-8"></div>
+            <div class="col-md-8 col-sm-8">
+                <div class="form-group" style="margin-top: 18px;">
+                    <!--    <a type="button" class="btn btn-default" href="<?php echo Yii::app()->createUrl("/admin/appointments/index"); ?>"><?php echo common::translateText("CANCEL_BTN_TEXT"); ?></a>-->
+                    <button type="submit" name="prescription" class="btn btn-primary"><?php echo "Prescription"; ?></button>
+                    <button type="submit" class="btn btn-primary"><?php echo "Case Paper"; ?></button>
+                    <button type="submit" name="next" class="btn btn-primary" onclick="return confirm('Are you sure? You want to save Treatment.');"><?php echo "Next"; ?></button>
+                </div>
+            </div>
             <div class="col-md-2 col-sm-2">
                 <div class="form-group">
                 <?php echo $form->labelEx($model, "credit_amount", array("class" => "control-label")); ?>
@@ -189,12 +195,6 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
             </div>    
             </div>
         <!--</div>-->         
-        <div class="modal-footer">
-        <!--    <a type="button" class="btn btn-default" href="<?php echo Yii::app()->createUrl("/admin/appointments/index"); ?>"><?php echo common::translateText("CANCEL_BTN_TEXT"); ?></a>-->
-            <button type="submit" name="prescription" class="btn btn-primary"><?php echo "Prescription"; ?></button>
-            <button type="submit" class="btn btn-primary"><?php echo "Case Paper"; ?></button>
-            <button type="submit" name="next" class="btn btn-primary" onclick="return confirm('Are you sure? You want to save Treatment.');"><?php echo "Next"; ?></button>
-        </div>
         <div class="row nm">
             <div class="col-md-12">
                 <div class="form-group">
