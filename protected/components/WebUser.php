@@ -69,6 +69,7 @@ class WebUser extends CWebUser {
                $titlesArr[$value->page_url] = $value->menu_title;
             endforeach;
         endif;
+        $titlesArr['treatments/detailsupdate'] = "Treatment";
         return $this->_titles = $titlesArr; 
     }
 }
