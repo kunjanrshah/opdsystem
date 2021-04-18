@@ -161,7 +161,7 @@
                                             <?php if ($printPrescription): ?>
                                                 <tr>
                                                     <td class="text-left" colspan="2">
-                                                        <?php echo CHtml::Link("Print Prescription", array("/admin/treatments/prescription", "id" => $value->id)); ?>
+                                                        <?php echo CHtml::Link("Print Prescription", array("/admin/treatments/prescription", "id" => $value->id, "button-type"=> "back")); ?>
                                                     </td>
                                                 </tr>                                                          
                                                 <?php

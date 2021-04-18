@@ -7,8 +7,7 @@
                     $Patients = Patients::model()->findByPk($model->patient_id);
                     echo $Patients->patient_name . "<br>";
                     echo $Patients->address1 . ",<br>";
-                    echo $Patients->address2 . ",";
-                    echo $Patients->city . "<br>";
+                    echo $Patients->AreaRel->area_name . ", ".$Patients->city . "<br>";
                     $contact2 = !empty($Patients->contact_number2) ? "," . $Patients->contact_number2 : "";
                     echo "Contact #  : " . $Patients->contact_number . $contact2 . "<br>Email  : " . CHtml::Link($Patients->email_address, "mailto:" . $Patients->email_address);
                     ?>
