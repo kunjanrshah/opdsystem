@@ -8,13 +8,9 @@
                     <div class="col-lg-12" style="display: flex;justify-content: space-between;">
                         <div>
                             <div class="panel-body text-left">
-                                <h4 class="semibold nm"><?php echo $model->patientRel->patient_name; ?></h4>
-                                <p class="text-muted nm"><?php echo $model->patientRel->contact_number; ?></p>
-                                <p class="text-muted nm"><?php echo $model->patientRel->address2; ?></p>
-                                <p class="text-muted nm"><?php echo $model->patientRel->city; ?></p>
-                                <p></p>
-                                <p class="semibold text-muted nm" style="font-size: 15px;">Date : <?php echo $model->created_dt; ?></p>
-                                <p class="text-muted nm" style="font-size: 15px;">Prescription : #<?php echo $model->id; ?></p>
+                                <h4 class="semibold nm"><?php echo $model->patientRel->patient_name; ?> (<?php echo $model->patientRel->id; ?>)</h4>
+                                <p class="text-muted nm"><?php echo $model->patientRel->AreaRel->area_name; ?> <?php echo $model->patientRel->city; ?></p>
+                                <p class="text-muted nm">Date : <?php echo $model->created_dt; ?></p>
                             </div>
                         </div>
                         <div>
@@ -22,7 +18,7 @@
                                 <h4 class="semibold nm">Radhe Clinic</h4>
                                 <p class="semibold nm" style="font-size: 15px;">Sanjay Shah</p>
                                 <p class="text-muted nm">M.B.B.S, M.D </p>
-                                <p></p>
+                                <p class="text-muted nm">M: +91 93270 72959</p>
                                 <p class="text-muted nm hide">7/8, Jeevan Sadhna Complex, </p>
                                 <p class="text-muted nm hide">Maniyasa Society,Maninagar,</p>
                                 <p class="text-muted nm hide"> Ahmedabad  - 380008</p>
@@ -40,8 +36,8 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table">
+                    <div class="table-responsive-no" style="padding:10px">
+                        <table class="table table-bordered">
                             <tr class="hide">
                                 <td colspan="4">
                                     <div class="col-lg-8 panel-body text-left">
@@ -124,14 +120,18 @@
                                     </td>
                                 </tr>
                             <?php endif; ?>
-                            <tr>
+                            <tr class="no-print">
                                 <td colspan="4" class="text-right">
                                     <?php echo CHtml::Link('Print', "",array("class" => "btn btn-primary no-print","onclick"=>"window.print()")); ?>
-                                    <!-- <?php									
-									$patient_id = $model->patient_id;
-									$appointment_id = $model->appointment_id;
-									echo CHtml::Link('Back', array("/admin/treatments/details/$model->id?Treatments[patient_id]=$patient_id&Treatments[appointment_id]=$appointment_id"), array("class" => "btn btn-primary no-print")); ?> -->
-                                    <?php echo CHtml::Link('Edit', array("/admin/treatments/detailsupdate?treatment_id=".$model->id), array("class" => "btn btn-primary no-print")); ?>
+                                    <?php
+                                        if(isset($_GET['button-type']) && $_GET['button-type'] == 'back') {									
+                                            $patient_id = $model->patient_id;
+                                            $appointment_id = $model->appointment_id;
+                                            echo CHtml::Link('Back', array("/admin/treatments/details/$model->id?Treatments[patient_id]=$patient_id&Treatments[appointment_id]=$appointment_id"), array("class" => "btn btn-primary no-print")); 
+                                        } else {
+                                            echo CHtml::Link('Edit', array("/admin/treatments/detailsupdate?treatment_id=".$model->id), array("class" => "btn btn-primary no-print")); 
+                                        }
+                                    ?>
                                 </td>
                             </tr>
                             </tbody>
