@@ -140,7 +140,7 @@
                                         "imageUrl" => false,
                                         "url" => 'Yii::app()->createUrl("/admin/appointments/update", array("id"=>$data->id))',
                                         "options" => array("class" => "NoaddUpdateRecord mr5", "title" => common::getTitle("patients/update")),
-                                        "visible" => ($updateRight) ? 'true' : 'false',
+                                        "visible" => ($updateRight) ? 'empty($data->is_treatment_given) ? true : false' : 'false',
                                     ),
                                     "treatments" => array(
                                         "label" => '<i class="icon ico-eyedropper2"></i> ' . common::getTitle("treatments/details"),
