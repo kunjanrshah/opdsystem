@@ -151,8 +151,16 @@
                             <?php endif; ?>
                             <tr class="no-print">
                                 <td colspan="4" class="text-right">
-                                    <?php echo CHtml::Link('Print', "", array("class" => "btn btn-primary no-print", "onclick" => "window.print()")); ?>
                                     <?php echo CHtml::Link('Edit', array("/admin/treatments/detailsupdate?treatment_id=" . $model->id), array("class" => "btn btn-primary no-print")); ?>
+                                    <?php
+                                    if(isset($_GET['button-type']) && $_GET['button-type'] == 'back') {									
+                                        $patient_id = $model->patient_id;
+                                        $appointment_id = $model->appointment_id;
+                                        echo CHtml::Link('Back', array("/admin/treatments/details/$model->id?Treatments[patient_id]=$patient_id&Treatments[appointment_id]=$appointment_id"), array("class" => "btn btn-primary no-print")); 
+                                    } else {
+                                        echo CHtml::Link('Print', "", array("class" => "btn btn-primary no-print", "onclick" => "window.print()"));
+                                    }
+                                    ?>
                                 </td>
                             </tr>
                             </tbody>

@@ -163,7 +163,7 @@
                                                     <td class="text-left" colspan="2">
                                                         <?php echo CHtml::Link("Print Prescription", array("/admin/treatments/prescription", "id" => $value->id, "button-type"=> "back")); ?>
                                                         &nbsp;|&nbsp;
-                                                        <?php echo CHtml::Link("Print Case Paper", array("/admin/treatments/casepaper", "id" => $value->id)); ?>
+                                                        <?php echo CHtml::Link("Print Case Paper", array("/admin/treatments/casepaper", "id" => $value->id, "button-type"=> "back")); ?>
                                                     </td>
                                                 </tr>                                                          
                                                 <?php
