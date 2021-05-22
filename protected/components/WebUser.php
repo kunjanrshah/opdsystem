@@ -70,6 +70,7 @@ class WebUser extends CWebUser {
             endforeach;
         endif;
         $titlesArr['treatments/detailsupdate'] = "Treatment";
+        $titlesArr['family/tree'] = "Family Tree";
         return $this->_titles = $titlesArr; 
     }
 }

@@ -73,8 +73,8 @@ class Patients extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('patient_name, username,registration_date,address1,city,password,repeat_password,status', 'required', "on" => "add"),
-            array('patient_name, username,registration_date,address1,city,status', 'required', "on" => "update"),
+            array('patient_name, username,registration_date,address1,city,password,repeat_password,status,patient_age', 'required', "on" => "add"),
+            array('patient_name, username,registration_date,address1,city,status,patient_age', 'required', "on" => "update"),
             array("username,email_address", "unique"),
             array("email_address", "email"),
             array("relation", "validRelation"),
@@ -89,7 +89,7 @@ class Patients extends CActiveRecord {
             array('relation, contact_number,contact_number2', 'length', 'max' => 10),
             array('blood_group', 'length', 'max' => 5),
             array('email_address', 'length', 'max' => 128),
-            array('address1, address2,regular_medicine,other_case,allergy', 'safe'),
+            array('address1, address2,regular_medicine,other_case,allergy,patient_age', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, username,contact_number2, password, salt, user_group, patient_name, profile_pic, registration_date, birth_date, patient_age, gender, family_id, relation, blood_group, reference_by, address1, address2, country_id, state_id, city, pin_code, contact_number, email_address, status, deleted, created_dt, created_by, updated_dt, updated_by', 'safe', 'on' => 'search'),

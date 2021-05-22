@@ -12,7 +12,10 @@ $form = $this->beginWidget('CActiveForm', array(
     'enableClientValidation' => true,
     'clientOptions' => array(
         'validateOnSubmit' => true
-    ), 'htmlOptions' => array('enctype' => 'multipart/form-data')));
+    ),     
+    'htmlOptions' => array('enctype' => 'multipart/form-data', 'onsubmit' => 'return validateAddMore();'))
+);
+    
 ?>
 <div class="row nm">
     <div class="col-md-4">
@@ -68,6 +71,20 @@ $form = $this->beginWidget('CActiveForm', array(
             });
         });
     }
+    function validateAddMore() {
+        var ret = true;
+        $('.addmore-required:visible').each(function () {
+            if ($(this).val() == "") {
+                ret = false;
+                $(this).parent().addClass('has-error');
+            }
+            else
+            {
+                $(this).parent().removeClass('has-error');
+            }
+        });
+        return ret;
+    }
     var c = <?php echo $c; ?>;
     function cloneMe() {
         $clone = $('#cloneMe').clone();
@@ -89,10 +106,12 @@ $form = $this->beginWidget('CActiveForm', array(
     function deletemore(obj) {
         $(obj).parent().parent().parent().remove();
     }
-    $(document).ready(function () {
-        cloneMe();
-        populateGroups();
-    });
+    <?php if($model->isNewRecord) { ?>
+        $(document).ready(function () {
+            cloneMe();
+            populateGroups();
+        });
+    <?php } ?>
 </script>
 <div class="hide">
 <?php

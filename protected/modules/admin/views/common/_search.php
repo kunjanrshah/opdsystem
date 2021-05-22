@@ -31,11 +31,13 @@
                                 'showAnim' => 'fold',
                                 'minLength' => '1',
                                 'search' => 'js:function( event, ui ) { 
+                                    $("#searchSubmitButton").attr("disabled", "disabled");
                                     $("#'.$identifier.'").val(null); 
                                 }',
                                 'select' => 'js:function( event, ui ) {
                                     $("#selectFieldValue").val( ui.item.label );
                                     $("#'.$identifier.'").val( ui.item.value );
+                                    $("#searchSubmitButton").removeAttr("disabled");
                                     return false;
                                 }',
                             ),
@@ -49,8 +51,8 @@
                         ?>
                 </div>
                 <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary"><i class="ico-loop4 mr5"></i><?php echo common::translateText("SEARCH_BTN_TEXT"); ?></button>
-                    <a href="javascript:;" onClick="window.location.reload();" class="btn btn-default"><i class="ico-loop4 mr5"></i>Reset</a>
+                    <button type="submit" id="searchSubmitButton" disabled="disabled" class="btn btn-primary"><i class="ico-loop4 mr5"></i><?php echo common::translateText("SEARCH_BTN_TEXT"); ?></button>
+                    <a href="javascript:;"  onClick="window.location.reload();" class="btn btn-default"><i class="ico-loop4 mr5"></i>Reset</a>
                 </div>
             </div>
         </div>

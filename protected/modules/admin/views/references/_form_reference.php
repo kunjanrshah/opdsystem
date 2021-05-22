@@ -31,10 +31,10 @@
                                         if($("#reference-grid") && $("#reference-grid").length){
                                             $.fn.yiiGridView.update("reference-grid");
                                         } else {
-                                            if($("#Patients_reference_id")){
-                                                $("#Patients_reference_id").select2("destroy");
-                                                $("#Patients_reference_id").empty().append(data);
-                                                $("#Patients_reference_id").select2();
+                                            if($("#Patients_reference_by")){
+                                                $("#Patients_reference_by").select2("destroy");
+                                                $("#Patients_reference_by").empty().append(data);
+                                                $("#Patients_reference_by").select2();
                                             }
                                         }
                                     }

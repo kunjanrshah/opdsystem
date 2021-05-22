@@ -9,6 +9,7 @@ $form = $this->beginWidget('CActiveForm', array(
 echo $form->hiddenField($model, "user_group");
 echo $form->hiddenField($model, "country_id");
 echo $form->hiddenField($model, "state_id");
+// echo "<pre>"; print_r($model->attributes); exit;
 ?>
 <div class="row nm">
     <h5 class="semibold mb15">Personal Info:</h5>
@@ -32,41 +33,24 @@ echo $form->hiddenField($model, "state_id");
             <?php echo $form->error($model, "registration_date", array("class" => "parsley-custom-error-message")); ?>
         </div>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2 hide">
         <div class="form-group">
             <?php echo $form->labelEx($model, "birth_date", array("class" => "control-label")); ?>
             <div class="has-icon pull-left">
-                <?php
-                common::getDatePicker($model, "birth_date", array("class" => "form-control", "placeholder" => $model->getAttributeLabel("birth_date"),
-                    "ajax" => array(
-                        "url" => Yii::app()->createUrl("/common/getagefromdate"),
-                        "type" => "POST",
-                        "dataType" => "JSON",
-                        "data" => array("date" => "js:this.value"),
-                        "success" => "js:function(response){
-                            var years = response.years;
-                            var months = response.months;
-                            var days = response.days;
-                            $('#Patients_patient_age_years').val(years);
-                            $('#Patients_patient_age_months').val(months);
-                            $('#Patients_patient_age_days').val(days);
-                            $('#Patients_age').val(years);
-                        }"
-                    )
-                        ),array('yearRange' => '2005:2099',"maxDate" => 0));
-                ?>
+                <?php common::getDatePicker($model, "birth_date", array("class" => "form-control", "placeholder" => $model->getAttributeLabel("birth_date")),array('yearRange' => '2005:2099',"maxDate" => 0));?>
                 <i class="ico-calendar5 form-control-icon"></i>
             </div>
             <?php echo $form->error($model, "birth_date", array("class" => "parsley-custom-error-message")); ?>
         </div>
     </div>
     <div class="col-md-2">
-    <div class="form-group">
-        <label class="control-label" for="Patients_age">Age</label>            
-        <div class="has-icon pull-left">
-            <input class="form-control numeric" maxlength="3" placeholder="Age" id="Patients_age" name="Patients[age]" type="text" value="<?php echo $model->patient_age_years;?>">                
-            <i class="ico-calendar5 form-control-icon"></i>
-        </div>
+        <div class="form-group">
+            <?php echo $form->labelEx($model, "patient_age", array("class" => "control-label")); ?>
+            <div class="has-icon pull-left">
+                <?php echo $form->textField($model, "patient_age", array("max-length"=> 3,"class" => "form-control numeric", "placeholder" => $model->getAttributeLabel("patient_age"))); ?>            
+                <i class="ico-calendar5 form-control-icon"></i>
+            </div>
+            <?php echo $form->error($model, "patient_age", array("class" => "parsley-custom-error-message")); ?>
         </div>    
     </div>
     <div class="col-md-4">
@@ -85,7 +69,6 @@ echo $form->hiddenField($model, "state_id");
                     <?php echo $form->textField($model, "patient_age_days", array("class" => "form-control", "readonly" => true, "placeholder" => $model->getAttributeLabel("patient_age_days"))); ?>
                 </div>
             </div>
-            <?php echo $form->error($model, "patient_age", array("class" => "parsley-custom-error-message")); ?>
         </div>
     </div>
 </div>
@@ -103,16 +86,6 @@ echo $form->hiddenField($model, "state_id");
     <div class="col-md-4">
         <div class="form-group">
             <?php echo $form->labelEx($model, "family_id", array("class" => "control-label")); ?>
-			<?php if (common::checkActionAccess("family/add")): ?>
-                <div class="pull-right">
-                    <a data-id="#Patients_f_head" href="<?php echo Yii::app()->createUrl("/admin/family/add") ?>" title="Add Medicine" class="pull-left btn-sm btn-default plus-box" id="addFamily">
-                        Add <i class="ico-plus"></i>
-                    </a>
-                </div>
-                <div class="clearfix"></div>
-                <?php
-            endif;
-            ?>
             <?php
             $selectFamilyHeadValue = '';
             if($model->family_id){
@@ -124,15 +97,15 @@ echo $form->hiddenField($model, "state_id");
                          $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
                             'name' => 'selectFamilyHeadValue',
                             'value' => $selectFamilyHeadValue->patient_name_with_id,
-                            'source' => CController::createUrl('patients/familyheaddropdown2'),
+                            'source' => CController::createUrl('patients/familyheaddropdown'),
                             'options' => array(
                                 'html'=>true,
                                 'showAnim' => 'fold',
                                 'minLength' => '1',
-                                'search' => 'js:function( event, ui ) { $("#Patients_family_id").val(null); }',
+                                'search' => 'js:function( event, ui ) { $("#Patients_family_id").val(null).trigger("change"); }',
                                 'select' => 'js:function( event, ui ) {
                                 $("#selectFamilyHeadValue").val( ui.item.label );
-                                $("#Patients_family_id").val( ui.item.value );
+                                $("#Patients_family_id").val(ui.item.value).trigger("change");
                                 $.ajax({
                                    url: "'.CController::createUrl('/common/getPatient').'",
                                    dataType: "json",
@@ -166,9 +139,7 @@ echo $form->hiddenField($model, "state_id");
                                 return false;
                                 }',
                             ),
-//                             'close' => 'js:function( event, ui ) { $("#selectFamilyHeadValue").val(null); }',
                             'htmlOptions' => array(
-//                                'onfocus' => 'js: this.value = null; $("#searchbox").val(null); $("#selectedvalue").val(null);',
                                 'onblur' => 'js: if(!$("#Patients_family_id").val()){ $("#selectFamilyHeadValue").val(null); }',
                                 'class' => 'form-control',
                                 'placeholder' => "Search Family Head ...",
@@ -176,39 +147,10 @@ echo $form->hiddenField($model, "state_id");
                             ),
                         ));
                         ?>
-            <?php
-//            echo common::select2($model, 'family_id', CHtml::ListData(Patients::model()->getFamilyHead(), "id", "patient_name_with_id"), array(
-//                'prompt' => 'Own', "class" => "form-control",
-//                'ajax' => array('type' => 'POST', 'dataType' => 'JSON',
-//                    'url' => CController::createUrl('/common/getPatient'),
-//                    'success' => 'function(response){
-//                        if(response.address1){
-//                           $("#Patients_address1").val(response.address1);
-//                        }
-//                        if(response.address2){
-//                           $("#Patients_address2").select2("destroy");
-//                           $("#Patients_address2").val(response.address2);
-//                           $("#Patients_address2").select2();
-//                        }
-//                        if(response.city){
-//                           $("#Patients_city").val(response.city);
-//                        }
-//                        if(response.email_address){
-//                           $("#Patients_email_address").val(response.email_address);
-//                        }
-//                        if(response.contact_number){
-//                            $("#Patients_contact_number").val(response.contact_number)
-//                        }
-//                        if(response.contact_number2){
-//                            $("#Patients_contact_number2").val(response.contact_number2)
-//                        }
-//                     }'
-//            )));
-            ?>  
             <?php echo $form->error($model, "family_id", array("class" => "parsley-custom-error-message")); ?>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 <?php echo !empty($model->family_id) ? '' : 'hide'; ?>" id="relationElement">
         <div class="form-group">
             <?php echo $form->labelEx($model, "relation", array("class" => "control-label")); ?>            
             <?php echo common::select2($model, "relation", $model->relationArr, array("class" => "form-control", "prompt" => common::translateText("DROPDOWN_TEXT"))); ?>
@@ -297,20 +239,6 @@ echo $form->hiddenField($model, "state_id");
             <?php echo $form->error($model, "other_case", array("class" => "parsley-custom-error-message")); ?>
         </div>
     </div>
-<!--    <div class="col-md-3">
-        <div class="form-group">
-            <div>
-                <div class="btn-group pr5">
-                    <?php //$model->profile_pic = !empty($model->profile_pic) ? $model->profile_pic : common::translateText("NOT_AVAILABLE_TEXT"); ?>
-                    <img width="60" height="60" alt="Profile Picture" src="<?php //echo Patients::model()->getProfilePicture($model->profile_pic, $model->id); ?>" class="img-circle img-bordered" id="profPic">
-                </div>
-                <div class="btn-group">
-                    <?php //echo $form->fileField($model, "profile_pic"); ?>
-                    <?php //echo $form->error($model, "profile_pic", array("class" => "parsley-custom-error-message")); ?>
-                </div>
-            </div>
-        </div>
-    </div>-->
 </div>
 <div class="row nm">
     <h5 class="semibold mb15">Contact Information</h5>
@@ -460,13 +388,30 @@ Yii::app()->clientScript->registerScript('actions', "
     $("input:file").change(function () {
         readURL(this);
     })
-    $("#Patients_age").change(function(){ 
+    $("#Patients_patient_age").change(function(){ 
         var age = $(this).val();
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
         var yyyy = Number(today.getFullYear())-Number(age);
         today = mm + '/' + dd + '/' + yyyy;
-        $("#Patients_birth_date").val(today).trigger('change');
+        $("#Patients_birth_date").val(today);
+        $('#Patients_patient_age_years').val(yyyy);
+        $('#Patients_patient_age_months').val(mm);
+        $('#Patients_patient_age_days').val(dd);
+    });
+    <?php if(!$model->isNewRecord) { ?> 
+        $("#Patients_patient_age").trigger('change');
+    <?php } ?>
+    $("#Patients_family_id").change(function() {
+        $('#Patients_relation').select2('destroy');
+        if($(this).val() != '') {
+            $('#Patients_relation').val($(this).val());
+            $("#relationElement").removeClass("hide");
+        } else {
+            $('#Patients_relation').val('');
+            $("#relationElement").addClass("hide");
+        }
+        $('#Patients_relation').select2();
     });
 </script>

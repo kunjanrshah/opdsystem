@@ -43,6 +43,9 @@ class MedicineController extends Controller {
 
     public function actionAdd() {
         if (Yii::app()->request->isPostRequest) {
+            $response = array();
+            Yii::app()->clientscript->scriptMap['jquery.min.js'] = FALSE;
+            Yii::app()->clientscript->scriptMap['jquery.js'] = FALSE;
             $model = new MedicineMaster();
             // Uncomment the following line if AJAX validation is needed
             $this->performAjaxValidation($model, "form-medicine");
@@ -63,7 +66,8 @@ class MedicineController extends Controller {
                     $response["message"] = common::getMessage("danger", common::translateText("ADD_FAIL"));
                     Yii::app()->user->setFlash("danger", common::translateText("ADD_FAIL"));
                 }
-                $this->redirect(array("/admin/medicine"));
+                echo CJSON::encode($response);
+                exit;
             }
             $this->layout = false;
             $this->render('_form_medicine', array('model' => $model), false, FALSE);
@@ -75,6 +79,9 @@ class MedicineController extends Controller {
 
     public function actionUpdate($id) {
         if (Yii::app()->request->isPostRequest) {
+            $response = array();
+            Yii::app()->clientscript->scriptMap['jquery.min.js'] = FALSE;
+            Yii::app()->clientscript->scriptMap['jquery.js'] = FALSE;
             $model = $this->loadModel($id, "MedicineMaster");
             // Uncomment the following line if AJAX validation is needed
             $this->performAjaxValidation($model, "form-medicine");
@@ -85,17 +92,18 @@ class MedicineController extends Controller {
                 $model->stock = !empty($_POST['MedicineMaster']['stock']) ? $_POST['MedicineMaster']['stock'] : "";
 
                 if ($model->validate()) {
-                    $model->update(false);
+                    $model->update();
                     $response["success"] = true;
-                    $response["message"] = common::getMessage("success", common::translateText("ADD_SUCCESS"));
+                    $response["message"] = common::getMessage("success", common::translateText("UPDATE_SUCCESS"));
                     $response["data"] = $this->getOptions($model->id);
-                    Yii::app()->user->setFlash("success", common::translateText("ADD_SUCCESS"));
+                    Yii::app()->user->setFlash("success", common::translateText("UPDATE_SUCCESS"));
                 } else {
                     $response["success"] = false;
-                    $response["message"] = common::getMessage("danger", common::translateText("ADD_FAIL"));
-                    Yii::app()->user->setFlash("danger", common::translateText("ADD_FAIL"));
+                    $response["message"] = common::getMessage("danger", common::translateText("UPDATE_FAIL"));
+                    Yii::app()->user->setFlash("danger", common::translateText("UPDATE_FAIL"));
                 }
-                $this->redirect(array("/admin/medicine"));
+                echo CJSON::encode($response);
+                exit;
             }
             $this->layout = false;
             $this->render('_form_medicine', array('model' => $model), false, FALSE);
