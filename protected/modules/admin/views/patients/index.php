@@ -119,7 +119,8 @@
                                                     <li>{addAppointment}</li> 
                                                     <li>{quickAppointment}</li>
                                                     <li>{updateRecord}</li>
-                                                    <li>{deleteRecord}</li>                                                                                                       
+                                                    <li>{deleteRecord}</li>
+                                                    <!--<li>{familyTree}</li>-->                                                                                                 
                                                 </ul>
                                             </div>
                                         </div>',
@@ -153,6 +154,13 @@
                                                 "options" => array("class" => "mr5", "title" => common::getTitle("appointments/quick")),
                                                 //"visible" => (common::isSuperAdmin() || common::isDoctor()) ? 'true' : 'false',
 												//"visible" => 'true',
+                                            ),
+                                            "familyTree"=>array(
+                                                "label"=>'<i class="icon ico-tree"></i> Family Tree',
+                                                "imageUrl"=>false,
+                                                "url"=>'Yii::app()->createUrl("/admin/family/tree", array("id"=>$data->id))',
+                                                "options"=>array("class"=>"mr5","title"=>"Family Tree"),
+                                                "visible"=>'true',
                                             ),
                                         ),
                                     ),

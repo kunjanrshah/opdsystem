@@ -337,7 +337,6 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
                 $(this).parent().removeClass('has-error');
             }
         });
-        console.log(ret);
         return ret;
     }
 </script>

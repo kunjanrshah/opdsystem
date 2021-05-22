@@ -25,12 +25,10 @@
                                 <div class="col-lg-8">
                                     <div class="col-md-12">
                                         <span class="semibold">Diagnosis :</span>
-                                        <br />
                                         <span><?php echo!empty($DiagnosisList[$value->diagnosis_id]) ? $DiagnosisList[$value->diagnosis_id] : common::translateText("NOT_AVAILABLE_TEXT"); ?></span>
                                     </div>
                                     <div class="col-md-12">
                                         <span class="semibold">Complains :</span>
-                                        <br />
                                         <span>
                                             <?php
                                             $complainsArr = array();

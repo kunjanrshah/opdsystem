@@ -107,9 +107,14 @@ class RMedicineController extends Controller {
             throw new CHttpException(400, common::translateText("400_ERROR"));
     }
 
-    public function getOptions() {
+    public function getOptions($id = null) {
         $selected_id = !empty($_GET['selected'])?$_GET['selected']:'';
         $selected_id = explode(",", $selected_id);
+        
+        if(!empty($id)) {
+            $selected_id[] = $id; 
+        }
+
         $model = RMedicineMaster::model()->findAll();
         $option = null;
         if ($model): foreach ($model as $value):
