@@ -50,6 +50,7 @@ class DiagnosisController extends Controller {
         if (isset($_POST['DiagnosisMaster'])) {
             $model->attributes = $_POST['DiagnosisMaster'];
             if ($model->validate()) {
+                $model->attributes = $_POST['DiagnosisMaster'];
                 $model->save();
                 if (!empty($_POST["DiagnosisTreatments"])):
                     foreach ($_POST["DiagnosisTreatments"] as $value):

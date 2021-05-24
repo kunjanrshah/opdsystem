@@ -62,7 +62,7 @@
                                 "value" => function($data, $row) {
                                     $patient_name = (FALSE) ? CHtml::Link($data->patient_name, array("/admin/patients/view", "id" => $data->id)) : $data->patient_name;
                                     $ageArr = common::getAgeFromDate($data->birth_date);
-                                    $years = !empty($ageArr["years"]) ? $ageArr["years"] : 0;
+                                    $years = !empty($ageArr["years"]) ? $ageArr["years"] + 1 : 0;
                                     $months = !empty($ageArr["months"]) ? $ageArr["months"] : 0;
                                     $days = !empty($ageArr["days"]) ? $ageArr["days"] : 0;
                                     return "<strong>".$patient_name . "</strong> ( <strong>ID : </strong>" . $data->id . " ) <br>" . "<strong>Age : </strong>" . $years . " Years, " . $months . " Months, " . $days . " Days";

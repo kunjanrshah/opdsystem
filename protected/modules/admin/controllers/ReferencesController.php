@@ -52,8 +52,8 @@ class ReferencesController extends Controller {
 
             if (isset($_POST['ReferencesMaster'])) {
                 $model->attributes = $_POST['ReferencesMaster'];
-                if ($model->validate() || true) {
-                    $model->save(false);
+                if ($model->validate()) {
+                    $model->save();
                     $response["success"] = true;
                     $response["message"] = common::getMessage("success", common::translateText("ADD_SUCCESS"));
                     $response["data"] = $this->getOptions($model->id);
