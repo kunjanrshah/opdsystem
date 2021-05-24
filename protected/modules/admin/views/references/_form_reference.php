@@ -92,7 +92,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo common::translateText("CANCEL_BTN_TEXT"); ?></button>
-                    <button type="submit" class="btn btn-primary" onclick="$('#form-references').submit();"><?php echo common::translateText("SUBMIT_BTN_TEXT"); ?></button>
+                    <button type="button" class="btn btn-primary" onclick="$('#form-references').submit();"><?php echo common::translateText("SUBMIT_BTN_TEXT"); ?></button>
                 </div>
                 <?php $this->endWidget(); ?>
             </div><!-- /.modal-content -->

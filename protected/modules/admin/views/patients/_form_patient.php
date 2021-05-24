@@ -33,7 +33,7 @@ echo $form->hiddenField($model, "state_id");
             <?php echo $form->error($model, "registration_date", array("class" => "parsley-custom-error-message")); ?>
         </div>
     </div>
-    <div class="col-md-2 hide">
+    <div class="col-md-2">
         <div class="form-group">
             <?php echo $form->labelEx($model, "birth_date", array("class" => "control-label")); ?>
             <div class="has-icon pull-left">
@@ -394,7 +394,7 @@ Yii::app()->clientScript->registerScript('actions', "
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
         var yyyy = Number(today.getFullYear())-Number(age);
-        today = mm + '/' + dd + '/' + yyyy;
+        today = dd + '/' + mm + '/' + yyyy;
         $("#Patients_birth_date").val(today);
         $('#Patients_patient_age_years').val(yyyy);
         $('#Patients_patient_age_months').val(mm);

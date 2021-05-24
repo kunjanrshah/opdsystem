@@ -43,37 +43,6 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <?php
-                         echo $form->hiddenField($model, 'family_id');
-                         $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-                            'name' => 'selectFamilyHeadValue',
-                            'value' => isset($_GET['selectFamilyHeadValue'])?$_GET['selectFamilyHeadValue']:'',
-                            'source' => CController::createUrl('patients/familyheaddropdown'),
-                            'options' => array(
-                                'html'=>true,
-                                'showAnim' => 'fold',
-                                'minLength' => '1',
-                                'search' => 'js:function( event, ui ) { $("#Patients_family_id").val(null); }',
-                                'select' => 'js:function( event, ui ) {
-                                $("#selectFamilyHeadValue").val( ui.item.label );
-                                $("#Patients_family_id").val( ui.item.value );
-                                return false;
-                                }',
-                            ),
-                            'htmlOptions' => array(
-//                                'onfocus' => 'js: this.value = null; $("#searchbox").val(null); $("#selectedvalue").val(null);',
-                                'onblur' => 'js: if(!$("#Patients_family_id").val()){ $("#selectFamilyHeadValue").val(null); }',
-                                'class' => 'form-control',
-                                'placeholder' => "Search Family Head ...",
-                                'autocomplete'=>'off'
-                            ),
-                        ));
-                        ?>
-<?php // echo common::select2($model, "family_id", CHtml::ListData(Patients::model()->getFamilyHead(), "id", "patient_name_with_id"), array("prompt" => $model->getAttributeLabel("family_id"), "class" => "chzn-select", "style" => "width:100%;")); ?>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
 <?php echo common::select2($model, "blood_group", $model->bloodGroupArr, array("prompt" => $model->getAttributeLabel("blood_group"), "style" => "width:100%;")); ?>
                     </div>
                 </div>  
