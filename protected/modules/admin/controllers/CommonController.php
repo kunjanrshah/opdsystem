@@ -80,6 +80,7 @@ class CommonController extends Controller
             <th>Address</th>
             <th>Contact Info</th>
             <th>Blood</th>
+            <th>Action</th>
         </tr></thead>";
         if (!empty($model)) {
             $html .= "<tbody>";
@@ -104,12 +105,43 @@ class CommonController extends Controller
 
                 $bloodInfo = !empty($data->bloodGroupArr[$data->blood_group]) ? $data->bloodGroupArr[$data->blood_group] : common::translateText('NOT_AVAILABLE_TEXT');
 
+                $appointmentRight = common::checkActionAccess("appointments/index");
+                $updateRight = common::checkActionAccess("patients/index");
+                $deleteRight = common::checkActionAccess("patients/delete");
+
+                $actions = $appointmentURL = $updateURL = $deleteURL = "";
+
+                if ($appointmentRight) {
+                    $appointmentURL = '<li>' . CHtml::Link('<i class="icon ico-calendar"></i> Quick Appointment', array('appointments/quick', 'Appointments[patient_id]' => $data->id), array('class' => "mr5", "title" => "Quick Appointment")) . '</li>';
+                }
+                if ($updateRight) {
+                    $updateURL = '<li>' . CHtml::Link('<i class="icon ico-pencil"></i> Update', array('patients/update', 'id' => $data->id), array('class' => "addUpdateRecord mr5", "title" => "Update")) . '</li>';
+                }
+                if ($deleteRight) {
+                    $deleteURL = '<li>' . CHtml::Link('<i class="icon ico-trash"></i> Delete', array('patients/delete', 'id' => $data->id), array('class' => "deleteRecord mr5 text-danger", "title" => "Delete")) . '</li>';
+                }
+
+                if ($appointmentRight || $updateRight || $deleteRight) {
+                    $actions = '<div class="toolbar">
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-default" type="button">Action</button>
+                            <button data-toggle="dropdown" class="btn btn-sm btn-default dropdown-toggle" type="button">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li></li>' . $appointmentURL . $updateURL . $deleteURL . ' 
+                            </ul>
+                        </div>
+                    </div>';
+                }
+
                 $html .= "<tr>
                     <td colspan='3'>" . $patientInfo . "</td>
                     <td>" . $relationInfo . "</td>
                     <td>" . $addressInfo . "</td>
                     <td>" . $contactInfo . "</td>
                     <td>" . $bloodInfo . "</td>
+                    <td class='text-center'>" . $actions . "</td>
                 </tr>";
             }
             $html .= "</tbody>";

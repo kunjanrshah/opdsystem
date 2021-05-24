@@ -53,7 +53,8 @@
                                "header" => "&nbsp;",
                                "type" => "raw",
                                "value" => function($data) {
-                                   return "<i style=\"cursor:pointer\" data-patient_id=\"$data->id\" class=\"ico-plus expand-collapse\"></i>";
+                                   $model = Patients::model()->findAllByAttributes(array("family_id" => $data->id));
+                                   return !empty($model) ? "<i style=\"cursor:pointer\" data-patient_id=\"$data->id\" class=\"ico-plus expand-collapse\"></i>" : "";
                                },
                                "htmlOptions" => array("width" => "1%", "class" => "text-center")
                            ),
