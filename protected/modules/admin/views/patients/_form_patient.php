@@ -37,7 +37,7 @@ echo $form->hiddenField($model, "state_id");
         <div class="form-group">
             <?php echo $form->labelEx($model, "birth_date", array("class" => "control-label")); ?>
             <div class="has-icon pull-left">
-                <?php common::getDatePicker($model, "birth_date", array("class" => "form-control", "placeholder" => $model->getAttributeLabel("birth_date")),array('yearRange' => '2005:2099',"maxDate" => 0));?>
+                <?php common::getDatePicker($model, "birth_date", array("class" => "form-control", "placeholder" => $model->getAttributeLabel("birth_date")),array('yearRange' => '1950:2099',"maxDate" => 0));?>
                 <i class="ico-calendar5 form-control-icon"></i>
             </div>
             <?php echo $form->error($model, "birth_date", array("class" => "parsley-custom-error-message")); ?>
@@ -399,6 +399,17 @@ Yii::app()->clientScript->registerScript('actions', "
         $('#Patients_patient_age_years').val(yyyy);
         $('#Patients_patient_age_months').val(mm);
         $('#Patients_patient_age_days').val(dd);
+    });
+    $("#Patients_birth_date").change(function(){
+        var date = $(this).val() || '';
+        var dateArr = date.split("/");
+        var y = dateArr[2];
+
+        var nowDate = new Date();
+        var nowYear = Number(nowDate.getFullYear());
+
+        var age = nowYear - y;
+        $("#Patients_patient_age").val(age).trigger('change');
     });
     <?php if(!$model->isNewRecord) { ?> 
         $("#Patients_patient_age").trigger('change');
