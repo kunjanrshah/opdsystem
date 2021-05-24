@@ -49,12 +49,14 @@
                                 'value' => '$data["id"]',
                                 "checkBoxHtmlOptions" => array("name" => "idList[]"),
                             ),
-//                            array(
-//                                "header" => "&nbsp;",
-//                                "type" => "raw",
-//                                "value" => '"<div class=\"media-object\" style=\"width:60px;height:60px;\">".CHtml::Image($data->getProfilePicture($data->profile_pic,$data->id),"",array("class"=>"img-circle","height"=>"60","weight"=>"60"))."</div>"',
-//                                "htmlOptions" => array("width" => "1%", "class" => "text-center")
-//                            ),
+                           array(
+                               "header" => "&nbsp;",
+                               "type" => "raw",
+                               "value" => function($data) {
+                                   return "<i style=\"cursor:pointer\" data-patient_id=\"$data->id\" class=\"ico-plus expand-collapse\"></i>";
+                               },
+                               "htmlOptions" => array("width" => "1%", "class" => "text-center")
+                           ),
                             array(
                                 "header" => "Patient",
                                 "name" => "patient_name",
@@ -205,3 +207,23 @@
     <!--/ END row -->
 </div>
 <!--/ END Template Container -->
+
+<script type="text/javascript">
+    $(".expand-collapse").live('click', function() {
+        var obj =  $(this);
+        var url = "<?php echo CController::createUrl('common/getpatientchild', array('id' => "patient_id"));?>";
+        url = url.replace("patient_id", obj.attr('data-patient_id'));
+        var parentObj = $(this).parent().parent();
+        if(obj.hasClass('ico-plus')) {
+            obj.removeClass('ico-plus');
+            obj.addClass('ico-minus');
+            $.get(url, function(data) {
+                parentObj.after("<tr class='additional-row'><td colspan='8'>"+data+"</td></tr>");
+            });
+        } else {
+            obj.addClass('ico-plus');
+            obj.removeClass('ico-minus');
+            parentObj.next('.additional-row').remove();
+        }
+    });
+</script>
