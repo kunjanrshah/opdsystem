@@ -102,7 +102,9 @@ echo $form->hiddenField($model, "state_id");
                                 'html'=>true,
                                 'showAnim' => 'fold',
                                 'minLength' => '1',
-                                'search' => 'js:function( event, ui ) { $("#Patients_family_id").val(null).trigger("change"); }',
+                                'search' => 'js:function( event, ui ) { 
+                                    $("#Patients_family_id").val(null).trigger("change"); 
+                                }',
                                 'select' => 'js:function( event, ui ) {
                                 $("#selectFamilyHeadValue").val( ui.item.label );
                                 $("#Patients_family_id").val(ui.item.value).trigger("change");
@@ -416,11 +418,11 @@ Yii::app()->clientScript->registerScript('actions', "
     <?php } ?>
     $("#Patients_family_id").change(function() {
         $('#Patients_relation').select2('destroy');
-        if($(this).val() != '') {
+        if($(this).val()) {
             $('#Patients_relation').val($(this).val());
             $("#relationElement").removeClass("hide");
         } else {
-            $('#Patients_relation').val('');
+            $('#Patients_relation').val(null);
             $("#relationElement").addClass("hide");
         }
         $('#Patients_relation').select2();

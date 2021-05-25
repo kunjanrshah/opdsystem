@@ -131,7 +131,7 @@ class ReportsController extends Controller {
         //print_r($data);exit;
         //$this->render('index', array("model" => $model,"data"=>$data));
         // file name for download
-        $fileName = "export_data" . date('Ymd') . ".xlsx";
+        $fileName = "export_data" . date('Ymd') . ".xls";
 
         // headers for download
         header("Content-Disposition: attachment; filename=\"$fileName\"");

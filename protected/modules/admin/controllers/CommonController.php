@@ -95,7 +95,7 @@ class CommonController extends Controller
 
                 $family_name = !empty($data->familyRel->patient_name) ? $data->familyRel->patient_name : $data->patient_name;
                 $relation = !empty($data->relationArr[$data->relation]) ? $data->relationArr[$data->relation] : "Self";
-                $relationInfo = "<strong>Head : </strong>" . $family_name . "<br><strong>Relation  : </strong>" . $relation;
+                $relationInfo = "<strong>Head : </strong>" . $family_name . "</strong> ( <strong> ID : </strong>" . $data->family_id . " ) <br><strong>Relation  : </strong>" . $relation;
 
                 $area_name = !empty($data->AreaRel->area_name) ? $data->AreaRel->area_name : "N/A";
                 $addressInfo = "<strong>Address : </strong>" . $data->address1 . "<br><strong>Area  : </strong>" . $area_name;
