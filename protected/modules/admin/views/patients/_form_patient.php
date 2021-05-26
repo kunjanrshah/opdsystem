@@ -142,7 +142,7 @@ echo $form->hiddenField($model, "state_id");
                                 }',
                             ),
                             'htmlOptions' => array(
-                                'onblur' => 'js: if(!$("#Patients_family_id").val()){ $("#selectFamilyHeadValue").val(null); }',
+                                'onblur' => 'js: if(!$("#selectFamilyHeadValue").val()){ $("#Patients_family_id").val(null).trigger("change"); } if(!$("#Patients_family_id").val()){ $("#selectFamilyHeadValue").val(null); }',
                                 'class' => 'form-control',
                                 'placeholder' => "Search Family Head ...",
                                 'autocomplete'=>'off'
