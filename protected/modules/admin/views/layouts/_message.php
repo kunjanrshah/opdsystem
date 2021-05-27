@@ -8,7 +8,11 @@
 <div class="indicator" id="ajaxLoader"><span class="spinner spinner7"></span></div>
     <?php
     Yii::app()->clientScript->registerScript(
-            'myHideEffect', '$(".alert").animate({opacity: 1.0}, 10000).fadeOut("slow");', CClientScript::POS_READY
+            'myHideEffect', 'setInterval(function(){ 
+                if($(".alert").is(":visible")) {
+                    $(".alert").animate({opacity: 1.0}, 5000).fadeOut("slow");
+                }
+             }, 1000)', CClientScript::POS_READY
     );
     ?>
 <script>
