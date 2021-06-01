@@ -51,7 +51,6 @@ class CompanyMaster extends CActiveRecord {
             array('country_id, state_id, deleted, created_dt, created_by, updated_dt, updated_by', 'numerical', 'integerOnly' => true),
             array('company_name, email_address', 'length', 'max' => 128),
             array('city', 'length', 'max' => 50),
-            array('phone_number', 'length', 'max' => 20),
             array('website', 'length', 'max' => 255),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
@@ -141,6 +140,9 @@ class CompanyMaster extends CActiveRecord {
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'pagination' => array(
+                'pageSize' => Yii::app()->params->defaultPageSize,
+            )
         ));
     }
     public function getCompanies(){

@@ -35,7 +35,7 @@ class ComplainsMaster extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('complain_title,description', 'required'),
+            array('complain_title', 'required'),
             array('complain_title', 'unique'),
             array('parent_id, deleted', 'numerical', 'integerOnly' => true),
             array('complain_title', 'length', 'max' => 255),
@@ -96,6 +96,9 @@ class ComplainsMaster extends CActiveRecord {
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'pagination' => array(
+                'pageSize' => Yii::app()->params->defaultPageSize,
+            )
         ));
     }
     

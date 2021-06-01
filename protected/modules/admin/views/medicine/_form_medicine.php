@@ -71,7 +71,7 @@
                             <?php echo $form->error($model, "drug_id", array("class" => "parsley-custom-error-message")); ?>                        
                         </div>
                     </div>      
-                    <div class="col-md-3">
+                    <div class="col-md-3 hide">
                         <div class="form-group">
                             <?php echo $form->labelEx($model, "stock", array("class" => "control-label")); ?>
                             <?php echo $form->textField($model, "stock", array("class" => "form-control")); ?>

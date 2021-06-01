@@ -47,6 +47,7 @@ class MedicineController extends Controller {
             Yii::app()->clientscript->scriptMap['jquery.min.js'] = FALSE;
             Yii::app()->clientscript->scriptMap['jquery.js'] = FALSE;
             $model = new MedicineMaster();
+            $model->is_internal=2;
             // Uncomment the following line if AJAX validation is needed
             $this->performAjaxValidation($model, "form-medicine");
 

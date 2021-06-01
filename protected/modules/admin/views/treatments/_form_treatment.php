@@ -353,7 +353,7 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
     .cutom-select-box .select2-choices{
         border-radius: 4px; border: 1px solid #cfd9db; min-height: 34px;
     }
-    #cloneContainer > :not(:nth-child(2)) .control-label {
+    #cloneContainer > :not(:nth-child(1)) .control-label {
         display: none;
     }  
     .modal-footer {

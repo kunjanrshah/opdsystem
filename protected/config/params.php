@@ -11,7 +11,7 @@ return array(
     'copyrightInfo' => 'Copyright Ltd.',
     'companyAddress'=>"Radhe Clinic,\nSanjay Shah,\nMD",
     "ADMIN_BT_URL" => $ADMIN_BT_URL,
-    "defaultPageSize" => 15,
+    "defaultPageSize" => 25,
     "dateFormatJS" => "dd/mm/yy",
     "timeFormatJS"=>'h:i A',
     "dateFormatPHP" => "d/m/Y",

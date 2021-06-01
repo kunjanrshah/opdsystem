@@ -108,6 +108,9 @@ class Countries extends CActiveRecord {
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'pagination' => array(
+                'pageSize' => Yii::app()->params->defaultPageSize,
+            )
         ));
     }
 
