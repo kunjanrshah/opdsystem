@@ -170,6 +170,9 @@ class Users extends CActiveRecord {
         }        
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'pagination' => array(
+                'pageSize' => Yii::app()->params->defaultPageSize,
+            ),
             'sort' => array(
                 'defaultOrder' => 'id ASC',
             ),

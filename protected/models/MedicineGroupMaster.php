@@ -79,6 +79,9 @@ class MedicineGroupMaster extends CActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'pagination' => array(
+                'pageSize' => Yii::app()->params->defaultPageSize,
+            )
 		));
 	}
 
@@ -94,6 +97,8 @@ class MedicineGroupMaster extends CActiveRecord
 	}
 
 	public function getGroups() {
-		return self::model()->findAll();
+		$c = new CDbCriteria();
+		$c->order = "name ASC";
+		return self::model()->findAll($c);
 	}
 }

@@ -43,6 +43,9 @@ class CompaniesController extends Controller {
 
     public function actionAdd() {
         if (Yii::app()->request->isPostRequest) {
+            $response = array();
+            Yii::app()->clientscript->scriptMap['jquery.min.js'] = FALSE;
+            Yii::app()->clientscript->scriptMap['jquery.js'] = FALSE;
             $model = new CompanyMaster();
             // Uncomment the following line if AJAX validation is needed
             $this->performAjaxValidation($model, "form-company");
@@ -59,8 +62,8 @@ class CompaniesController extends Controller {
                 $this->redirect(array("/admin/Companies"));
             }
 
-            $outputJs = Yii::app()->request->isAjaxRequest;
-            $this->renderPartial('_form_company', array('model' => $model), false, $outputJs);
+            $this->layout = false;
+            $this->render('_form_company', array('model' => $model), false, FALSE);
         } else
             throw new CHttpException(400, common::translateText("400_ERROR"));
     }
@@ -69,6 +72,9 @@ class CompaniesController extends Controller {
 
     public function actionUpdate($id) {
         if (Yii::app()->request->isPostRequest) {
+            $response = array();
+            Yii::app()->clientscript->scriptMap['jquery.min.js'] = FALSE;
+            Yii::app()->clientscript->scriptMap['jquery.js'] = FALSE;
             $model = $this->loadModel($id, "CompanyMaster");
             // Uncomment the following line if AJAX validation is needed
             $this->performAjaxValidation($model, "form-company");
@@ -76,7 +82,6 @@ class CompaniesController extends Controller {
             if (isset($_POST['CompanyMaster'])) {
                 $model->attributes = $_POST['CompanyMaster'];
                 if ($model->validate()) {
-
                     $model->update();
                     Yii::app()->user->setFlash("success", common::translateText("UPDATE_SUCCESS"));
                 } else {
@@ -85,8 +90,8 @@ class CompaniesController extends Controller {
                 $this->redirect(array("/admin/Companies"));
             }
 
-            $outputJs = Yii::app()->request->isAjaxRequest;
-            $this->renderPartial('_form_company', array('model' => $model), false, $outputJs);
+            $this->layout = false;
+            $this->render('_form_company', array('model' => $model), false, FALSE);
         } else
             throw new CHttpException(400, common::translateText("400_ERROR"));
     }

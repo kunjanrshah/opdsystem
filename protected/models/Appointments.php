@@ -184,7 +184,7 @@ class Appointments extends CActiveRecord {
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'pagination' => array(
-                'pageSize' => 10,
+                'pageSize' => Yii::app()->params->defaultPageSize,
             ), 'sort' => array('defaultOrder' => 'appointment_date DESC,appointment_time ASC, token_number ASC')
         ));
     }

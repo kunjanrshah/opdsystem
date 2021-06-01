@@ -106,6 +106,9 @@ class Notifications extends CActiveRecord {
         $criteria->compare('deleted', 0);
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'pagination' => array(
+                'pageSize' => Yii::app()->params->defaultPageSize,
+            )
         ));
     }
 

@@ -87,6 +87,9 @@ class States extends CActiveRecord {
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'pagination' => array(
+                'pageSize' => Yii::app()->params->defaultPageSize,
+            )
         ));
     }
     public function getStates($country_id){

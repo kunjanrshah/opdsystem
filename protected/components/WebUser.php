@@ -71,6 +71,9 @@ class WebUser extends CWebUser {
         endif;
         $titlesArr['treatments/detailsupdate'] = "Treatment";
         $titlesArr['family/tree'] = "Family Tree";
+        $titlesArr['companies/index'] = "Manage Company";
+        $titlesArr['companies/add'] = "Add Company";
+        $titlesArr['companies/update'] = "Update Company";
         return $this->_titles = $titlesArr; 
     }
 }

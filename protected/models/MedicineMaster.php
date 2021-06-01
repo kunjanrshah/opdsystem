@@ -153,6 +153,9 @@ class MedicineMaster extends CActiveRecord {
         $sort->defaultOrder = 'newMedicineName ASC';
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'pagination' => array(
+                'pageSize' => Yii::app()->params->defaultPageSize,
+            ),
             'sort' => $sort
         ));
     }
