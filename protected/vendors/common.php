@@ -155,19 +155,19 @@ class common {
     }
 
     public static function isSuperAdmin() {
-        return (Yii::app()->user->user_group == UsersGroup::SUPER_ADMIN);
+        return (@Yii::app()->user->user_group == UsersGroup::SUPER_ADMIN);
     }
 
     public static function isDoctor() {
-        return (Yii::app()->user->user_group == UsersGroup::DOCTOR);
+        return (@Yii::app()->user->user_group == UsersGroup::DOCTOR);
     }
 
     public static function isCompounder() {
-        return (Yii::app()->user->user_group == UsersGroup::COMPOUNDER);
+        return (@Yii::app()->user->user_group == UsersGroup::COMPOUNDER);
     }
 
     public static function isPatient() {
-        return (Yii::app()->user->user_group == UsersGroup::PATIENT);
+        return (@Yii::app()->user->user_group == UsersGroup::PATIENT);
     }
 
     public static function getTitle($pageUrl) {
