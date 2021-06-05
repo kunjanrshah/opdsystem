@@ -19,43 +19,47 @@
  * @property integer $updated_dt
  * @property integer $updated_by
  */
-class MedicineMaster extends CActiveRecord {
+class MedicineMaster extends CActiveRecord
+{
 
     const INTERNAL = 1;
     const EXTERNAL = 2;
-    public $isInternalArr = array(self::INTERNAL => "Yes", self::EXTERNAL=> "No");
+    public $isInternalArr = array(self::INTERNAL => "Yes", self::EXTERNAL => "No");
     public $medicineTypeArr = array(1 => "Type1", 2 => "Type2");
-    public $start_date, $end_date, $medicine_name_with_type, $medicine_name_with_company,$group_id,$medicine_name_with_group;
-
+    public $start_date, $end_date, $medicine_name_with_type, $medicine_name_with_company, $group_id, $medicine_name_with_group;
+    public $medicine_name_with_medicine_type;
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
      * @return MedicineMaster the static model class
      */
-    public static function model($className = __CLASS__) {
+    public static function model($className = __CLASS__)
+    {
         return parent::model($className);
     }
 
     /**
      * @return string the associated database table name
      */
-    public function tableName() {
+    public function tableName()
+    {
         return 'medicine_master';
     }
 
     /**
      * @return array validation rules for model attributes.
      */
-    public function rules() {
+    public function rules()
+    {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('group_id,medicine_name, drug_id, is_internal, company_id', 'required'),
+            array('group_id,medicine_name, drug_id, is_internal, company_id, medicine_type', 'required'),
             array('drug_id, is_internal, medicine_type, dosages, company_id, deleted, created_dt, created_by, updated_dt, updated_by', 'numerical', 'integerOnly' => true),
             array("medicine_name", "unique"),
             array('medicine_name', 'length', 'max' => 128),
             array('duration_in_days', 'length', 'max' => 10),
-            array('group_id', 'safe'),
+            array('group_id,medicine_type', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, medicine_name,is_vaccine,stock, drug_id, is_internal, medicine_type, dosages, dosages_remarks, duration_in_days, company_id, deleted, created_dt, created_by, updated_dt, updated_by', 'safe', 'on' => 'search'),
@@ -65,17 +69,20 @@ class MedicineMaster extends CActiveRecord {
     /**
      * @return array relational rules.
      */
-    public function relations() {
+    public function relations()
+    {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
             "drugRel" => array(self::BELONGS_TO, "DrugsMaster", "drug_id"),
             "companyRel" => array(self::BELONGS_TO, "CompanyMaster", "company_id"),
             "groupRel" => array(self::BELONGS_TO, "MedicineGroupMaster", "group_id"),
+            "medicineTypeRel" => array(self::BELONGS_TO, "MedicineTypes", "medicine_type"),
         );
     }
 
-    public function defaultScope() {
+    public function defaultScope()
+    {
 
         $alias = $this->getTableAlias(false, false);
         return array(
@@ -84,22 +91,31 @@ class MedicineMaster extends CActiveRecord {
         );
     }
 
-    public function afterFind() {
+    public function afterFind()
+    {
         $type = ($this->is_internal == 1) ? "Internal" : "External";
         $this->medicine_name_with_type = $this->medicine_name . " (" . $type . ")";
-        $company_name = !empty($this->companyRel->company_name)? " (" . $this->companyRel->company_name . ")" : '';
+        $company_name = !empty($this->companyRel->company_name) ? " (" . $this->companyRel->company_name . ")" : '';
         $this->medicine_name_with_company = $this->medicine_name . $company_name;
-        $group_name = !empty($this->groupRel->name)? " (" . $this->groupRel->name . ")" : '';
+        $group_name = !empty($this->groupRel->name) ? " (" . $this->groupRel->name . ")" : '';
         $this->medicine_name_with_group = $this->medicine_name . $group_name;
+
+        $prefix = !empty($this->medicineTypeRel->name) ? $this->medicineTypeRel->name . ". " : "";
+        $this->medicine_name_with_medicine_type = $prefix . $this->medicine_name;
+
+        $this->medicine_name_with_company = $prefix . $this->medicine_name_with_company;
+
+        $this->medicine_name_with_type = $prefix . $this->medicine_name_with_type;
 
         return parent::afterFind();
     }
 
-    protected function beforeSave() {
-        if ($this->isNewRecord):
+    protected function beforeSave()
+    {
+        if ($this->isNewRecord) :
             $this->created_dt = common::getTimeStamp();
             $this->created_by = Yii::app()->user->id;
-        else:
+        else :
             $this->updated_dt = common::getTimeStamp();
             $this->updated_by = Yii::app()->user->id;
         endif;
@@ -109,7 +125,8 @@ class MedicineMaster extends CActiveRecord {
     /**
      * @return array customized attribute labels (name=>label)
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
             'id' => 'ID',
             'medicine_name' => 'Medicine Name',
@@ -134,23 +151,31 @@ class MedicineMaster extends CActiveRecord {
      * Retrieves a list of models based on the current search/filter conditions.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
-    public function search() {
+    public function search()
+    {
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
 
         $criteria = new CDbCriteria;
-        $criteria->select = "t.*, REPLACE(REPLACE(REPLACE(REPLACE(t.medicine_name, 'Syp.', '') , 'Tab.', '') , 'Cap.', ''), 'Inj.', '') AS newMedicineName";
-        $criteria->compare('medicine_name',$this->medicine_name,true);
-
+        $criteria->compare('medicine_name', $this->medicine_name, true);
+        $criteria->with = array('groupRel','companyRel','drugRel');
         $sort = new CSort();
+        $sort->defaultOrder = 't.id asc';
         $sort->attributes = array(
-                'medicine_name'=>array(
-                        'asc'=>'newMedicineName ASC',
-                        'desc'=>'newMedicineName DESC',
-                ),
-                '*', // this adds all of the other columns as sortable
+            'groupRel' => array(
+                'asc' => 'groupRel.name asc',
+                'desc' => 'groupRel.name desc'
+            ),
+            'companyRel' => array(
+                'asc' => 'companyRel.company_name asc',
+                'desc' => 'companyRel.company_name desc'
+            ),
+            'drugRel' => array(
+                'asc' => 'drugRel.drug_name asc',
+                'desc' => 'drugRel.drug_name desc'
+            ),
+            '*'
         );
-        $sort->defaultOrder = 'newMedicineName ASC';
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'pagination' => array(
@@ -159,5 +184,4 @@ class MedicineMaster extends CActiveRecord {
             'sort' => $sort
         ));
     }
-
 }

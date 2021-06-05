@@ -102,7 +102,6 @@ class DrugsMaster extends CActiveRecord {
         // should not be searched.
 
         $criteria = new CDbCriteria;
-        $criteria->select = "t.*, REPLACE(REPLACE(REPLACE(REPLACE(t.drug_name, 'Syp.', '') , 'Tab.', '') , 'Cap.', ''), 'Inj.', '') AS newMedicineName";
 
         $criteria->compare('id', $this->id);
         $criteria->compare('drug_name', $this->drug_name, true);
@@ -113,28 +112,15 @@ class DrugsMaster extends CActiveRecord {
         $criteria->compare('updated_dt', $this->updated_dt);
         $criteria->compare('updated_by', $this->updated_by);
 
-        $sort = new CSort();
-        $sort->attributes = array(
-                'drug_name'=>array(
-                        'asc'=>'newMedicineName ASC',
-                        'desc'=>'newMedicineName DESC',
-                ),
-                '*', // this adds all of the other columns as sortable
-        );
-        $sort->defaultOrder = 'newMedicineName ASC';
-
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'pagination' => array(
                 'pageSize' => Yii::app()->params->defaultPageSize,
-            ),
-            'sort' => $sort
+            )
         ));
     }
     public function getDrugs(){
       $criteria = new CDbCriteria;
-      $criteria->select = "t.*, REPLACE(REPLACE(REPLACE(REPLACE(t.drug_name, 'Syp.', '') , 'Tab.', '') , 'Cap.', ''), 'Inj.', '') AS newMedicineName";
-      $criteria->order = "newMedicineName ASC";
       return DrugsMaster::model()->findAll($criteria);
     }
 }

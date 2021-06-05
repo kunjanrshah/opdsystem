@@ -1,37 +1,34 @@
 <?php
-$deleteRight = common::checkActionAccess("medicine/delete");
+$deleteRight = common::checkActionAccess("medicinetypes/delete");
 ?>
 <!-- START Template Container -->
 <div class="container-fluid">
     <!-- START row -->
-    <?php $this->renderPartial("application.modules.admin.views.common._search", array("field"=>"medicine_name", "id"=>"medicine-grid", "model" => $model));?>
-    <?php
-    // $this->renderPartial("_search", array("model" => $model));
-    $this->renderPartial("/layouts/_message");
-    ?>
+    <?php $this->renderPartial("/layouts/_message"); ?>
+    <?php $this->renderPartial("application.modules.admin.views.common._search", array("field"=>"name", "id"=>"medicine-types-grid", "model" => $model));?>
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-primary">
                 <div class="panel-toolbar-wrapper pl0 pt5 pb5">
                     <div class="panel-toolbar pl10">
                         <div class="pull-left">
-                            <span class="semibold">&nbsp;&nbsp;<?php echo common::getTitle("medicine/index"); ?></span>  
+                            <span class="semibold">&nbsp;&nbsp;<?php echo common::getTitle("medicinetypes/index"); ?></span>  
                         </div>
                     </div>
                     <div class="panel-toolbar text-right">
                         <?php
-                        if (common::checkActionAccess("medicine/add")) :
-                            echo CHtml::Link(common::getTitle("medicine/add") . ' <i class="ico-plus"></i>', array("medicine/add"), array(
-                                "title" => common::getTitle("medicine/add"),
+                        if (common::checkActionAccess("medicinetypes/add")) :
+                            echo CHtml::Link(common::getTitle("medicinetypes/add") . ' <i class="ico-plus"></i>', array("medicinetypes/add"), array(
+                                "title" => common::getTitle("medicinetypes/add"),
                                 "data-placement" => "bottom",
                                 "rel" => "tooltip",
                                 "class" => "btn btn-sm btn-default addUpdateRecord",
-                                "data-original-title" => common::getTitle("medicine/add")
+                                "data-original-title" => common::getTitle("medicinetypes/add")
                             ));
                         endif;
-                        
+
                         if ($deleteRight) :
-                            echo CHtml::Link('<i class="ico-remove3"></i>', array("/admin/medicine/delete"), array("class" => "ml5 btn btn-sm btn-danger deleteRecord multipleDelete"));
+                            echo CHtml::Link('<i class="ico-remove3"></i>', array("/admin/medicinetypes/delete"), array("class" => "ml5 btn btn-sm btn-danger deleteRecord multipleDelete"));
                         endif;
                         ?>
                     </div>
@@ -39,11 +36,12 @@ $deleteRight = common::checkActionAccess("medicine/delete");
                 <!-- panel body with collapse capabale -->
                 <div class="table-responsive panel-collapse pull out">                  
                     <?php
-                    $updateRight = common::checkActionAccess("medicine/index");
-                    $deleteRight = common::checkActionAccess("medicine/delete");
-                    $columnClass = (!$updateRight && !$deleteRight) ? "hide" : "";
+                    $updateRight = common::checkActionAccess("medicinetypes/index");
+                    $deleteRight = common::checkActionAccess("medicinetypes/delete");
+                    $permissionRight = common::checkActionAccess("medicinetypes/permissions");
+                    $columnClass = (!$updateRight && !$deleteRight && !$permissionRight) ? "hide" : "";
                     $this->widget("zii.widgets.grid.CGridView", array(
-                        "id" => "medicine-grid",
+                        "id" => "medicine-types-grid",
                         "dataProvider" => $model->search(),
                         "columns" => array(
                             array(
@@ -51,27 +49,9 @@ $deleteRight = common::checkActionAccess("medicine/delete");
                                 'selectableRows' => 2,
                                 'value' => '$data["id"]',
                                 "checkBoxHtmlOptions" => array("name" => "idList[]"),
+                                "htmlOptions" => array("width" => "3%")
                             ),
-                            "medicine_name",
-                            array(
-                                'header'=>'Group',
-                                'name'=>'groupRel',
-                                'value'=>'$data->groupRel->name'
-                            ),
-                            array(
-                                'header'=>'Drug',
-                                'name'=>'drugRel',
-                                'value'=>'$data->drugRel->drug_name'
-                            ),
-                            array(
-                                'header'=>'Company',
-                                'name'=>'companyRel',
-                                'value'=>'$data->companyRel->company_name'
-                            ),
-                            array(
-                                "name" => "is_vaccine",
-                                "value" => '!empty($data->is_vaccine)?"Yes":"No"'
-                            ),
+                            "name",
                             array(
                                 "class" => "CButtonColumn",
                                 "header" => "Action",
@@ -93,15 +73,15 @@ $deleteRight = common::checkActionAccess("medicine/delete");
                                     "updateRecord" => array(
                                         "label" => '<i class="icon ico-pencil"></i> ' . common::translateText("UPDATE_BTN_TEXT"),
                                         "imageUrl" => false,
-                                        "url" => 'Yii::app()->createUrl("/admin/medicine/update", array("id"=>$data->id))',
-                                        "options" => array("class" => "addUpdateRecord mr5", "title" => common::getTitle("medicine/update")),
+                                        "url" => 'Yii::app()->createUrl("/admin/medicinetypes/update", array("id"=>$data->id))',
+                                        "options" => array("class" => "addUpdateRecord mr5", "title" => common::getTitle("medicinetypes/update")),
                                         "visible" => ($updateRight) ? 'true' : 'false',
                                     ),
                                     "deleteRecord" => array(
                                         "label" => '<i class="icon ico-trash"></i> ' . common::translateText("DELETE_BTN_TEXT"),
                                         "imageUrl" => false,
-                                        "url" => 'Yii::app()->createUrl("/admin/medicine/delete", array("id"=>$data->id))',
-                                        "options" => array("class" => "deleteRecord text-danger mr5", "title" => common::getTitle("medicine/delete")),
+                                        "url" => 'Yii::app()->createUrl("/admin/medicinetypes/delete", array("id"=>$data->id))',
+                                        "options" => array("class" => "deleteRecord text-danger mr5", "title" => common::getTitle("medicinetypes/delete")),
                                         "visible" => ($deleteRight) ? 'true' : 'false',
                                     ),
                                 ),
@@ -127,12 +107,12 @@ $deleteRight = common::checkActionAccess("medicine/delete");
                                     alert('" . common::translateText("INVALID_SELECTION") . "'); return false;  
                                 }
                             }
-                            var totalRecs = $('input[type=checkbox]:checked').not('#medicine-grid_c0_all').length;
+                            var totalRecs = $('input[type=checkbox]:checked').not('#medicine-types-grid_c0_all').length;
                             totalRecs = (totalRecs=='0')?'this':totalRecs;
                             if(!confirm('Are you sure to delete '+totalRecs+' record(s) ?')) return false;                                               
                             var url = $(this).attr('href');
                             $.post(url,idList,function(res){
-                                $.fn.yiiGridView.update('medicine-grid');
+                                $.fn.yiiGridView.update('medicine-types-grid');
                                 $('#flash-message').html(res).animate({opacity: 1.0}, 3000).fadeOut('slow');
                             });
                             return false;
