@@ -41,21 +41,28 @@
                 ?>
                 <!-- User Group Info  -->
                 <div class="row nm">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <?php echo $form->labelEx($model, "group_id", array("class" => "control-label")); ?>
                             <?php echo common::select2($model, "group_id", CHtml::ListData(MedicineGroupMaster::model()->getGroups(), 'id', 'name'), array("prompt" => common::translateText("DROPDOWN_TEXT"), "class" => "form-control")); ?>
                             <?php echo $form->error($model, "group_id", array("class" => "parsley-custom-error-message")); ?>                        
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <?php echo $form->labelEx($model, "medicine_type", array("class" => "control-label")); ?>
+                            <?php echo common::select2($model, "medicine_type", CHtml::ListData(MedicineTypes::model()->findAll(), 'id', 'name'), array("prompt" => common::translateText("DROPDOWN_TEXT"), "class" => "form-control")); ?>
+                            <?php echo $form->error($model, "medicine_type", array("class" => "parsley-custom-error-message")); ?>                        
+                        </div>
+                    </div> 
+                    <div class="col-md-3">
                         <div class="form-group">
                             <?php echo $form->labelEx($model, "medicine_name", array("class" => "control-label")); ?>
                             <?php echo $form->textField($model, "medicine_name", array("class" => "form-control")); ?>
                             <?php echo $form->error($model, "medicine_name", array("class" => "parsley-custom-error-message")); ?>                        
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <?php echo $form->labelEx($model, "company_id", array("class" => "control-label")); ?>
                             <?php echo common::select2($model, "company_id", CHtml::ListData(CompanyMaster::model()->getCompanies(), 'id', 'company_name'), array("prompt" => common::translateText("DROPDOWN_TEXT"), "class" => "form-control")); ?>

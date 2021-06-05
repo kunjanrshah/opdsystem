@@ -1,8 +1,7 @@
 <?php
 $criteria = new CDbCriteria();
-$criteria->select = "t.*, REPLACE(REPLACE(REPLACE(REPLACE(t.medicine_name, 'Syp.', '') , 'Tab.', '') , 'Cap.', ''), 'Inj.', '') AS newMedicineName";
 $criteria->condition="is_internal='1'";
-$criteria->order = "newMedicineName ASC";
+$criteria->order = "medicine_name ASC";
 $medicinesModel = MedicineMaster::model()->findAll($criteria);
 
 $criteria = new CDbCriteria();
@@ -20,7 +19,7 @@ foreach ($medicinesModel as $medicine) {
 }
 $tempExternal = array();
 foreach ($medicinesModel2 as $medicine) {
-    list($type, $name) = explode('.', $medicine->medicine_name_with_group);
+    list($type, $name) = explode('.asdfasdfas', $medicine->medicine_name_with_group);
     if(!empty($type) && !empty($name)) {
         $tempExternal[$medicine->id] = trim($name."$$$".$type);
     } else {

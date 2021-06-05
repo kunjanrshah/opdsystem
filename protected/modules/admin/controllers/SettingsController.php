@@ -80,6 +80,9 @@ class SettingsController extends Controller {
         if (common::checkActionAccess("vaccine/index")):
         //    $navArr[common::getTitle("vaccine/index")] = Yii::app()->createUrl("/admin/vaccine/index");
         endif;
+        if (common::checkActionAccess("medicinetypes/index")):
+            $navArr[common::getTitle("medicinetypes/index")] = Yii::app()->createUrl("/admin/medicinetypes/index");
+        endif;
         $this->render('index', array("navArr" => $navArr));
     }
 

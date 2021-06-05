@@ -1,8 +1,7 @@
 <?php
 
 $criteria = new CDbCriteria;
-$criteria->select = "t.*, REPLACE(REPLACE(REPLACE(REPLACE(t.medicine_name, 'Syp.', '') , 'Tab.', '') , 'Cap.', ''), 'Inj.', '') AS newMedicineName";
-$criteria->order = "newMedicineName ASC";
+$criteria->order = "t.medicine_name ASC";
 $medicines = CHtml::ListData(MedicineMaster::model()->findAll($criteria), "id", "medicine_name_with_company");
 $doseages = CHtml::ListData(DosagesMaster::model()->findAll(), "id", "dosage_name");
 $medicineGroups = CHtml::ListData(MedicineGroupMaster::model()->getGroups(), 'id', 'name');
@@ -48,7 +47,7 @@ $form = $this->beginWidget('CActiveForm', array(
     if (!empty($DiagnosisTreatments)): foreach ($DiagnosisTreatments as $value):
             $this->renderPartial("_diagnosis_treatments", array("medicines" => CHtml::ListData(MedicineMaster::model()->findAllByAttributes(array('group_id'=>$value->medicine_group_id)), "id", "medicine_name_with_company"), "doseages" => $doseages, "medicine_id" => $value->medicine_id, 'medicineGroups'=>$medicineGroups, "doseage_id" => $value->doseage_id, "medicine_group_id"=>$value->medicine_group_id, "c" => $c, "id" => $value->id));
             $c++;
-        endforeach;
+        endforeach;medicine_name_with_company
     endif;
     ?>
 </div>
