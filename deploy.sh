@@ -31,7 +31,7 @@ fi
 
 if [ -n "$BRANCH" ]; then
     git fetch
-    git pull upstream $BRANCH
+    git pull origin $BRANCH
     RUNTIME_FOLDER=/protected/runtime
     if [ -d "$RUNTIME_FOLDER" ]; then
         mkdir "$RUNTIME_FOLDER"
