@@ -24,9 +24,14 @@ if [ -f "$DEV_FILE" ]; then
     BRANCH="develop"
 fi
 
+DEV_FILE=qa
+if [ -f "$DEV_FILE" ]; then
+    BRANCH="develop"
+fi
+
 if [ -n "$BRANCH" ]; then
     git fetch
-    git pull origin $BRANCH
+    git pull upstream $BRANCH
     RUNTIME_FOLDER=/protected/runtime
     if [ -d "$RUNTIME_FOLDER" ]; then
         mkdir "$RUNTIME_FOLDER"
