@@ -24,6 +24,11 @@ if [ -f "$DEV_FILE" ]; then
     BRANCH="develop"
 fi
 
+DEV_FILE=qa
+if [ -f "$DEV_FILE" ]; then
+    BRANCH="develop"
+fi
+
 if [ -n "$BRANCH" ]; then
     git fetch
     git pull origin $BRANCH
