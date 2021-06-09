@@ -25,9 +25,9 @@ if ($production) {
 } else {
     $WEB_URL = 'http://' . $HTTP_HOST . '/opdsystem/';
     $DOCUMENT_PATH = $_SERVER['DOCUMENT_ROOT'] . '/opdsystem/';
-    $DB_USERNAME = "root";
-    $DB_PASSWORD = "tiger"; //""
-    $DB_NAME = "docker"; //superzcr_opdsystem
+    $DB_USERNAME = "docker";
+    $DB_PASSWORD = "docker";
+    $DB_NAME = "docker";
     $HOST_NAME = "database";
     $SESSION_NAME = "opdystem_dev";
 }

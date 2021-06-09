@@ -71,7 +71,7 @@
                     </div>
                 </div>    
                 <div class="row nm">
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <?php echo $form->labelEx($model, "drug_id", array("class" => "control-label")); ?>
                             <?php echo common::select2($model, "drug_id", CHtml::ListData(DrugsMaster::model()->getDrugs(), 'id', 'drug_name'), array("prompt" => common::translateText("DROPDOWN_TEXT"), "class" => "form-control")); ?>
