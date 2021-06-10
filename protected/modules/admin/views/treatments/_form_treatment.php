@@ -254,18 +254,23 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
         $("#cloneContainerCharge").find(".amount").each(function (i, v) {
             debit_amount = Number(v.value) + Number(debit_amount);
         });
-        $("#Treatments_debit_amount").val(debit_amount);
+        $("#Treatments_debit_amount").val(0);
         $("#Treatments_credit_amount").val(debit_amount);
     }
     $("#Treatments_credit_amount").change(function () {
+        var new_credit = $(this).val();
         udpateDebitAmount();
-        var debit = $("#Treatments_debit_amount").val();
         var credit = $(this).val();
-
-        if (debit != '' && credit != '' && debit != '0' && credit != '0') {
-            var final = Number(debit) - Number(credit);
-            $("#Treatments_debit_amount").val(final)
+        // var debit = $("#Treatments_debit_amount").val();
+        if(new_credit <=  credit) {
+            $("#Treatments_debit_amount").val(Number(credit) - Number(new_credit));
+        } else {
+            $("#Treatments_debit_amount").val(0);
         }
+        // if (debit != '' && credit != '' && debit != '0' && credit != '0') {
+        //     var final = Number(debit) - Number(credit);
+        //     $("#Treatments_debit_amount").val(final)
+        // }
     });
 
     function cloneMe(medicine_id, doseage_id, days) {
