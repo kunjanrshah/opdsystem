@@ -54,7 +54,7 @@ $deleteRight = common::checkActionAccess("medicine/delete");
                             ),
                             array(
                                 'name'=>'medicine_name',
-                                'value'=>'!empty($data->medicineTypeRel->name)?$data->medicineTypeRel->name." ".$data->medicine_name : $data->medicine_name'
+                                'value'=>'$data->medicineNameFormated'
                             ),
                             array(
                                 'header'=>'Group',
