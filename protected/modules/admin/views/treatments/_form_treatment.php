@@ -11,32 +11,7 @@ $criteria->together = true;
 $criteria->order = "groupRel.name ASC";
 $medicinesModel2 = MedicineMaster::model()->findAll($criteria);
 
-$medicines = array();
-$internal = array();
-$external = array();
-foreach ($medicinesModel as $medicine) {
-    $internal[$medicine->id] = $medicine->medicine_name_with_type;
-}
-$tempExternal = array();
-foreach ($medicinesModel2 as $medicine) {
-    list($type, $name) = explode('.asdfasdfas', $medicine->medicine_name_with_group);
-    if(!empty($type) && !empty($name)) {
-        $tempExternal[$medicine->id] = trim($name."$$$".$type);
-    } else {
-        $tempExternal[$medicine->id] = trim($medicine->medicine_name_with_group);
-    }
-}
-asort($tempExternal);
-foreach ($tempExternal as $key=>$medicine) {
-    list($name, $type) = explode('$$$', $medicine);
-    if(!empty($type) && !empty($name)) {
-        $external[$key] = trim($type.'. '.$name);
-    } else {
-        $external[$key] = trim($medicine);
-    }
-}
-
-$medicines = array("Internal" => $internal) + array("External" => $external);
+$medicines = array("Internal" => CHtml::ListData($medicinesModel, 'id', 'medicineTypeMedicineName')) + array("External" => CHtml::ListData($medicinesModel2, 'id', 'medicineTypeMedicineName'));
 
 $doseages = CHtml::ListData(DosagesMaster::model()->findAll(), "id", "dosage_name");
 $charges = CHtml::ListData(ChargesMaster::model()->findAll(), "id", "charge_title");
