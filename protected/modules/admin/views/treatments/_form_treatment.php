@@ -11,7 +11,7 @@ $criteria->together = true;
 $criteria->order = "groupRel.name ASC";
 $medicinesModel2 = MedicineMaster::model()->findAll($criteria);
 
-$medicines = array("Internal" => CHtml::ListData($medicinesModel, 'id', 'medicineTypeMedicineName')) + array("External" => CHtml::ListData($medicinesModel2, 'id', 'medicineTypeMedicineName'));
+$medicines = array("Internal" => CHtml::ListData($medicinesModel, 'id', 'medicineNameFormated')) + array("External" => CHtml::ListData($medicinesModel2, 'id', 'medicineNameFormated'));
 
 $doseages = CHtml::ListData(DosagesMaster::model()->findAll(), "id", "dosage_name");
 $charges = CHtml::ListData(ChargesMaster::model()->findAll(), "id", "charge_title");
