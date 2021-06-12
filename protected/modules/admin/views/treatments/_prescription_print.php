@@ -12,7 +12,7 @@
             <?php foreach ($model->treatmentDetailsRel as $dValue): ?>
                 <?php if ($dValue->medicineRel->is_internal == 2): ?>
                     <tr>
-                        <td class="valign-top text-center"><span class="bold"><?php echo $dValue->medicineRel->medicine_name; ?></span></td>
+                        <td class="valign-top text-center"><span class="bold"><?php echo $dValue->medicineRel->medicineTypeMedicineName; ?></span></td>
                         <td class="valign-top text-center"><span class="bold"><?php echo $dValue->doseageRel->dosage_name; ?></span></td>
                         <td class="valign-top text-center"><span class="text-primary bold"><?php echo $dValue->days; ?></span></td>
                     </tr>
