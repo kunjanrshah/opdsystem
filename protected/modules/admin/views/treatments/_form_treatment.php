@@ -8,7 +8,7 @@ $criteria = new CDbCriteria();
 $criteria->condition="is_internal!='1'";
 $criteria->with = "groupRel";
 $criteria->together = true;
-$criteria->order = "groupRel.name ASC";
+$criteria->order = "medicine_name ASC";
 $medicinesModel2 = MedicineMaster::model()->findAll($criteria);
 
 $medicines = array("Internal" => CHtml::ListData($medicinesModel, 'id', 'medicineNameFormated')) + array("External" => CHtml::ListData($medicinesModel2, 'id', 'medicineNameFormated'));
