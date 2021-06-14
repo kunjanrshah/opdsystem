@@ -88,4 +88,37 @@ class CommonController extends Controller {
         Yii::app()->end();
     }
 
+    public function actionMigrate() {
+        exit("no allowed");
+        $medicines = Yii::app()->db->createCommand()
+            ->select('id, medicine_name')
+            ->from('medicine_master m')
+            ->queryAll();
+
+        $medicinesTypes = Yii::app()->db->createCommand()
+            ->select('id, name')
+            ->from('medicine_types m')
+            ->queryAll();
+        
+        $mtypes = array();
+        foreach($medicinesTypes as $type) {
+            $mtypes[$type['id']] = trim($type['name']);
+        }
+        $i=0;
+        if(!empty($medicines)) {
+            foreach($medicines as $medicine_id => $medicine) {
+                $medicine_name = $medicine['medicine_name'];
+                if(!empty($medicine_name)) {
+                    foreach($mtypes as $medicine_type => $name) {
+                        if(strpos($medicine_name, $name) !== false){
+                            Yii::app()->db->createCommand('update medicine_master SET medicine_type="'.$medicine_type.'", medicine_name=REPLACE(medicine_name, "'.$name.'.", "")  WHERE id="'.$medicine_id.'"')->execute();
+                            $i++;
+                        }
+                    }
+                }
+            }
+        }
+        echo $i." records updated";exit;
+    }
+
 }
