@@ -97,7 +97,7 @@ class MedicineMaster extends CActiveRecord
     {        
         $medicine_type = "";
         if(!empty($this->medicineTypeRel->name)) {
-            $medicine_type = $this->medicineTypeRel->name.". ";
+            $medicine_type = " ".$this->medicineTypeRel->name.". ";
         }
         $medicine_group = !empty($this->groupRel->name) ? " (Group: ".$this->groupRel->name.")": '';
         $medicine_content = !empty($this->drugRel->drug_name) ?  " (Content: ".$this->drugRel->drug_name.")": '';;
@@ -107,7 +107,7 @@ class MedicineMaster extends CActiveRecord
         $this->medicineTypeMedicineName = $medicine_type.$this->medicine_name;
 
         //Medicine name format: {MedicineType}. {MedicineName} {MedicineGroup} {Medicine Content} {Medicine Company}
-        $this->medicineNameFormated = $this->medicine_name.(!empty($medicine_type)?"[".trim($medicine_type)."]":"").$medicine_content.$medicine_group.$medicine_company;
+        $this->medicineNameFormated = $this->medicine_name.(!empty($medicine_type)?" [".trim($medicine_type)."] ":"").$medicine_content.$medicine_group.$medicine_company;
 
         return parent::afterFind();
     }
