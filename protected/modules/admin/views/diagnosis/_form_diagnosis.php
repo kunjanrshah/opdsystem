@@ -2,7 +2,7 @@
 
 $criteria = new CDbCriteria;
 $criteria->order = "t.medicine_name ASC";
-$medicines = CHtml::ListData(MedicineMaster::model()->findAll($criteria), "id", "medicineNameFormated");
+$medicines = CHtml::ListData(MedicineMaster::model()->findAll($criteria), "id", "medicineTypeMedicineName");
 $doseages = CHtml::ListData(DosagesMaster::model()->findAll(), "id", "dosage_name");
 $medicineGroups = CHtml::ListData(MedicineGroupMaster::model()->getGroups(), 'id', 'name');
 $form = $this->beginWidget('CActiveForm', array(
@@ -45,7 +45,7 @@ $form = $this->beginWidget('CActiveForm', array(
     $DiagnosisTreatments = DiagnosisTreatments::model()->findAllByAttributes(array("diagnosis_id"=>$model->id));
     //echo count($DiagnosisTreatments);
     if (!empty($DiagnosisTreatments)): foreach ($DiagnosisTreatments as $value):
-            $this->renderPartial("_diagnosis_treatments", array("medicines" => CHtml::ListData(MedicineMaster::model()->findAllByAttributes(array('group_id'=>$value->medicine_group_id)), "id", "medicineNameFormated"), "doseages" => $doseages, "medicine_id" => $value->medicine_id, 'medicineGroups'=>$medicineGroups, "doseage_id" => $value->doseage_id, "medicine_group_id"=>$value->medicine_group_id, "c" => $c, "id" => $value->id));
+            $this->renderPartial("_diagnosis_treatments", array("medicines" => CHtml::ListData(MedicineMaster::model()->findAllByAttributes(array('group_id'=>$value->medicine_group_id)), "id", "medicineTypeMedicineName"), "doseages" => $doseages, "medicine_id" => $value->medicine_id, 'medicineGroups'=>$medicineGroups, "doseage_id" => $value->doseage_id, "medicine_group_id"=>$value->medicine_group_id, "c" => $c, "id" => $value->id));
             $c++;
         endforeach;
     endif;

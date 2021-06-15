@@ -82,7 +82,7 @@ class CommonController extends Controller {
         $select = common::translateText("DROPDOWN_TEXT");
         echo CHtml::tag('option', array('value' => ""), CHtml::encode($select), true);
         if ($model): foreach ($model as $value):
-                echo CHtml::tag('option', array('value' => $value->id,), CHtml::encode($value->medicine_name), true);
+                echo CHtml::tag('option', array('value' => $value->id,), CHtml::encode($value->medicineTypeMedicineName), true);
             endforeach;
         endif;
         Yii::app()->end();
