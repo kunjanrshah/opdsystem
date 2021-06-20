@@ -78,14 +78,50 @@ class CommonController extends Controller {
 
     public function actionGetMedicines($id = null) {
         $id = !empty($_POST["id"]) ? $_POST["id"] : $id;
-        $model = MedicineMaster::model()->findAllByAttributes(array("group_id" => $id));
+        $criteria = new CDbCriteria();
+        $criteria->condition = "group_id='".$id."'";
+        $criteria->order = "medicine_name ASC";
+        $model = MedicineMaster::model()->findAll($criteria);
         $select = common::translateText("DROPDOWN_TEXT");
         echo CHtml::tag('option', array('value' => ""), CHtml::encode($select), true);
         if ($model): foreach ($model as $value):
-                echo CHtml::tag('option', array('value' => $value->id,), CHtml::encode($value->medicine_name_with_medicine_type), true);
+                echo CHtml::tag('option', array('value' => $value->id,), CHtml::encode($value->medicineTypeMedicineName), true);
             endforeach;
         endif;
         Yii::app()->end();
+    }
+
+    public function actionMigrate() {
+        exit("no allowed");
+        $medicines = Yii::app()->db->createCommand()
+            ->select('id, medicine_name')
+            ->from('medicine_master m')
+            ->queryAll();
+
+        $medicinesTypes = Yii::app()->db->createCommand()
+            ->select('id, name')
+            ->from('medicine_types m')
+            ->queryAll();
+        
+        $mtypes = array();
+        foreach($medicinesTypes as $type) {
+            $mtypes[$type['id']] = trim($type['name']);
+        }
+        $i=0;
+        if(!empty($medicines)) {
+            foreach($medicines as $medicine_id => $medicine) {
+                $medicine_name = $medicine['medicine_name'];
+                if(!empty($medicine_name)) {
+                    foreach($mtypes as $medicine_type => $name) {
+                        if(strpos($medicine_name, $name) !== false){
+                            Yii::app()->db->createCommand('update medicine_master SET medicine_type="'.$medicine_type.'", medicine_name=REPLACE(medicine_name, "'.$name.'.", "")  WHERE id="'.$medicine_id.'"')->execute();
+                            $i++;
+                        }
+                    }
+                }
+            }
+        }
+        echo $i." records updated";exit;
     }
 
 }

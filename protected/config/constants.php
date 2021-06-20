@@ -13,6 +13,7 @@ if ($production) {
     $DB_PASSWORD = "!61tFE#9WmAG";
     $DB_NAME = "superbi1_opdsystem";
     $HOST_NAME = "localhost";
+    $SESSION_NAME = "opdystem_prod";
 } else if ($qa) {
     $WEB_URL = 'http://' . $HTTP_HOST . '/opd_uat/';
     $DOCUMENT_PATH = $_SERVER['DOCUMENT_ROOT'] . '/opd_uat/';
@@ -20,13 +21,15 @@ if ($production) {
     $DB_PASSWORD = "opd_uat";
     $DB_NAME = "superbi1_opd_uat";
     $HOST_NAME = "localhost";
+    $SESSION_NAME = "opdystem_qa";
 } else {
     $WEB_URL = 'http://' . $HTTP_HOST . '/opdsystem/';
     $DOCUMENT_PATH = $_SERVER['DOCUMENT_ROOT'] . '/opdsystem/';
-    $DB_USERNAME = "root";
-    $DB_PASSWORD = "tiger"; //""
-    $DB_NAME = "docker"; //superzcr_opdsystem
+    $DB_USERNAME = "docker";
+    $DB_PASSWORD = "docker";
+    $DB_NAME = "docker";
     $HOST_NAME = "database";
+    $SESSION_NAME = "opdystem_dev";
 }
 $UPLOADS_PATH = $DOCUMENT_PATH . "uploads/";
 $UPLOADS_URL = $WEB_URL . "uploads/";

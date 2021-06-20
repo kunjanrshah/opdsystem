@@ -52,7 +52,10 @@ $deleteRight = common::checkActionAccess("medicine/delete");
                                 'value' => '$data["id"]',
                                 "checkBoxHtmlOptions" => array("name" => "idList[]"),
                             ),
-                            "medicine_name",
+                            array(
+                                'name'=>'medicine_name',
+                                'value'=>'$data->medicineTypeMedicineName'
+                            ),
                             array(
                                 'header'=>'Group',
                                 'name'=>'groupRel',

@@ -34,6 +34,9 @@ return array(
     ),
     // application components
     'components' => array( 
+        'session' => array(
+            'sessionName' => $SESSION_NAME,
+        ),
         'messages' => array(
             'language' => 'en'
         ),

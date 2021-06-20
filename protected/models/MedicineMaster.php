@@ -26,8 +26,10 @@ class MedicineMaster extends CActiveRecord
     const EXTERNAL = 2;
     public $isInternalArr = array(self::INTERNAL => "Yes", self::EXTERNAL => "No");
     public $medicineTypeArr = array(1 => "Type1", 2 => "Type2");
-    public $start_date, $end_date, $medicine_name_with_type, $medicine_name_with_company, $group_id, $medicine_name_with_group;
-    public $medicine_name_with_medicine_type;
+    public $start_date, $end_date, $medicine_name_with_company, $group_id;
+    public $medicineTypeMedicineName;
+    public $medicineNameFormated;
+    
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -92,20 +94,20 @@ class MedicineMaster extends CActiveRecord
     }
 
     public function afterFind()
-    {
-        $type = ($this->is_internal == 1) ? "Internal" : "External";
-        $this->medicine_name_with_type = $this->medicine_name . " (" . $type . ")";
-        $company_name = !empty($this->companyRel->company_name) ? " (" . $this->companyRel->company_name . ")" : '';
-        $this->medicine_name_with_company = $this->medicine_name . $company_name;
-        $group_name = !empty($this->groupRel->name) ? " (" . $this->groupRel->name . ")" : '';
-        $this->medicine_name_with_group = $this->medicine_name . $group_name;
+    {        
+        $medicine_type = "";
+        if(!empty($this->medicineTypeRel->name)) {
+            $medicine_type = " ".$this->medicineTypeRel->name.". ";
+        }
+        $medicine_group = !empty($this->groupRel->name) ? " (Group: ".$this->groupRel->name.")": '';
+        $medicine_content = !empty($this->drugRel->drug_name) ?  " (Content: ".$this->drugRel->drug_name.")": '';;
+        $medicine_company = !empty($this->companyRel->company_name) ? " (Company: ".$this->companyRel->company_name.")": '';;
 
-        $prefix = !empty($this->medicineTypeRel->name) ? $this->medicineTypeRel->name . ". " : "";
-        $this->medicine_name_with_medicine_type = $prefix . $this->medicine_name;
+        //Medicine name with Prefix Tab
+        $this->medicineTypeMedicineName = $medicine_type.$this->medicine_name;
 
-        $this->medicine_name_with_company = $prefix . $this->medicine_name_with_company;
-
-        $this->medicine_name_with_type = $prefix . $this->medicine_name_with_type;
+        //Medicine name format: {MedicineType}. {MedicineName} {MedicineGroup} {Medicine Content} {Medicine Company}
+        $this->medicineNameFormated = $this->medicine_name.(!empty($medicine_type)?" [".trim($medicine_type)."] ":"").$medicine_content.$medicine_group.$medicine_company;
 
         return parent::afterFind();
     }

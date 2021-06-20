@@ -15,14 +15,14 @@ class WebUser extends CWebUser {
     // access it by Yii::app()->user->isAdmin()
     function loadWebUser(){
         $userModel = $this->loadUser(Yii::app()->user->id);
-        if(is_object($userModel)): 
+        if(is_object($userModel) && isset(Yii::app()->user->user_group)): 
             $this->loadPermissions(Yii::app()->user->user_group);
             $this->loadTitles();
         endif;
     }
     function isSuperAdmin() {
         
-        return intval($this->_model->user_group) == UsersGroup::SUPER_ADMIN;
+        return isset($this->_model->user_group) && intval($this->_model->user_group) == UsersGroup::SUPER_ADMIN;
     }
 
     function getProfilePicture($profile_pic = null, $id = null) {

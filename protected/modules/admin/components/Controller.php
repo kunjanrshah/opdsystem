@@ -32,7 +32,7 @@ class Controller extends CController {
         if (!in_array(Yii::app()->controller->id,$allowedPath)  && !Users::model()->isAdminLoggedIn()) {
             $this->redirect(Yii::app()->user->loginUrl);
         }
-        if(!Yii::app()->user->isGuest){
+        if(!Yii::app()->user->isGuest && !empty(Yii::app()->user->user_group)){
             $this->isDoctor     = common::isDoctor();
             $this->isSuperAdmin = common::isSuperAdmin();
             $this->isCompounder = common::isCompounder();

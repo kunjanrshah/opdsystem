@@ -8,35 +8,10 @@ $criteria = new CDbCriteria();
 $criteria->condition="is_internal!='1'";
 $criteria->with = "groupRel";
 $criteria->together = true;
-$criteria->order = "groupRel.name ASC";
+$criteria->order = "medicine_name ASC";
 $medicinesModel2 = MedicineMaster::model()->findAll($criteria);
 
-$medicines = array();
-$internal = array();
-$external = array();
-foreach ($medicinesModel as $medicine) {
-    $internal[$medicine->id] = $medicine->medicine_name_with_type;
-}
-$tempExternal = array();
-foreach ($medicinesModel2 as $medicine) {
-    list($type, $name) = explode('.asdfasdfas', $medicine->medicine_name_with_group);
-    if(!empty($type) && !empty($name)) {
-        $tempExternal[$medicine->id] = trim($name."$$$".$type);
-    } else {
-        $tempExternal[$medicine->id] = trim($medicine->medicine_name_with_group);
-    }
-}
-asort($tempExternal);
-foreach ($tempExternal as $key=>$medicine) {
-    list($name, $type) = explode('$$$', $medicine);
-    if(!empty($type) && !empty($name)) {
-        $external[$key] = trim($type.'. '.$name);
-    } else {
-        $external[$key] = trim($medicine);
-    }
-}
-
-$medicines = array("Internal" => $internal) + array("External" => $external);
+$medicines = array("Internal" => CHtml::ListData($medicinesModel, 'id', 'medicineNameFormated')) + array("External" => CHtml::ListData($medicinesModel2, 'id', 'medicineNameFormated'));
 
 $doseages = CHtml::ListData(DosagesMaster::model()->findAll(), "id", "dosage_name");
 $charges = CHtml::ListData(ChargesMaster::model()->findAll(), "id", "charge_title");
@@ -254,18 +229,23 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
         $("#cloneContainerCharge").find(".amount").each(function (i, v) {
             debit_amount = Number(v.value) + Number(debit_amount);
         });
-        $("#Treatments_debit_amount").val(debit_amount);
+        $("#Treatments_debit_amount").val(0);
         $("#Treatments_credit_amount").val(debit_amount);
     }
     $("#Treatments_credit_amount").change(function () {
+        var new_credit = $(this).val();
         udpateDebitAmount();
-        var debit = $("#Treatments_debit_amount").val();
         var credit = $(this).val();
-
-        if (debit != '' && credit != '' && debit != '0' && credit != '0') {
-            var final = Number(debit) - Number(credit);
-            $("#Treatments_debit_amount").val(final)
+        // var debit = $("#Treatments_debit_amount").val();
+        if(new_credit <=  credit) {
+            $("#Treatments_debit_amount").val(Number(credit) - Number(new_credit));
+        } else {
+            $("#Treatments_debit_amount").val(0);
         }
+        // if (debit != '' && credit != '' && debit != '0' && credit != '0') {
+        //     var final = Number(debit) - Number(credit);
+        //     $("#Treatments_debit_amount").val(final)
+        // }
     });
 
     function cloneMe(medicine_id, doseage_id, days) {
