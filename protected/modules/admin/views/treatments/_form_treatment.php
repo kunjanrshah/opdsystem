@@ -196,6 +196,7 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
             // console.log(amountIdentity);
             var previousVal = $("#" + amountIdentity).val();
             $("#" + amountIdentity).val(chargesAmountObj[charge_id]);
+			udpateDebitAmount()
             if (previousVal != 0) {
                 return false;
             }
@@ -274,7 +275,7 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
     function deteteThisCharge(obj) {
         $(obj).parent().parent().parent().remove();
         udpateDebitAmount();
-        $("#Treatments_credit_amount").val(0);
+        //$("#Treatments_credit_amount").val(0);
     }
     function deteteThis(obj) {
         $(obj).parent().parent().parent().remove();
