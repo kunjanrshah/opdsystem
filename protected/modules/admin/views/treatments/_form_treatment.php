@@ -239,6 +239,7 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
         // var debit = $("#Treatments_debit_amount").val();
         if(new_credit <=  credit) {
             $("#Treatments_debit_amount").val(Number(credit) - Number(new_credit));
+			$("#Treatments_credit_amount").val(Number(new_credit))
         } else {
             $("#Treatments_debit_amount").val(0);
         }
