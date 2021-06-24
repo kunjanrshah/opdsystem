@@ -76,6 +76,8 @@ class ReportsController extends Controller {
 
         $start_date = common::getTimeStamp($model->start_date);
         $end_date = common::getTimeStamp($model->end_date);
+		$end_date = $end_date + (24*60*60);
+		
         if (!empty($start_date) && !empty($end_date)) {
             $criteria->addCondition("t.created_dt >= '" . $start_date . "'", 'AND');
             $criteria->addCondition("t.created_dt <= '" . $end_date . "'", 'AND');
