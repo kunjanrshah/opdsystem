@@ -215,7 +215,7 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
 
         $("#cloneContainerCharge").append($clone);
         $clone.removeAttr("id", "cloneMeCharge");
-        udpateDebitAmount();
+
         // console.log(c1);
         $(".amount").parent("div").show();
         $('#TreatmentCharges_' + c1 + '_amount').parent("div").hide();
@@ -234,9 +234,9 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
         $("#Treatments_credit_amount").val(debit_amount);
     }
     $("#Treatments_credit_amount").change(function () {
-        var new_credit = $(this).val();
+        var new_credit = parseInt($(this).val());
         udpateDebitAmount();
-        var credit = $(this).val();
+        var credit = parseInt($(this).val());
         // var debit = $("#Treatments_debit_amount").val();
         if(new_credit <=  credit) {
             $("#Treatments_debit_amount").val(Number(credit) - Number(new_credit));
