@@ -33,16 +33,17 @@ class ReportsController extends Controller {
         if (isset($_GET["Treatments"])):
             $model->attributes = $_GET["Treatments"];
         endif;
-        $model->start_date = !empty($_GET['Treatments']['start_date']) ? $_GET['Treatments']['start_date'] : (common::getDateTime("now", "01/m/Y"));
-        $model->end_date = !empty($_GET['Treatments']['end_date']) ? $_GET['Treatments']['end_date'] : (common::getDateTime("now", "t/m/Y"));
+        $model->start_date = !empty($_GET['Treatments']['start_date']) ? $_GET['Treatments']['start_date'] : (common::getDateTime("now", "d/m/Y"));
+        $model->end_date = !empty($_GET['Treatments']['end_date']) ? $_GET['Treatments']['end_date'] : (common::getDateTime("now", "d/m/Y"));
 
         $criteria = new CDbCriteria();
         // $criteria->compare("t.treatment_id",$model->treatment_id);
         $criteria->compare("t.diagnosis_id", $model->diagnosis_id);
         $criteria->compare("t.patient_id", $model->patient_id);
-
+		
         $start_date = common::getTimeStamp($model->start_date);
         $end_date = common::getTimeStamp($model->end_date);
+		$end_date = $end_date + (24*60*60);
 		
         if (!empty($start_date) && !empty($end_date)) {
             $criteria->addCondition("t.created_dt >= '" . $start_date . "'", 'AND');
