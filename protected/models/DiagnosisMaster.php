@@ -120,7 +120,7 @@ class DiagnosisMaster extends CActiveRecord {
     }
 
     public function getDiagnosis() {
-        return $this->findAll();
+        return $this->findAll(array('order'=>'diagnosis_title'));
     }
 
     public function getDiagnosisList() {
