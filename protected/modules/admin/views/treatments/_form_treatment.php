@@ -102,7 +102,7 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
     <div class="col-md-6">
         <div class="form-group">
             <?php echo $form->labelEx($model, "diagnosis_id", array("class" => "control-label")); ?>
-            <?php echo common::select2($model, "diagnosis_id", DiagnosisMaster::model()->getDiagnosisList(), array("class" => "form-control", "multiple" => false, 'onchange' => 'getTreatments()', "prompt" => common::translateText("DROPDOWN_TEXT"))); ?>
+            <?php echo common::select2($model, "diagnosis_id", DiagnosisMaster::model()->getDiagnosisList(), array("class" => "form-control", "multiple" => TRUE, 'onchange' => 'getTreatments()', "prompt" => common::translateText("DROPDOWN_TEXT"))); ?>
             <?php echo $form->error($model, "diagnosis_id", array("class" => "parsley-custom-error-message")); ?>                                       
         </div>
     </div>
@@ -291,6 +291,7 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
             success: function (response) {
                 $("#Treatments_complains_id").select2("destroy");
                 $("#Treatments_complains_id").html(response.options);
+				//alert(response.options);
                 $("#Treatments_complains_id").select2();
 
                 if (response.treatments) {
