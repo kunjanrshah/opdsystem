@@ -13,11 +13,6 @@
                         <?php echo common::getTitle("reports/index"); ?>
                     </h3>
                 </div>
-				<div class="col-xs-2">
-					<?php
-						print_r($diagnosis_data);
-					?>
-				</div>
                 <!-- panel body with collapse capabale -->
                 <div class="table-responsive panel-collapse pull out">
                     <table class="table table-bordered table-hover">
@@ -54,12 +49,7 @@
                                                 ?>
                                             </td>
                                             <td><?php echo $value->patientRel->patient_name; ?></td>
-                                            <td><?php
-													foreach ($value->diagnosis_id as $each_diagnosis_id):
-														echo $diagnosis_data[$each_diagnosis_id] . ", ";
-													endforeach;
-												?>
-											</td>
+                                            <td><?php echo $value->diagnosisRel->diagnosis_title; ?></td>
                                             <td>
                                                 <?php
                                                 $total = 0;
@@ -69,7 +59,6 @@
                                                         echo "<br />";
                                                         $total +=$charges->amount;
                                                     endforeach;
-													$total = $total - $debit;
                                                 else : echo common::translateText("NOT_AVAILABLE_TEXT");
                                                 endif;
                                                 ?>
@@ -87,7 +76,7 @@
                                 ?>
                                 <tr>
                                     <td>Total </td>
-                                    <td colspan="4" class="text-right"><?php echo $grandTotal + $grandDebit;?></td>
+                                    <td colspan="3" class="text-right"><?php echo $grandTotal + $grandDebit;?></td>
                                     <td class="text-right success"><?php echo $grandTotal; ?> </td>
                                     <td class="text-right danger"><?php echo $grandDebit; ?> </td>
                                 </tr>

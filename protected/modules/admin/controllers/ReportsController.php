@@ -38,8 +38,11 @@ class ReportsController extends Controller {
 
         $criteria = new CDbCriteria();
         // $criteria->compare("t.treatment_id",$model->treatment_id);
-        $criteria->compare("t.diagnosis_id", $model->diagnosis_id);
         $criteria->compare("t.patient_id", $model->patient_id);
+		$criteria->addSearchCondition("t.diagnosis_id", $model->diagnosis_id);
+		//$charge_id = "%21%";
+		//$criteria->join = 'LEFT JOIN treatment_charges tcharges ON t.id = tcharges.treatment_id'; 
+		//$criteria->addSearchCondition("tcharges.charge_id", $charge_id);
 		
         $start_date = common::getTimeStamp($model->start_date);
         $end_date = common::getTimeStamp($model->end_date);
@@ -58,7 +61,15 @@ class ReportsController extends Controller {
 		$criteria->order = "t.id DESC";
         $data = Treatments::model()->findAll($criteria);
         //common::pr($data);exit;
-        $this->render('index', array("model" => $model, "data" => $data));
+		
+		$DiagnosisMaster = DiagnosisMaster::model()->findAll();
+		//$diagnosis_array = array();
+		//foreach ($DiagnosisMaster as $diagnosis_record){
+		//	$diagnosis_array[$diagnosis_record->id] = $diagnosis_record->diagnosis_title;
+		//}
+		//$diagnosis_array[33]= $criteria->createCommand()->getRawSql() . " sql";
+        //$this->render('index', array("model" => $model, "data" => $data, "diagnosis_data"=> $diagnosis_array));
+		$this->render('index', array("model" => $model, "data" => $data));
     }
 
     public function actionExport() {
@@ -71,8 +82,8 @@ class ReportsController extends Controller {
 
         $criteria = new CDbCriteria();
         // $criteria->compare("t.treatment_id",$model->treatment_id);
-        $criteria->compare("t.diagnosis_id", $model->diagnosis_id);
         $criteria->compare("t.patient_id", $model->patient_id);
+		$criteria->addSearchCondition("t.diagnosis_id", $model->diagnosis_id);
 
         $start_date = common::getTimeStamp($model->start_date);
         $end_date = common::getTimeStamp($model->end_date);
@@ -111,6 +122,7 @@ class ReportsController extends Controller {
 //                            $original_data['Charges'] .= " ";
                             $total +=$charges->amount;
                         }
+						$total -= $debit;
                     } else {
                         $original_data['Charges'] .= common::translateText("NOT_AVAILABLE_TEXT");
                     }

@@ -89,7 +89,7 @@
                                 "header" => "Action",
                                 "htmlOptions" => array("width" => "10%", "class" => "text-center $columnClass"),
                                 "headerHtmlOptions" => array("width" => "10%", "class" => "text-center $columnClass"),
-                                "template" => '{viewTreatments}',
+                                "template" => '{viewTreatments}{edit}',
                                 "buttons" => array(
                                     "viewTreatments" => array(
                                         "label" => '<i class="icon ico-search"></i>',
@@ -98,6 +98,13 @@
                                         "options" => array("class" => "mr5", "title" => common::getTitle("treatments/index")),
                                         "visible" =>  '( "'.$detailRights.'" && !$data->is_treatment_given) ? true : false',
                                     ),
+									'edit' => array
+									(
+										'label'=>'[E]',
+										"url" => 'Yii::app()->createUrl("/admin/treatments/detailsupdate", array("treatment_id"=>$data->id))',
+                                        "options" => array("class" => "mr5", "title" => common::getTitle("/admin/treatments/detailsupdate")),
+                                        "visible" =>  '$data->id',
+									),
                                 ),
                             ),
                         ),

@@ -46,7 +46,15 @@
                                         <span class="text-muted" style="margin-left: 15px;">
                                             <?php
                                             $DiagnosisList = DiagnosisMaster::model()->getDiagnosisList();
-                                            echo !empty($DiagnosisList[$model->diagnosis_id]) ? $DiagnosisList[$model->diagnosis_id] : common::translateText("NOT_AVAILABLE_TEXT");
+                                           
+											$diagnosisArr = array();
+											if (!empty($value->diagnosis_id)): foreach ($value->diagnosis_id as $diagnosis_id):
+													if (!empty($DiagnosisList[$diagnosis_id])) :
+														$diagnosisArr[] = $DiagnosisList[$diagnosis_id];
+													endif;
+												endforeach;
+											endif;
+											echo!empty($diagnosisArr) ? implode(", ", $diagnosisArr) : common::translateText("NOT_AVAILABLE_TEXT");
                                             ?>
                                         </span>
                                         <h5 class="semibold mt0 mb5" style="margin-left: 15px;">Complains</h5>

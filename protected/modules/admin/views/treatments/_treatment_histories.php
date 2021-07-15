@@ -25,7 +25,20 @@
                                 <div class="col-lg-8">
                                     <div class="col-md-12">
                                         <span class="semibold">Diagnosis :</span>
-                                        <span><?php echo!empty($DiagnosisList[$value->diagnosis_id]) ? $DiagnosisList[$value->diagnosis_id] : common::translateText("NOT_AVAILABLE_TEXT"); ?></span>
+                                        <span>
+
+											<?php
+											$diagnosisArr = array();
+											if (!empty($value->diagnosis_id)): foreach ($value->diagnosis_id as $diagnosis_id):
+													if (!empty($DiagnosisList[$diagnosis_id])) :
+														$diagnosisArr[] = $DiagnosisList[$diagnosis_id];
+													endif;
+												endforeach;
+											endif;
+											echo!empty($diagnosisArr) ? implode(", ", $diagnosisArr) : common::translateText("NOT_AVAILABLE_TEXT");
+											?>
+										</span>
+										
                                     </div>
                                     <div class="col-md-12">
                                         <span class="semibold">Complains :</span>
