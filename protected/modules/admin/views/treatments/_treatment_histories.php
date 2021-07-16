@@ -190,7 +190,7 @@
         <?php if (!empty($value->reamarks)): ?>
                                 <div class="row">
                                     <div class="col-md-12">                                    
-                                        <span>Remarks : <?php echo!empty($value->remarks) ? $value->remarks : "N/A"; ?></span>
+                                        <span>Advice : <?php echo!empty($value->remarks) ? $value->remarks : "N/A"; ?></span>
                                     </div>
                                 </div>
                                 <br />

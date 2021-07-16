@@ -173,7 +173,7 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
         <div class="row nm">
             <div class="col-md-12">
                 <div class="form-group">
-                    <?php echo $form->labelEx($model, "remarks", array("class" => "control-label")); ?>
+                    <?php echo $form->labelEx($model, "advice", array("class" => "control-label")); ?>
                     <?php echo $form->textArea($model, "remarks", array("class" => "form-control")); ?>
                     <?php echo $form->error($model, "remarks", array("class" => "parsley-custom-error-message")); ?>                                       
                 </div>

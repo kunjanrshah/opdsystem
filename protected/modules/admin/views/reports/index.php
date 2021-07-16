@@ -14,9 +14,9 @@
                     </h3>
                 </div>
 				<div class="col-xs-2">
-					<?php
+					<!-- </?php
 						print_r($diagnosis_data);
-					?>
+					?> -->
 				</div>
                 <!-- panel body with collapse capabale -->
                 <div class="table-responsive panel-collapse pull out">

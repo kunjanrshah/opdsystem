@@ -152,7 +152,7 @@
                             <?php if (!empty($model->remarks)) : ?>
                                 <tr>
                                     <td colspan="4">
-                                        <h5 class="semibold mt0 mb5">Remarks</h5>
+                                        <h5 class="semibold mt0 mb5">Advice</h5>
                                         <span class="text-muted"><?php echo $model->remarks; ?></span>
                                     </td>
                                 </tr>
