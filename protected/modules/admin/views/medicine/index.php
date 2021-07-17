@@ -73,7 +73,7 @@ $deleteRight = common::checkActionAccess("medicine/delete");
                             ),
                             array(
                                 "name" => "is_internal",
-                                "value" => '!empty($data->is_internal)?"Yes":"No"'
+                                "value" => '($data->is_internal==2)?"No":"Yes"'
                             ),
                             array(
                                 "class" => "CButtonColumn",
