@@ -72,8 +72,8 @@ $deleteRight = common::checkActionAccess("medicine/delete");
                                 'value'=>'$data->companyRel->company_name'
                             ),
                             array(
-                                "name" => "is_vaccine",
-                                "value" => '!empty($data->is_vaccine)?"Yes":"No"'
+                                "name" => "is_internal",
+                                "value" => '!empty($data->is_internal)?"Yes":"No"'
                             ),
                             array(
                                 "class" => "CButtonColumn",

@@ -134,7 +134,7 @@ class MedicineMaster extends CActiveRecord
             'medicine_name' => 'Medicine Name',
             'group_id' => 'Group',
             'drug_id' => 'Drug',
-            'is_internal' => 'Is Internal',
+            'is_internal' => 'Internal ?',
             'medicine_type' => 'Medicine Type',
             'dosages' => 'Dosages',
             'dosages_remarks' => 'Dosages Remarks',
