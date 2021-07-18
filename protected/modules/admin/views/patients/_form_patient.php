@@ -360,7 +360,6 @@ echo $form->hiddenField($model, "state_id");
         </div>
     </div>
 </div>
-
 <?php
 $this->endWidget();
 Yii::app()->clientScript->registerScript('actions', "

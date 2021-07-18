@@ -259,17 +259,6 @@ class TreatmentsController extends Controller {
             $options = "";
             $treatments = array();
             if (!empty($diagnosis_id)):
-<<<<<<< HEAD
-				//$criterias = new CDbCriteria();
-				//$List = implode(',', $diagnosis_id);
-                //$criterias->condition = "id IN (" . $List . ")";
-                //$DiagnosisMaster = DiagnosisMaster::model()->findAll($criterias);
-				
-                $DiagnosisMaster = DiagnosisMaster::model()->findByPk($diagnosis_id);
-				//foreach ($DiagnosisMaster as $value):
-					$criteria = new CDbCriteria();
-					$criteria->condition = "id IN (" . implode(",", $DiagnosisMaster->complains) . ")";
-=======
 				$criterias = new CDbCriteria();
 				$List = implode(',', $diagnosis_id);
                 $criterias->condition = "id IN (" . $List . ")";
@@ -279,17 +268,12 @@ class TreatmentsController extends Controller {
 				foreach ($DiagnosisMaster as $value):
 					$criteria = new CDbCriteria();
 					$criteria->condition = "id IN (" . implode(",", $value->complains) . ")";
->>>>>>> 3f0edeaa6006965f14e48f2366c4a164304fcfae
 					$model = ComplainsMaster::model()->findAll($criteria);
 					if ($model): foreach ($model as $value):
 							$options.= CHtml::tag('option', array('value' => $value->id, "selected" => true), CHtml::encode($value->complain_title), true);
 						endforeach;
 					endif;
-<<<<<<< HEAD
-				//endforeach;
-=======
 				endforeach;
->>>>>>> 3f0edeaa6006965f14e48f2366c4a164304fcfae
 				
                 $crit = new CDBCriteria();
                 $crit->join = "LEFT JOIN `".MedicineMaster::tableName()."` AS MM ON MM.id = t.medicine_id";
