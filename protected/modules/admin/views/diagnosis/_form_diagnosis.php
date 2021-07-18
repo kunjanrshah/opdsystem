@@ -14,7 +14,7 @@ $form = $this->beginWidget('CActiveForm', array(
     ),     
     'htmlOptions' => array('enctype' => 'multipart/form-data', 'onsubmit' => 'return validateAddMore();'))
 );
-    
+$daysArr = array_combine(range(1, 30), range(1, 30));  
 ?>
 <div class="row nm">
     <div class="col-md-4">
@@ -49,7 +49,7 @@ $form = $this->beginWidget('CActiveForm', array(
             $criteria->condition = "group_id='".$value->medicine_group_id."'";
             $criteria->order = "medicine_name ASC";
             $model = MedicineMaster::model()->findAll($criteria);
-            $this->renderPartial("_diagnosis_treatments", array("medicines" => CHtml::ListData(MedicineMaster::model()->findAll($criteria), "id", "medicineTypeMedicineName"), "doseages" => $doseages, "medicine_id" => $value->medicine_id, 'medicineGroups'=>$medicineGroups, "doseage_id" => $value->doseage_id, "medicine_group_id"=>$value->medicine_group_id, "c" => $c, "id" => $value->id));
+            $this->renderPartial("_diagnosis_treatments", array("daysArr"=>$daysArr,"medicines" => CHtml::ListData(MedicineMaster::model()->findAll($criteria), "id", "medicineTypeMedicineName"), "doseages" => $doseages, "medicine_id" => $value->medicine_id, 'medicineGroups'=>$medicineGroups, "doseage_id" => $value->doseage_id, "medicine_group_id"=>$value->medicine_group_id, "c" => $c, "id" => $value->id));
             $c++;
         endforeach;
     endif;
@@ -71,6 +71,19 @@ $form = $this->beginWidget('CActiveForm', array(
             url = url + '?id='+obj.val();
             $.get(url, function(response) {
                 obj.parent().parent().parent().find('.medicines').html(response);
+            });
+        });
+        $("select.medicines").change(function() {
+            var obj = $(this);
+            var url = '<?php echo Yii::app()->createURL('common/getmedicine');?>';
+            url = url + '?id='+obj.val();
+            $.get(url, function(response) {
+                const jObj = JSON.parse(response);
+                if(jObj.is_internal == '2') { //external
+                    obj.parent().parent().parent().find('.daysContainer').css('visibility', 'visible');
+                } else {
+                  obj.parent().parent().parent().find('.daysContainer').css('visibility', 'hidden');
+                }
             });
         });
     }
@@ -96,6 +109,8 @@ $form = $this->beginWidget('CActiveForm', array(
         $clone.find('select.medicine-groups').attr('name', 'DiagnosisTreatments[' + c + '][medicine_group_id]');
         $clone.find('select.medicine-groups').attr('id', 'DiagnosisTreatments_' + c + 'medicine_group_id');
         $clone.find('select.doseages').attr('name', 'DiagnosisTreatments[' + c + '][doseage_id]');
+        $clone.find('select.days').attr('id', 'DiagnosisTreatments_' + c + '_days');
+        $clone.find('select.days').attr('name', 'DiagnosisTreatments[' + c + '][days]');
         $clone.find('select.doseages').attr('id', 'DiagnosisTreatments_' + c + '_doseage_id');
         $clone.find('.ids').attr('name', 'DiagnosisTreatments[' + c + '][id]');
         $clone.find('.ids').attr('id', 'DiagnosisTreatments_' + c + '_id');
@@ -118,6 +133,6 @@ $form = $this->beginWidget('CActiveForm', array(
 </script>
 <div class="hide">
 <?php
-$this->renderPartial("_diagnosis_treatments", array('medicineGroups'=>$medicineGroups, "medicines" => array(), "doseages" => $doseages, "medicine_id" => "","medicine_group_id" => "", "doseage_id" => "", "c" => 0, "id" => ""));
+$this->renderPartial("_diagnosis_treatments", array('daysArr'=>$daysArr, 'medicineGroups'=>$medicineGroups, "medicines" => array(), "doseages" => $doseages, "medicine_id" => "","medicine_group_id" => "", "doseage_id" => "", "c" => 0, "id" => ""));
 ?>
 </div>

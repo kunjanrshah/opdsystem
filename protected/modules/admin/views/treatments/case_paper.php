@@ -115,7 +115,7 @@
                                         <td class="valign-top text-center"><span class="bold"><?php echo $dValue->medicineRel->medicineTypeMedicineName; ?></span></td>
                                         <td class="valign-top text-center"><span class="bold"><?php echo ($dValue->medicineRel->is_internal == MedicineMaster::EXTERNAL) ? "External" : "Internal"; ?></span></td>
                                         <td class="valign-top text-center"><span class="bold"><?php echo $dValue->doseageRel->dosage_name; ?></span></td>
-                                        <td class="valign-top text-center"><span class="text-primary bold"><?php echo $dValue->days; ?></span></td>
+                                        <td class="valign-top text-center"><span class="text-primary bold"><?php echo $dValue->medicineRel->is_internal == '2' ? $dValue->days : '--'; ?></span></td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php endif; ?>

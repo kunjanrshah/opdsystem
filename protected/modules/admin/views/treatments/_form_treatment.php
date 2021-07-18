@@ -173,7 +173,7 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
         <div class="row nm">
             <div class="col-md-12">
                 <div class="form-group">
-                    <?php echo $form->labelEx($model, "advice", array("class" => "control-label")); ?>
+                    <?php echo $form->labelEx($model, "remarks", array("class" => "control-label")); ?>
                     <?php echo $form->textArea($model, "remarks", array("class" => "form-control")); ?>
                     <?php echo $form->error($model, "remarks", array("class" => "parsley-custom-error-message")); ?>                                       
                 </div>
@@ -251,7 +251,7 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
         // }
     });
 
-    function cloneMe(medicine_id, doseage_id, days) {
+    function cloneMe(medicine_id, doseage_id, days, is_internal) {
         $clone = $('#cloneMe').clone();
         $clone.find('select.medicines').attr('name', 'TreatmentDetails[' + c + '][medicine_id]');
         $clone.find('select.medicines').attr('id', 'TreatmentDetails_' + c + '_medicine_id');
@@ -264,6 +264,8 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
         $clone.find('.days').attr('name', 'TreatmentDetails[' + c + '][days]');
         $clone.find('.days').attr('id', 'TreatmentDetails_' + c + '_days');
         $clone.find('.days').val(days);
+
+        $clone.find('.daysContainer').css('visibility', is_internal == '2' ? 'visibile' : 'hidden');
 
         if (medicine_id == 0) {
             $clone.find('select').not(".days").val('0');
@@ -293,10 +295,10 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
                 $("#Treatments_complains_id").html(response.options);
 				//alert(response.options);
                 $("#Treatments_complains_id").select2();
-
+                $("#Treatments_remarks").val(response.advices.toString());
                 if (response.treatments) {
                     $.each(response.treatments, function (i, v) {
-                        cloneMe(v.medicine_id, v.doseage_id, v.days);
+                        cloneMe(v.medicine_id, v.doseage_id, v.days, v.is_internal);
                     });
                 }
             }

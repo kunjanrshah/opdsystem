@@ -90,7 +90,7 @@ class DiagnosisMaster extends CActiveRecord {
             'diagnosis_title' => 'Diagnosis Title',
             'complains' => 'Complains',
             'deleted' => 'Deleted',
-            'description' => 'Description',
+            'description' => 'Advice',
         );
     }
 

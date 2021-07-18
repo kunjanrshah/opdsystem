@@ -91,6 +91,11 @@ class CommonController extends Controller {
         Yii::app()->end();
     }
 
+    public function actionGetMedicine($id) {
+        $model = MedicineMaster::model()->findByPk($id);
+        echo json_encode($model->attributes); exit;
+    }
+
     public function actionMigrate() {
         exit("no allowed");
         $medicines = Yii::app()->db->createCommand()

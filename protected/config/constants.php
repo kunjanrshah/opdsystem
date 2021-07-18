@@ -25,10 +25,10 @@ if ($production) {
 } else {
     $WEB_URL = 'http://' . $HTTP_HOST . '/opdsystem/';
     $DOCUMENT_PATH = $_SERVER['DOCUMENT_ROOT'] . '/opdsystem/';
-    $DB_USERNAME = "docker";
-    $DB_PASSWORD = "docker";
-    $DB_NAME = "docker";
-    $HOST_NAME = "database";
+    $DB_USERNAME = "alpesh";
+    $DB_PASSWORD = "alpesh@123";
+    $DB_NAME = "opdsystem";
+    $HOST_NAME = "localhost";
     $SESSION_NAME = "opdystem_dev";
 }
 $UPLOADS_PATH = $DOCUMENT_PATH . "uploads/";
