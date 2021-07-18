@@ -49,7 +49,8 @@ $daysArr = array_combine(range(1, 30), range(1, 30));
             $criteria->condition = "group_id='".$value->medicine_group_id."'";
             $criteria->order = "medicine_name ASC";
             $model = MedicineMaster::model()->findAll($criteria);
-            $this->renderPartial("_diagnosis_treatments", array("daysArr"=>$daysArr,"medicines" => CHtml::ListData(MedicineMaster::model()->findAll($criteria), "id", "medicineTypeMedicineName"), "doseages" => $doseages, "medicine_id" => $value->medicine_id, 'medicineGroups'=>$medicineGroups, "doseage_id" => $value->doseage_id, "medicine_group_id"=>$value->medicine_group_id, "c" => $c, "id" => $value->id));
+            echo "<pre>"; print_r($value); exit;
+            $this->renderPartial("_diagnosis_treatments", array("daysArr"=>$daysArr,"medicines" => CHtml::ListData(MedicineMaster::model()->findAll($criteria), "id", "medicineTypeMedicineName"), "doseages" => $doseages, "medicine_id" => $value->medicine_id, 'medicineGroups'=>$medicineGroups, "doseage_id" => $value->doseage_id, "medicine_group_id"=>$value->medicine_group_id, "c" => $c, "id" => $value->id, "days"=>$value->days));
             $c++;
         endforeach;
     endif;
@@ -133,6 +134,6 @@ $daysArr = array_combine(range(1, 30), range(1, 30));
 </script>
 <div class="hide">
 <?php
-$this->renderPartial("_diagnosis_treatments", array('daysArr'=>$daysArr, 'medicineGroups'=>$medicineGroups, "medicines" => array(), "doseages" => $doseages, "medicine_id" => "","medicine_group_id" => "", "doseage_id" => "", "c" => 0, "id" => ""));
+$this->renderPartial("_diagnosis_treatments", array('daysArr'=>$daysArr, 'medicineGroups'=>$medicineGroups, "medicines" => array(), "doseages" => $doseages, "medicine_id" => "","medicine_group_id" => "", "doseage_id" => "", "c" => 0, "id" => "", $days=>""));
 ?>
 </div>
