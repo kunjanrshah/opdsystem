@@ -60,8 +60,11 @@
                     <?php // echo common::select2($model, "patient_id", Patients::model()->getPatientsList(), array("prompt" => "Patients", "class" => "chzn-select", "style" => "width:100%;")); ?>
                 </div>   
                 <div class="col-xs-2">
-                    <?php echo common::select2($model, "diagnosis_id", CHtml::ListData(DiagnosisMaster::model()->findAll(), "id", "diagnosis_title"), array("prompt" => "Diagnosis", "class" => "chzn-select", "style" => "width:100%;")); ?>
-                </div>   
+                    <?php echo common::select2($model, "diagnosis_id", CHtml::ListData(DiagnosisMaster::model()->findAll(), "id", "diagnosis_title"), array("prompt" => "All Diagnosis", "class" => "chzn-select", "style" => "width:100%;")); ?>
+                </div> 
+				<!--<div class="col-xs-2">
+                    </?php echo common::select2($model, "treatmentChargesRel", CHtml::ListData(ChargesMaster::model()->findAll(), "id", "charge_title"), array("prompt" => "All Charges", "class" => "chzn-select", "style" => "width:100%;")); ?>
+                </div> 	-->
                 <div class="col-xs-2">
                     <button type="submit" class="btn btn-primary"><i class="ico-loop4 mr5"></i><?php echo common::translateText("SEARCH_BTN_TEXT"); ?></button>
                 </div>

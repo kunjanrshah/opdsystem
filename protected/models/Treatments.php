@@ -134,7 +134,7 @@ class Treatments extends CActiveRecord {
 
     public function afterFind() {
         $this->complains_id = !empty($this->complains_id) ? explode(",", $this->complains_id) : array();
-        //$this->diagnosis_id = !empty($this->diagnosis_id) ? explode(",", $this->diagnosis_id) : array();
+        $this->diagnosis_id = !empty($this->diagnosis_id) ? explode(",", $this->diagnosis_id) : array();
         $this->created_dt = common::getDateTimeFromTimeStamp($this->created_dt, "d/m/Y h:i A");
         return parent::afterFind();
     }

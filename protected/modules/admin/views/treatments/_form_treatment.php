@@ -14,11 +14,8 @@ $medicinesModel2 = MedicineMaster::model()->findAll($criteria);
 $medicines = array("Internal" => CHtml::ListData($medicinesModel, 'id', 'medicineNameFormated')) + array("External" => CHtml::ListData($medicinesModel2, 'id', 'medicineNameFormated'));
 
 $doseages = CHtml::ListData(DosagesMaster::model()->findAll(), "id", "dosage_name");
-
-//$charges = CHtml::ListData(ChargesMaster::model()->findAll(), "id", "charge_title");
 $charges = CHtml::ListData(ChargesMaster::model()->findAll(array('order'=>'t.charge_title')), "id", "charge_title");
 asort($charges);
-
 $chargesAmount = CHtml::ListData(ChargesMaster::model()->findAll(), "id", "amount");
 $daysArr = array_combine(range(1, 30), range(1, 30));
 $action = !$model->isNewRecord ? "update" : "add";
@@ -105,7 +102,7 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
     <div class="col-md-6">
         <div class="form-group">
             <?php echo $form->labelEx($model, "diagnosis_id", array("class" => "control-label")); ?>
-            <?php echo common::select2($model, "diagnosis_id", DiagnosisMaster::model()->getDiagnosisList(), array("class" => "form-control", "multiple" => false, 'onchange' => 'getTreatments()', "prompt" => common::translateText("DROPDOWN_TEXT"))); ?>
+            <?php echo common::select2($model, "diagnosis_id", DiagnosisMaster::model()->getDiagnosisList(), array("class" => "form-control", "multiple" => TRUE, 'onchange' => 'getTreatments()', "prompt" => common::translateText("DROPDOWN_TEXT"))); ?>
             <?php echo $form->error($model, "diagnosis_id", array("class" => "parsley-custom-error-message")); ?>                                       
         </div>
     </div>
@@ -176,7 +173,7 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
         <div class="row nm">
             <div class="col-md-12">
                 <div class="form-group">
-                    <?php echo $form->labelEx($model, "remarks", array("class" => "control-label")); ?>
+                    <?php echo $form->labelEx($model, "advice", array("class" => "control-label")); ?>
                     <?php echo $form->textArea($model, "remarks", array("class" => "form-control")); ?>
                     <?php echo $form->error($model, "remarks", array("class" => "parsley-custom-error-message")); ?>                                       
                 </div>
@@ -294,6 +291,7 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
             success: function (response) {
                 $("#Treatments_complains_id").select2("destroy");
                 $("#Treatments_complains_id").html(response.options);
+				//alert(response.options);
                 $("#Treatments_complains_id").select2();
 
                 if (response.treatments) {

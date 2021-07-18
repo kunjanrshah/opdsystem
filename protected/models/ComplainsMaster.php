@@ -103,7 +103,7 @@ class ComplainsMaster extends CActiveRecord {
     }
     
     public function getComplains(){
-        return $this->findAll();
+        return $this->findAll(array('order'=>'complain_title'));
     }
     public function getComplainsList(){
         return CHtml::ListData($this->getComplains(),"id","complain_title");
