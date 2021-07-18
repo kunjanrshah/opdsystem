@@ -293,6 +293,7 @@ class TreatmentsController extends Controller {
                         $treatments[$i]["medicine_id"] = $value->medicine_id;
                         $treatments[$i]["doseage_id"] = $value->doseage_id;
                         $treatments[$i]["is_internal"] = MedicineMaster::model()->findByPk($value->medicine_id)->is_internal;
+                        $treatments[$i]["days"] = $value->days;
                         $i++;
                     endforeach;
                 endif;
