@@ -241,6 +241,15 @@ echo $form->hiddenField($model, "state_id");
             <?php echo $form->error($model, "other_case", array("class" => "parsley-custom-error-message")); ?>
         </div>
     </div>
+    
+    <div class="col-md-3 pull-right" >
+        <br/>
+        <div class="form-group custom-select-class">
+            <button type="button" class="btn btn-default" onclick="js:history.go(-1);"><?php echo common::translateText("CANCEL_BTN_TEXT"); ?></button>
+            &nbsp;&nbsp;&nbsp; <button type="submit" class="btn btn-primary"><?php echo common::translateText("SUBMIT_BTN_TEXT"); ?></button>
+        </div>
+    </div>
+    
 </div>
 <div class="row nm">
     <h5 class="semibold mb15">Contact Information</h5>
@@ -351,10 +360,7 @@ echo $form->hiddenField($model, "state_id");
         </div>
     </div>
 </div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-default" onclick="js:history.go(-1);"><?php echo common::translateText("CANCEL_BTN_TEXT"); ?></button>
-    <button type="submit" class="btn btn-primary"><?php echo common::translateText("SUBMIT_BTN_TEXT"); ?></button>
-</div>
+
 <?php
 $this->endWidget();
 Yii::app()->clientScript->registerScript('actions', "

@@ -14,7 +14,11 @@ $medicinesModel2 = MedicineMaster::model()->findAll($criteria);
 $medicines = array("Internal" => CHtml::ListData($medicinesModel, 'id', 'medicineNameFormated')) + array("External" => CHtml::ListData($medicinesModel2, 'id', 'medicineNameFormated'));
 
 $doseages = CHtml::ListData(DosagesMaster::model()->findAll(), "id", "dosage_name");
-$charges = CHtml::ListData(ChargesMaster::model()->findAll(), "id", "charge_title");
+
+//$charges = CHtml::ListData(ChargesMaster::model()->findAll(), "id", "charge_title");
+$charges = CHtml::ListData(ChargesMaster::model()->findAll(array('order'=>'t.charge_title')), "id", "charge_title");
+asort($charges);
+
 $chargesAmount = CHtml::ListData(ChargesMaster::model()->findAll(), "id", "amount");
 $daysArr = array_combine(range(1, 30), range(1, 30));
 $action = !$model->isNewRecord ? "update" : "add";

@@ -259,15 +259,22 @@ class TreatmentsController extends Controller {
             $options = "";
             $treatments = array();
             if (!empty($diagnosis_id)):
+				//$criterias = new CDbCriteria();
+				//$List = implode(',', $diagnosis_id);
+                //$criterias->condition = "id IN (" . $List . ")";
+                //$DiagnosisMaster = DiagnosisMaster::model()->findAll($criterias);
+				
                 $DiagnosisMaster = DiagnosisMaster::model()->findByPk($diagnosis_id);
-                $criteria = new CDbCriteria();
-                $criteria->condition = "id IN (" . implode(",", $DiagnosisMaster->complains) . ")";
-                $model = ComplainsMaster::model()->findAll($criteria);
-                if ($model): foreach ($model as $value):
-                        $options.= CHtml::tag('option', array('value' => $value->id, "selected" => true), CHtml::encode($value->complain_title), true);
-                    endforeach;
-                endif;
-
+				//foreach ($DiagnosisMaster as $value):
+					$criteria = new CDbCriteria();
+					$criteria->condition = "id IN (" . implode(",", $DiagnosisMaster->complains) . ")";
+					$model = ComplainsMaster::model()->findAll($criteria);
+					if ($model): foreach ($model as $value):
+							$options.= CHtml::tag('option', array('value' => $value->id, "selected" => true), CHtml::encode($value->complain_title), true);
+						endforeach;
+					endif;
+				//endforeach;
+				
                 $crit = new CDBCriteria();
                 $crit->join = "LEFT JOIN `".MedicineMaster::tableName()."` AS MM ON MM.id = t.medicine_id";
                 $crit->compare("diagnosis_id",$diagnosis_id);

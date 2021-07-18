@@ -18,6 +18,7 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
+								<th>Sr no</th>
                                 <th>Treatment Date Time</th>
                                 <th>Patient</th>                                                                
                                 <th>Diagnosis</th>
@@ -30,9 +31,13 @@
                             <?php
                             $grandTotal = 0;
                             $grandDebit = 0;
+							$srno = 1;
                             if (!empty($data)) : foreach ($data as $value): if (!empty($value->patientRel)):
                                         ?>
                                         <tr>
+											<td>
+												<?php echo $srno++; ?>
+											</td>
                                             <td>
                                                 <?php
                                                 if (common::checkActionAccess("treatments/details")) {

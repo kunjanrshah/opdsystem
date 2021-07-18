@@ -51,7 +51,7 @@ class DiagnosisMaster extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('diagnosis_title, description', 'required'),
+            array('diagnosis_title, complains', 'required'),	
             array('parent_id, deleted', 'numerical', 'integerOnly' => true),
             array('diagnosis_title, complains', 'length', 'max' => 255),
             // The following rule is used by search().
@@ -120,7 +120,7 @@ class DiagnosisMaster extends CActiveRecord {
     }
 
     public function getDiagnosis() {
-        return $this->findAll();
+        return $this->findAll(array('order'=>'diagnosis_title'));
     }
 
     public function getDiagnosisList() {
