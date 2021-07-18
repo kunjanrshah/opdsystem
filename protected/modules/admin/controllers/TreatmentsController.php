@@ -257,22 +257,29 @@ class TreatmentsController extends Controller {
             $diagnosis_id = !empty($_POST["Treatments"]["diagnosis_id"]) ? $_POST["Treatments"]["diagnosis_id"] : array();
             $complains_id = !empty($_POST["Treatments"]["complains_id"]) ? $_POST["Treatments"]["complains_id"] : array();
             $options = "";
+            $advices = [];
             $treatments = array();
             if (!empty($diagnosis_id)):
 				$criterias = new CDbCriteria();
 				$List = implode(',', $diagnosis_id);
+                if(!empty($List)):
                 $criterias->condition = "id IN (" . $List . ")";
                 $DiagnosisMaster = DiagnosisMaster::model()->findAll($criterias);
 				
                 //$DiagnosisMaster = DiagnosisMaster::model()->findByPk($diagnosis_id);
 				foreach ($DiagnosisMaster as $value):
 					$criteria = new CDbCriteria();
+                    if(!empty($value->complains)):
 					$criteria->condition = "id IN (" . implode(",", $value->complains) . ")";
+                    if(!empty($value->description)) {
+                        $advices[] = $value->description;
+                    }
 					$model = ComplainsMaster::model()->findAll($criteria);
 					if ($model): foreach ($model as $value):
 							$options.= CHtml::tag('option', array('value' => $value->id, "selected" => true), CHtml::encode($value->complain_title), true);
 						endforeach;
 					endif;
+                endif;
 				endforeach;
 				
                 $crit = new CDBCriteria();
@@ -285,11 +292,13 @@ class TreatmentsController extends Controller {
                     foreach ($DiagnosisTreatments as $value):
                         $treatments[$i]["medicine_id"] = $value->medicine_id;
                         $treatments[$i]["doseage_id"] = $value->doseage_id;
+                        $treatments[$i]["is_internal"] = MedicineMaster::model()->findByPk($value->medicine_id)->is_internal;
                         $i++;
                     endforeach;
                 endif;
             endif;
-            echo json_encode(array("options" => $options, "treatments" => $treatments));
+            endif;
+            echo json_encode(array("options" => $options, "treatments" => $treatments, "advices"=> $advices));
             Yii::app()->end();
         } else {
             throw new CHttpException(400, common::translateText("400_ERROR"));

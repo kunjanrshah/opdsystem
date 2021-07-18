@@ -108,7 +108,7 @@
                                                             <?php echo!empty($dValue->doseageRel) ? $dValue->doseageRel->dosage_name : "N/A"; ?>
                                                         </td>
                                                         <td class="text-center" width="5%">
-                                                            <?php echo!empty($dValue->days) ? $dValue->days : "N/A"; ?>
+                                                            <?php echo!empty($dValue->days) && ($dValue->medicineRel->is_internal == MedicineMaster::EXTERNAL) ? $dValue->days : "--"; ?>
                                                         </td>                                                
                                                     </tr>
                                                     <?php

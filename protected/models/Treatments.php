@@ -92,7 +92,7 @@ class Treatments extends CActiveRecord {
             'patient_resp' => 'Patient Resp',
             'patient_waist' => 'Patient Waist',
             'patient_hip' => 'Patient Hip',
-            'remarks' => 'Remarks',
+            'remarks' => 'Advice',
             'diagnosis_id' => 'Diagnosis',
             'complains_id' => 'Complains',
             'deleted' => 'Deleted',

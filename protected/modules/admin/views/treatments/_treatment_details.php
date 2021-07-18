@@ -5,13 +5,13 @@
             <?php echo CHtml::dropDownList("TreatmentDetails[$c][medicine_id]", $medicine_id, $medicines, array("prompt" => common::translateText("DROPDOWN_TEXT"), "class" => "addmore-required medicines form-control")); ?>
         </div>
     </div>
-    <div class="col-md-3 col-sm-3">
+    <div class="col-md-4 col-sm-4">
         <div class="form-group">
             <?php echo CHtml::Label("Dosage", "&nbsp;", array("class" => "control-label")); ?>
             <?php echo CHtml::dropDownList("TreatmentDetails[$c][doseage_id]", $doseage_id, $doseages, array("prompt" => common::translateText("DROPDOWN_TEXT"), "class" => "addmore-required doseages form-control")); ?>
         </div>
     </div>
-    <div class="col-md-2 col-sm-2">
+    <div class="col-md-1 col-sm-1 daysContainer">
         <div class="form-group">
             <?php echo CHtml::Label("Days", "&nbsp;", array("class" => "control-label")); ?>
             <?php echo CHtml::dropDownList("TreatmentDetails[$c][days]", $days, $daysArr, array("class" => "addmore-required days form-control")); ?>

@@ -11,7 +11,7 @@
  */
 class DiagnosisTreatments extends CActiveRecord {
 
-    public $medicine_group_id;
+    public $medicine_group_id, $days;
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -36,7 +36,7 @@ class DiagnosisTreatments extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('diagnosis_id, medicine_id, doseage_id, medicine_group_id', 'required'),
-            array('medicine_group_id', 'safe'),
+            array('medicine_group_id, days', 'safe'),
             array('diagnosis_id, medicine_id, doseage_id', 'numerical', 'integerOnly' => true),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.

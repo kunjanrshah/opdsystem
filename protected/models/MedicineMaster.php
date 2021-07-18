@@ -181,7 +181,7 @@ class MedicineMaster extends CActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'pagination' => array(
-                'pageSize' => Yii::app()->params->defaultPageSize,
+                'pageSize' => 100 //Yii::app()->params->defaultPageSize,
             ),
             'sort' => $sort
         ));
