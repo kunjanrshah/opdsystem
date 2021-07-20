@@ -295,7 +295,7 @@ $hide = (empty($model->patient_id) || empty($model->appointment_id)) ? "hide" : 
                 $("#Treatments_complains_id").html(response.options);
 				//alert(response.options);
                 $("#Treatments_complains_id").select2();
-                $("#Treatments_remarks").val(response.advices.toString());
+                $("#Treatments_remarks").val((response.advices || []).join(', '));
                 if (response.treatments) {
                     $.each(response.treatments, function (i, v) {
                         cloneMe(v.medicine_id, v.doseage_id, v.days, v.is_internal);

@@ -56,6 +56,7 @@ class DiagnosisMaster extends CActiveRecord {
             array('diagnosis_title, complains', 'length', 'max' => 255),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
+            array('description', 'safe'),
             array('id, parent_id, diagnosis_title, complains, deleted, description', 'safe', 'on' => 'search'),
         );
     }
